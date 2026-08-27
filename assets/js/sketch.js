@@ -251,13 +251,30 @@
     renderSlide(document.querySelector('.slide.is-active'));
   }
 
+  /* Printing puts every slide on a page at once, but lazy rendering means only
+     the slides someone actually visited have drawn anything. Printing a freshly
+     opened deck would otherwise produce a PDF with every figure blank. */
+  function renderAll() {
+    document.querySelectorAll('.slide').forEach(renderSlide);
+  }
+
   document.addEventListener('deck:slide', e => renderSlide(e.detail.slide));
   // Re-draw on resize so the sketch stays crisp after a fullscreen toggle.
   let rt;
   window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(renderActive, 200); });
 
+  window.addEventListener('beforeprint', renderAll);
+  // Safari and the headless PDF paths do not always fire beforeprint, but the
+  // print media query flips in every engine that applies the print stylesheet.
+  if (window.matchMedia) {
+    const mq = window.matchMedia('print');
+    const onPrint = e => { if (e.matches) renderAll(); };
+    if (mq.addEventListener) mq.addEventListener('change', onPrint);
+    else if (mq.addListener) mq.addListener(onPrint);
+  }
+
   window.SKETCH = {
     COL, FONT, tint, scene, rect, ellipse, line, poly, arrow, txt, lines, chip, cardBox,
-    register, renderSlide, renderActive
+    register, renderSlide, renderActive, renderAll
   };
 })();
