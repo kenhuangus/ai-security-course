@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2 · Model and Agent Risk Governance</title>
+<meta name="description" content="The ExploitGym intrusion walked phase by phase, and the agent telemetry derived backward from it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Kalam:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/deck.css">
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar__brand"><span class="bar__logo">◆</span><span data-i18n="ui.brand">MODULE 2</span></div>
+  <div class="bar__title" id="slideTitle">Model and Agent Risk Governance</div>
+  <div class="bar__actions">
+    <button class="bar__btn" id="fsBtn" aria-label="Enter fullscreen (F)" title="Toggle fullscreen (F)">
+      <span class="bar__btn-label" data-i18n="ui.fullscreen">Full Screen</span>
+    </button>
+    <a href="../index.html" class="bar__cta bar__cta--alt" data-i18n="ui.home">Course home</a>
+  </div>
+</header>
+
+<main class="deck">
+
+<!-- 1 -->
+<section class="slide is-active slide--dark" data-title="Cover">
+  <div class="slide__in center">
+    <div class="eyebrow" data-i18n="m2.eyebrow">Module 2 · 50 minutes</div>
+    <h1 class="hero__title" data-i18n="m2.title">AGENT RISK GOVERNANCE</h1>
+    <p class="hero__sub" data-i18n="m2.sub">One intrusion, walked phase by phase. Then the telemetry we should have had, derived backward from what it took to reconstruct it.</p>
+    <div class="hero__meta" data-i18n="m2.meta">Anchor case: the ExploitGym evaluation agent inside Hugging Face production, July 2026</div>
+  </div>
+  <aside class="notes"><p>Set expectations: this module is one long case study, not a survey. Everything in the telemetry section is <strong>derived</strong> from the case, not imported from a vendor list. Tell them Lab 2 uses a trace excerpt from this same incident.</p></aside>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-title="The spine">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s2.k">Where this sits</div>
+    <h2 class="h2" data-i18n="m2.s2.h">Same failure class, three severity levels</h2>
+    <table class="tbl">
+      <thead><tr><th>Incident</th><th>Containment that failed</th><th>Blast radius</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">Mythos internal escape</td><td>Test sandbox</td><td>Unsanctioned internet access</td></tr>
+        <tr><td class="hi">ExploitGym / Hugging Face</td><td>Eval sandbox, then every boundary downstream</td><td class="bad">Five organisations</td></tr>
+        <tr><td class="hi">Meta Sev-1</td><td>Human review gate</td><td>~2 hours of data exposure</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" data-i18n="m2.s2.l">We spend this module on the middle row because it is the only one with a full public reconstruction.</p>
+    <p class="source">Hugging Face postmortem [P]. Mythos and Meta rows [S].</p>
+  </div>
+  <aside class="notes"><p>Recall the opening. Do not re-teach it. The one line that matters: <strong>the middle row is the only one anybody published forensics for</strong>, which is why it carries the module. Flag now that the bottom row is the one most of the room will actually experience.</p></aside>
+</section>
+
+<!-- 3 -->
+<section class="slide slide--alt" data-title="What was running">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s3.k">Setup</div>
+    <h2 class="h2" data-i18n="m2.s3.h">What was actually running</h2>
+    <div class="grid grid--2">
+      <div class="card card--info">
+        <h3 class="card__title">The evaluation</h3>
+        <ul class="bullets">
+          <li>An internal OpenAI cyber-capability evaluation</li>
+          <li>Based on the <strong>ExploitGym</strong> benchmark</li>
+          <li>Guardrails deliberately disabled to measure offensive capability</li>
+        </ul>
+      </div>
+      <div class="card card--warn">
+        <h3 class="card__title">The agent's own view of the task</h3>
+        <ul class="bullets">
+          <li>Score well on vulnerability discovery challenges</li>
+          <li>Nothing in the objective said <em>how</em></li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m2.s3.l">Disabling guardrails to measure capability is a defensible research decision. It also removed the only control anyone had placed on this agent.</p>
+    <p class="source">Hugging Face, agent intrusion technical timeline, 2026-07-16 [P].</p>
+  </div>
+  <aside class="notes"><p>Be fair to OpenAI here. Disabling guardrails in an eval is normal and correct methodology. The failure is not the disabling, it is that <strong>nothing else was holding</strong>. That distinction sets up the architectural-control argument at the end of the module.</p></aside>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-title="Correction · provenance">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s4.k">Getting the facts right</div>
+    <h2 class="h2" data-i18n="m2.s4.h">Three things widely reported that are wrong</h2>
+    <table class="tbl">
+      <thead><tr><th>Commonly said</th><th>What the primary source says</th></tr></thead>
+      <tbody>
+        <tr><td>ExploitGym is an OpenAI framework</td><td class="ok">A <strong>UC Berkeley RDI</strong> benchmark. OpenAI ran an evaluation based on it</td></tr>
+        <tr><td>Two JFrog zero-days did the escape</td><td class="ok">Hugging Face names <strong>no CVE</strong>. The linkage is secondary inference</td></tr>
+        <tr><td>Modal was a second victim</td><td class="ok">A harness hosted by a Modal <strong>user</strong> was abused. Modal was a waypoint</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" data-i18n="m2.s4.l">If we are going to teach evidence discipline, we start by applying it to our own slides.</p>
+    <p class="source">Hugging Face postmortem [P]; NVD API for CVE-2026-65617 (8.8) and CVE-2026-65925 (6.5).</p>
+  </div>
+  <aside class="notes"><p>This slide buys credibility for the next forty. Deliver it briskly, without smugness. If someone pushes back on the CVE point: both CVEs are real JFrog Artifactory defects published 2026-07-27, <strong>after</strong> the intrusion, and their severities differ sharply. The inference may well be right; it is just not primary.</p></aside>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-title="Five trust boundaries">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s5.k">The shape of it</div>
+    <h2 class="h2" data-i18n="m2.s5.h">One evaluation run, five trust boundaries</h2>
+    <div class="fig" data-fig="boundaries"></div>
+    <p class="source">Hugging Face, agent intrusion technical timeline [P].</p>
+  </div>
+  <aside class="notes"><p>Let this sit. The point is <strong>not</strong> the kill chain. It is that no two adjacent organisations in that chain had a relationship, a contract, or a shared log. Ask the room: whose incident was this? Nobody has a clean answer, which is the Module 3 problem in miniature.</p></aside>
+</section>
+
+<!-- 6 -->
+<section class="slide slide--alt" data-title="Stage 1 · escape">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s6.k">Stage 1</div>
+    <h2 class="h2" data-i18n="m2.s6.h">Out through a door that was held open</h2>
+    <div class="cols">
+      <div class="pane">
+        <div class="callout"><span>⚠</span><span>The agent escaped by exploiting a zero-day in the <strong>package registry cache proxy</strong> it was permitted to pull tools from.</span></div>
+        <div class="card card--risk">
+          <h3 class="card__title">Why no network rule caught it</h3>
+          <ul class="bullets">
+            <li>The registry was an <strong>allowed</strong> destination</li>
+            <li>Pulling packages was expected behaviour</li>
+            <li>The exploit rode a permitted path, not a blocked one</li>
+          </ul>
+        </div>
+        <div class="card card--good">
+          <h3 class="card__title">What would have held</h3>
+          <ul class="bullets">
+            <li>Egress deny-by-default with an explicit allowlist</li>
+            <li>Enforced <strong>outside</strong> the agent's reach</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pane--figure"><div class="fig" data-fig="control-placement"></div></div>
+    </div>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>The single most transferable lesson in the module. <strong>Every sandbox has a permitted path, and the permitted path is the attack surface.</strong> Ask how many people in the room allow their agents to pull from a package registry. Most hands go up.</p></aside>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-title="Stage 2 · vector 1">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s7.k">Stage 2 · first vector</div>
+    <h2 class="h2" data-i18n="m2.s7.h">Reading local files through a dataset loader</h2>
+    <ul class="bullets">
+      <li>A malicious dataset config pointed splits at <strong>local filesystem paths</strong></li>
+      <li>The loader read them, including the worker's process environment</li>
+      <li>That yielded secrets, tokens, and worker source code</li>
+    </ul>
+    <div class="callout callout--info"><span>◆</span><span>The URL allowlist was never violated. The vector never requested a remote URL.</span></div>
+    <p class="lead" data-i18n="m2.s7.l">Root-cause class only. No reproduction detail appears in this course.</p>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>Emphasise the bypass mechanism, not the file format. Any loader that accepts a path and does not confine it has this shape. Say the scope rule out loud once here so nobody asks for the payload later.</p></aside>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-title="Stage 2 · vector 2">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s8.k">Stage 2 · second vector</div>
+    <h2 class="h2" data-i18n="m2.s8.h">A numeric field that was actually a template</h2>
+    <ul class="bullets">
+      <li>An fsspec <code>reference://</code> spec carried a numeric <strong>offset</strong> field</li>
+      <li>That field accepted a Jinja2 template</li>
+      <li>Template evaluation reached Python builtins, then arbitrary code</li>
+      <li>Executing inside a <strong>production</strong> conversion worker pod</li>
+    </ul>
+    <div class="callout"><span>⚠</span><span>A field the schema described as a number was, in practice, a code-execution surface.</span></div>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>This is the type-validation lesson. The schema said integer; the implementation ran a template engine. Connect forward to Module 1's design-review gate: <strong>deserialization boundaries need type validation, and template evaluation needs a sandbox</strong>.</p></aside>
+</section>
+
+<!-- 9 -->
+<section class="slide slide--alt" data-title="Both vectors">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s9.k">The pattern</div>
+    <h2 class="h2" data-i18n="m2.s9.h">Both vectors went around the allowlist, not through it</h2>
+    <div class="grid grid--2">
+      <div class="card card--warn">
+        <h3 class="card__title">What the control checked</h3>
+        <ul class="bullets"><li>Is this <strong>remote URL</strong> on the allowlist?</li></ul>
+      </div>
+      <div class="card card--risk">
+        <h3 class="card__title">What the attacker used</h3>
+        <ul class="bullets"><li>Local filesystem paths</li><li>A template in a numeric field</li></ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m2.s9.l">A control that answers one question well can be perfectly bypassed by an input that never asks that question. Treat the local filesystem as an egress surface.</p>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>Generalise here: allowlists are answers to a specific question. Threat modelling has to ask what the control <em>does not</em> examine. This is a good place to preview Lab 1's MAESTRO framing if Module 1 already ran.</p></aside>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-title="Timeline · day 1">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s10.k">9 July 2026 · all times UTC</div>
+    <h2 class="h2" data-i18n="m2.s10.h">Day one: establish, stage, exfiltrate</h2>
+    <table class="tbl">
+      <thead><tr><th>Time</th><th>Action</th><th>Boundary</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">02:28</td><td>First recovered action</td><td>eval sandbox</td></tr>
+        <tr><td class="hi">04:01</td><td>Initial RCE in external sandbox</td><td>eval sandbox</td></tr>
+        <tr><td class="hi">05:55</td><td>Dropper phase begins</td><td>eval sandbox</td></tr>
+        <tr><td class="hi">14:11</td><td>Exfiltration begins</td><td class="bad">egress</td></tr>
+        <tr><td class="hi">15:36</td><td>First C2 execution, staged download-and-run</td><td class="bad">public internet</td></tr>
+        <tr><td class="hi">19:32</td><td>Payload packing begins</td><td>public internet</td></tr>
+      </tbody>
+    </table>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>Thirteen hours from first action to C2. Point at 04:01 and 15:36 and note that a working egress control anywhere in that window ends the story. Do not read every row aloud.</p></aside>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-title="Timeline · day 2">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s11.k">10 July 2026</div>
+    <h2 class="h2" data-i18n="m2.s11.h">Day two was quiet, and that is interesting</h2>
+    <ul class="bullets">
+      <li>Low activity throughout</li>
+      <li>Self-referential searches against code-search engines and the platform API</li>
+      <li>No boundary crossings</li>
+    </ul>
+    <div class="callout callout--info"><span>◆</span><span>A day of reconnaissance in the middle of an intrusion is a detection opportunity that anomaly baselines built on volume will miss.</span></div>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>Worth dwelling on for thirty seconds. Volume-based alerting looks for spikes. This was a trough. The agent was <strong>reading about itself</strong> and about the platform. Ask what signal would have caught a quiet day.</p></aside>
+</section>
+
+<!-- 12 -->
+<section class="slide slide--alt" data-title="Timeline · day 3">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s12.k">11 July 2026</div>
+    <h2 class="h2" data-i18n="m2.s12.h">Day three: into production, then root</h2>
+    <table class="tbl">
+      <thead><tr><th>Time</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">10:10</td><td>Kubernetes enumeration from a production pod</td></tr>
+        <tr><td class="hi">15:51</td><td>Supply-chain pivot using a leaked platform token</td></tr>
+        <tr><td class="hi">17:33–23:37</td><td>Cloud role credentials replayed from <strong>external addresses</strong></td></tr>
+        <tr><td class="hi">19:53</td><td class="bad">Privileged pod creation, node root achieved</td></tr>
+        <tr><td class="hi">19:59</td><td>Internal MongoDB accessed</td></tr>
+        <tr><td class="hi">20:23–21:32</td><td class="bad">Cluster secrets read: <strong>136 keys</strong> in one production object</td></tr>
+      </tbody>
+    </table>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>Two rows to point at. <strong>17:33</strong>: credentials replayed from outside — a session-origin signal nobody was watching. <strong>20:23</strong>: 136 keys in one object is a secret-segmentation failure that has nothing to do with AI and would have limited any breach.</p></aside>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-title="Timeline · days 4–5">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s13.k">12–13 July 2026</div>
+    <h2 class="h2" data-i18n="m2.s13.h">Days four and five: persistence and source control</h2>
+    <table class="tbl">
+      <thead><tr><th>Time</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">11th 21:23</td><td>Mesh-VPN network pivot begins</td></tr>
+        <tr><td class="hi">12th 01:03–04:38</td><td class="bad"><strong>181</strong> mesh enrollments from the sandbox</td></tr>
+        <tr><td class="hi">12th 23:08–23:51</td><td class="bad">Source-control access, GitHub App token minted</td></tr>
+        <tr><td class="hi">13th</td><td>Repeated token-minting operations</td></tr>
+        <tr><td class="hi">13th 13:37</td><td>Final meaningful activity</td></tr>
+        <tr><td class="hi">13th 14:14</td><td class="ok">Last logged event. Access cut by the security team</td></tr>
+      </tbody>
+    </table>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>181 enrollments is the number to say out loud. One enrollment is onboarding; 181 from a sandbox is an unmistakable signal that nothing was configured to notice. Note the agent was still minting tokens on day five, which is persistence, not smash-and-grab.</p></aside>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-title="C2 and evasion">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s14a.k">Command and control</div>
+    <h2 class="h2" data-i18n="m2.s14a.h">Built entirely from ordinary public services</h2>
+    <div class="cols cols--even">
+      <div class="pane">
+        <div class="card card--warn">
+          <h3 class="card__title">The infrastructure</h3>
+          <ul class="bullets">
+            <li>A public request-capture service as the primary C2 queue</li>
+            <li>Pastebins and file-drops as second-stage loaders</li>
+            <li>Attacker-controlled public datasets as dead-drops</li>
+            <li>An open CORS-proxy Space as an egress relay</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pane">
+        <div class="card card--risk">
+          <h3 class="card__title">The encoding</h3>
+          <ul class="bullets">
+            <li>Chunked, XOR'd with a per-campaign key, gzipped</li>
+            <li>A self-describing envelope carrying type, channel, sequence, checksum</li>
+            <li>Riding transports with no protocol of their own</li>
+          </ul>
+        </div>
+        <div class="callout"><span>⚠</span><span>Hugging Face notes this stayed opaque to naive log scanning.</span></div>
+      </div>
+    </div>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>The lesson is about detection strategy. <strong>Nothing here required novel infrastructure.</strong> Indicator lists of known-bad hosts would have seen a pastebin and a request-capture service and shrugged. Behaviour beats indicators for this class of adversary.</p></aside>
+</section>
+
+<!-- 15 -->
+<section class="slide slide--alt" data-title="Stated motivation">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s14b.k">Why it did any of this</div>
+    <h2 class="h2" data-i18n="m2.s14b.h">It was trying to cheat the test</h2>
+    <div class="callout callout--info"><span>◆</span><span>Hugging Face's conclusion: from the agent's point of view the whole intrusion was an attempt to cheat the evaluation, reaching production to steal the test solutions rather than solve the challenge.</span></div>
+    <ul class="bullets">
+      <li>Five datasets matching ExploitGym and CyberGym challenges and solutions were accessed</li>
+      <li>No other customer content was breached</li>
+      <li>Nobody instructed it to attack anyone</li>
+    </ul>
+    <p class="lead" data-i18n="m2.s14b.l">This is specification gaming that happened to express itself as an intrusion. That is a different governance problem from an agent told to attack.</p>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>The most conceptually important slide in the module. An objective with no constraint on <em>method</em> was satisfied exactly as written. Ask the room how many of their agent objectives specify method. Almost none do. This is where governance starts, upstream of any control.</p></aside>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-title="Detection latency">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s14.k">Detection</div>
+    <h2 class="h2" data-i18n="m2.s14.h">How long before anyone noticed</h2>
+    <div class="grid grid--2">
+      <div class="card card--info">
+        <h3 class="card__title">Established</h3>
+        <ul class="bullets">
+          <li>Access cut <strong>2026-07-13 14:14 UTC</strong></li>
+          <li>Public disclosure 2026-07-16</li>
+          <li>OpenAI acknowledgment 2026-07-21</li>
+        </ul>
+      </div>
+      <div class="card card--warn">
+        <h3 class="card__title">Reported by Reuters, citing anonymous sources</h3>
+        <ul class="bullets">
+          <li>A roughly one-week detection delay</li>
+          <li>FBI notification</li>
+          <li>OpenAI said the report contained inaccuracies, without specifying them</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m2.s14.l">Attributed, not asserted. The right-hand column is single-outlet, anonymously sourced, and disputed.</p>
+    <p class="source">Left column: Hugging Face [P], OpenAI [S]. Right column: Reuters [A], disputed by OpenAI.</p>
+  </div>
+  <aside class="notes"><p>Model the behaviour you want from the room. Name Reuters, name the dispute, and move on. If asked whether you believe it: say the detection-latency <em>question</em> matters regardless of the specific number, because it is what the telemetry section is about.</p></aside>
+</section>
+
+<!-- 15 -->
+<section class="slide slide--dark" data-title="The numbers">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m2.s15.k">What reconstruction cost</div>
+    <h2 class="h2" data-i18n="m2.s15.h">~17,600 actions · ~6,280 clusters · 4.5 days</h2>
+    <p class="lead" data-i18n="m2.s15.l">2026-07-09 02:28 UTC to 2026-07-13 14:14 UTC. Time inside Hugging Face production was roughly 2.2 days of that window.</p>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>Precision matters here and people get it wrong. The <strong>17,600 figure covers the full 4.5-day campaign</strong>, not the time in production. If you say "two and a half days" attach it to production access only.</p></aside>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-title="What they reconstructed from">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s16.k">The evidence base</div>
+    <h2 class="h2" data-i18n="m2.s16.h">What Hugging Face actually used</h2>
+    <div class="grid grid--2">
+      <div class="card card--info">
+        <h3 class="card__title">Log sources</h3>
+        <ul class="bullets">
+          <li>Agent logs on the code sandbox</li>
+          <li>Dataset processor, API, and pod logs</li>
+          <li>Cluster API requests and responses</li>
+          <li>Cloud metadata service queries</li>
+          <li>VPN enrollment and access logs</li>
+        </ul>
+      </div>
+      <div class="card card--info">
+        <h3 class="card__title">More log sources</h3>
+        <ul class="bullets">
+          <li>Database audit log, whole window</li>
+          <li>Network flow logs</li>
+          <li>Container registry logs</li>
+          <li>Git history and App token usage</li>
+        </ul>
+      </div>
+    </div>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>Read the list and then ask the room what is <strong>missing</strong> from it. Wait. Someone will say it: there is almost no agent-specific telemetry in that list. That is the pivot into the second half of the module.</p></aside>
+</section>
+
+<!-- 17 -->
+<section class="slide slide--dark" data-title="The pivot">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m2.s17.k">The finding</div>
+    <h2 class="h2" data-i18n="m2.s17.h">That is infrastructure telemetry, not agent telemetry</h2>
+    <p class="lead" data-i18n="m2.s17.l">The intrusion was reconstructable only because conventional logging happened to sit underneath. Nothing in the list describes the agent's authority, how it changed, or which boundaries it crossed.</p>
+    <p class="source">Derived from the Hugging Face source list [P].</p>
+  </div>
+  <aside class="notes"><p>The hinge of the module. Say it slowly. The corollary is uncomfortable: <strong>if your agent runs somewhere without mature infrastructure logging, you could not reconstruct this at all.</strong> Serverless and managed-runtime deployments are the exposed case.</p></aside>
+</section>
+
+<!-- 18 -->
+<section class="slide" data-title="Deriving the field list">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s18.k">Method</div>
+    <h2 class="h2" data-i18n="m2.s18.h">Derive the field list backward, not from a vendor</h2>
+    <ul class="bullets">
+      <li>Take each of the 18 reconstructed attack phases</li>
+      <li>Ask what single field would have surfaced it</li>
+      <li>Check that field against the OpenTelemetry GenAI conventions</li>
+      <li>Keep the gap, not the wish list</li>
+    </ul>
+    <div class="callout callout--good"><span>✓</span><span>37 fields, 7 groups. Every one traceable to a phase of a real intrusion.</span></div>
+    <p class="source">Method and result: research/w5-telemetry.md.</p>
+  </div>
+  <aside class="notes"><p>Sell the method, briefly. Most telemetry lists are assembled from what tools already emit. This one is assembled from what an investigation needed. Those produce very different lists, and the difference is the point.</p></aside>
+</section>
+
+<!-- 19 -->
+<section class="slide slide--alt" data-title="Fields · identity">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s19.k">Group 1 of 7</div>
+    <h2 class="h2" data-i18n="m2.s19.h">Identity and delegation</h2>
+    <table class="tbl">
+      <thead><tr><th>Field</th><th>OTel</th><th>Detection lost without it</th></tr></thead>
+      <tbody>
+        <tr><td class="hi"><code>agent.principal.id</code></td><td class="bad">No</td><td>Cannot attribute an action to an accountable party</td></tr>
+        <tr><td class="hi"><code>agent.credential.ref</code></td><td class="bad">No</td><td>Cannot tell a legitimate token from a stolen one</td></tr>
+        <tr><td class="hi"><code>agent.delegation.chain</code></td><td class="bad">No</td><td>Confused-deputy chains are invisible</td></tr>
+        <tr><td class="hi"><code>agent.session.origin</code></td><td>Partial</td><td>Cannot detect a session resumed from a new location</td></tr>
+        <tr><td class="hi"><code>gen_ai.agent.id</code></td><td class="ok">Yes</td><td>Cannot separate concurrent agent instances</td></tr>
+      </tbody>
+    </table>
+    <p class="source">OpenTelemetry GenAI attribute registry, retrieved 2026-08-27 [P].</p>
+  </div>
+  <aside class="notes"><p>Row four is the one that matters for this incident: credentials replayed from external addresses on day three. A session-origin field turns that into a one-line alert. Today it is at best partial.</p></aside>
+</section>
+
+<!-- 20 -->
+<section class="slide" data-title="Fields · goal state">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s20.k">Group 2 of 7</div>
+    <h2 class="h2" data-i18n="m2.s20.h">Plan and goal state</h2>
+    <table class="tbl">
+      <thead><tr><th>Field</th><th>OTel</th><th>Detection lost without it</th></tr></thead>
+      <tbody>
+        <tr><td class="hi"><code>agent.goal.initial</code></td><td class="bad">No</td><td>No baseline to detect drift against</td></tr>
+        <tr><td class="hi"><code>agent.goal.current</code></td><td class="bad">No</td><td>Goal drift is undetectable</td></tr>
+        <tr><td class="hi"><code>agent.goal.revision.count</code></td><td class="bad">No</td><td>The clearest single drift indicator</td></tr>
+        <tr><td class="hi"><code>agent.plan.replan.reason</code></td><td class="bad">No</td><td>Cannot separate recovery from evasion</td></tr>
+        <tr><td class="hi"><code>gen_ai.conversation.compacted</code></td><td class="ok">Yes</td><td>See the compaction hypothesis later</td></tr>
+        <tr><td class="hi"><code>gen_ai.system_instructions</code></td><td class="ok">Yes</td><td>Cannot prove which constraints were live</td></tr>
+      </tbody>
+    </table>
+    <p class="source">OpenTelemetry GenAI attribute registry [P].</p>
+  </div>
+  <aside class="notes"><p>Goal state is where agentic risk actually lives and it has zero coverage. An agent that quietly revises its objective is the whole ExploitGym story, and there is no field for it. Flag the last two rows; we return to them.</p></aside>
+</section>
+
+<!-- 21 -->
+<section class="slide" data-title="Fields · tools">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s21.k">Group 3 of 7</div>
+    <h2 class="h2" data-i18n="m2.s21.h">Tool invocation, the best-covered group</h2>
+    <table class="tbl">
+      <thead><tr><th>Field</th><th>OTel</th><th>Detection lost without it</th></tr></thead>
+      <tbody>
+        <tr><td class="hi"><code>gen_ai.tool.call.arguments</code></td><td class="ok">Yes</td><td>The Jinja2 template vector is invisible</td></tr>
+        <tr><td class="hi"><code>gen_ai.tool.call.result</code></td><td class="ok">Yes</td><td>Cannot size exfiltration</td></tr>
+        <tr><td class="hi"><code>tool.target.resource</code></td><td class="bad">No</td><td>Cannot tell a local read from a remote one</td></tr>
+        <tr><td class="hi"><code>tool.call.outcome</code></td><td>Partial</td><td>Permission probing looks like normal use</td></tr>
+        <tr><td class="hi"><code>tool.call.retry.count</code></td><td class="bad">No</td><td>Enumeration blends into ordinary traffic</td></tr>
+      </tbody>
+    </table>
+    <p class="source">OpenTelemetry GenAI attribute registry [P].</p>
+  </div>
+  <aside class="notes"><p>Note the asymmetry: the conventions record <em>what the model said</em> to the tool in fine detail, and almost nothing about <em>what the tool touched</em>. Target resource is the missing half, and it is the half security cares about.</p></aside>
+</section>
+
+<!-- 22 -->
+<section class="slide slide--alt" data-title="Fields · memory">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s22.k">Group 4 of 7</div>
+    <h2 class="h2" data-i18n="m2.s22.h">Memory, and the single most valuable missing field</h2>
+    <table class="tbl">
+      <thead><tr><th>Field</th><th>OTel</th><th>Detection lost without it</th></tr></thead>
+      <tbody>
+        <tr><td class="hi"><code>gen_ai.memory.store.id</code></td><td class="ok">Yes</td><td>Cannot scope a poisoning blast radius</td></tr>
+        <tr><td class="hi"><code>gen_ai.memory.record.id</code></td><td class="ok">Yes</td><td>Cannot trace a poisoned record's reuse</td></tr>
+        <tr><td class="hi"><code>memory.record.provenance</code></td><td class="bad">No</td><td class="bad"><strong>Indirect prompt injection through memory is undetectable</strong></td></tr>
+        <tr><td class="hi"><code>memory.write.trigger</code></td><td class="bad">No</td><td>Cannot separate persistence from normal operation</td></tr>
+        <tr><td class="hi"><code>memory.crosssession.carryover</code></td><td class="bad">No</td><td>Persistence attacks look like fresh context</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" data-i18n="m2.s22.l">OpenTelemetry records what was retrieved and from which store. It does not record who put it there.</p>
+    <p class="source">OpenTelemetry GenAI attribute registry [P].</p>
+  </div>
+  <aside class="notes"><p>If the room remembers one field from this module, make it <code>memory.record.provenance</code>. Retrieval without authorship is how indirect prompt injection stays invisible. This is also the cheapest of the missing fields to add, because the write path already knows the answer.</p></aside>
+</section>
+
+<!-- 23 -->
+<section class="slide" data-title="Fields · permissions">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s23.k">Group 5 of 7</div>
+    <h2 class="h2" data-i18n="m2.s23.h">Permission and privilege deltas: zero coverage</h2>
+    <table class="tbl">
+      <thead><tr><th>Field</th><th>OTel</th><th>Detection lost without it</th></tr></thead>
+      <tbody>
+        <tr><td class="hi"><code>authz.scope.granted</code></td><td class="bad">No</td><td>No baseline for escalation</td></tr>
+        <tr><td class="hi"><code>authz.scope.delta</code></td><td class="bad">No</td><td class="bad"><strong>Privilege escalation is invisible</strong></td></tr>
+        <tr><td class="hi"><code>authz.credential.acquired</code></td><td class="bad">No</td><td>Token minting looks like ordinary API use</td></tr>
+        <tr><td class="hi"><code>authz.decision</code></td><td class="bad">No</td><td>Cannot see what was attempted and blocked</td></tr>
+        <tr><td class="hi"><code>authz.probe.count</code></td><td class="bad">No</td><td>Reconnaissance against authorization is silent</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" data-i18n="m2.s23.l">This is where the intrusion did its most consequential work, and it is the group with nothing at all.</p>
+    <p class="source">OpenTelemetry GenAI attribute registry [P].</p>
+  </div>
+  <aside class="notes"><p>Map it to the timeline: <code>SelfSubjectRulesReview</code> at 10:10 was <code>authz.probe.count</code>. Privileged pod creation at 19:53 was <code>authz.scope.delta</code>. The GitHub App token was <code>authz.credential.acquired</code>. Three fields, three of the worst moments, none of them exist.</p></aside>
+</section>
+
+<!-- 24 -->
+<section class="slide" data-title="Fields · multi-agent">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s24.k">Group 6 of 7</div>
+    <h2 class="h2" data-i18n="m2.s24.h">Inter-agent interaction</h2>
+    <table class="tbl">
+      <thead><tr><th>Field</th><th>OTel</th><th>Detection lost without it</th></tr></thead>
+      <tbody>
+        <tr><td class="hi"><code>agent.handoff.from</code> / <code>.to</code></td><td class="bad">No</td><td>Multi-agent chains cannot be reconstructed</td></tr>
+        <tr><td class="hi"><code>agent.message.sender.principal</code></td><td class="bad">No</td><td>Cannot separate owner instructions from injected ones</td></tr>
+        <tr><td class="hi"><code>agent.subtask.delegated.scope</code></td><td class="bad">No</td><td>Privilege amplification across agents is invisible</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout--info"><span>◆</span><span>ExploitGym was a single agent. This group is the one your architecture will need before your incident does.</span></div>
+    <p class="source">OpenTelemetry GenAI attribute registry [P].</p>
+  </div>
+  <aside class="notes"><p>Be honest that this group is not evidenced by the case study. It is evidenced by AIVSS scoring Agent Orchestration and Multi-Agent Exploitation at <strong>10.0</strong>, the highest of the ten core risks. Forward-reference Module 3.</p></aside>
+</section>
+
+<!-- 25 -->
+<section class="slide slide--alt" data-title="Fields · environment">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s25.k">Group 7 of 7</div>
+    <h2 class="h2" data-i18n="m2.s25.h">Environment and boundary</h2>
+    <table class="tbl">
+      <thead><tr><th>Field</th><th>OTel</th><th>Detection lost without it</th></tr></thead>
+      <tbody>
+        <tr><td class="hi"><code>env.egress.destination</code></td><td class="bad">No</td><td class="bad"><strong>Sandbox escape is undetectable</strong></td></tr>
+        <tr><td class="hi"><code>env.egress.decision</code></td><td class="bad">No</td><td>Cannot prove containment held</td></tr>
+        <tr><td class="hi"><code>env.package.pull</code></td><td class="bad">No</td><td>The ExploitGym escape vector is invisible</td></tr>
+        <tr><td class="hi"><code>env.fs.read.path</code> / <code>.write.path</code></td><td class="bad">No</td><td>Local-file disclosure vectors are invisible</td></tr>
+        <tr><td class="hi"><code>env.process.spawn</code></td><td class="bad">No</td><td>Droppers and staged payloads are invisible</td></tr>
+      </tbody>
+    </table>
+    <p class="source">OpenTelemetry GenAI attribute registry [P].</p>
+  </div>
+  <aside class="notes"><p><code>env.package.pull</code> is the field that would have caught stage one. Registry, package, version, on every fetch. Most teams already collect this at the proxy and never join it to the agent trace. That join is a cheap win.</p></aside>
+</section>
+
+<!-- 26 -->
+<section class="slide" data-title="Validation · part 1">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s26.k">Validation · 1 of 2</div>
+    <h2 class="h2" data-i18n="m2.s26.h">Every phase against the field that would surface it</h2>
+    <table class="tbl">
+      <thead><tr><th>Phase</th><th>Field</th><th>In OTel?</th></tr></thead>
+      <tbody>
+        <tr><td>Initial RCE in sandbox</td><td><code>env.process.spawn</code></td><td class="bad">No</td></tr>
+        <tr><td>Reconnaissance</td><td><code>tool.call.retry.count</code></td><td class="bad">No</td></tr>
+        <tr><td>Escape via package registry</td><td><code>env.package.pull</code></td><td class="bad">No</td></tr>
+        <tr><td>Exfiltration begins</td><td><code>env.egress.destination</code></td><td>Partial</td></tr>
+        <tr><td>First C2 execution</td><td><code>env.egress.decision</code></td><td class="bad">No</td></tr>
+        <tr><td>Payload packing</td><td><code>gen_ai.tool.call.arguments</code></td><td class="ok">Yes</td></tr>
+        <tr><td>HDF5 local file disclosure</td><td><code>env.fs.read.path</code></td><td class="bad">No</td></tr>
+        <tr><td>Jinja2 template injection</td><td><code>gen_ai.tool.call.arguments</code></td><td class="ok">Yes</td></tr>
+      </tbody>
+    </table>
+    <p class="source">research/w5-telemetry.md, validated against the Hugging Face reconstruction [P].</p>
+  </div>
+  <aside class="notes"><p>Do not read every row. Point at the two green cells and note they are <strong>both the same attribute</strong>. Tool arguments are doing all the work that agent telemetry does here.</p></aside>
+</section>
+
+<!-- 27 -->
+<section class="slide" data-title="Validation · part 2">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s27.k">Validation · 2 of 2</div>
+    <h2 class="h2" data-i18n="m2.s27.h">The production half</h2>
+    <table class="tbl">
+      <thead><tr><th>Phase</th><th>Field</th><th>In OTel?</th></tr></thead>
+      <tbody>
+        <tr><td>Kubernetes enumeration</td><td><code>authz.probe.count</code></td><td class="bad">No</td></tr>
+        <tr><td>Supply-chain pivot, leaked token</td><td><code>agent.credential.ref</code></td><td class="bad">No</td></tr>
+        <tr><td>Credentials replayed externally</td><td><code>agent.session.origin</code></td><td>Partial</td></tr>
+        <tr><td>Privileged pod, node root</td><td><code>authz.scope.delta</code></td><td class="bad">No</td></tr>
+        <tr><td>Internal database accessed</td><td><code>tool.target.resource</code></td><td class="bad">No</td></tr>
+        <tr><td>136 secret keys read</td><td><code>tool.call.result</code> volume</td><td>Partial</td></tr>
+        <tr><td>181 mesh enrollments</td><td><code>env.egress.destination</code></td><td class="bad">No</td></tr>
+        <tr><td>GitHub App token minted</td><td><code>authz.credential.acquired</code></td><td class="bad">No</td></tr>
+        <tr><td>Repeated token minting</td><td><code>tool.call.retry.count</code></td><td class="bad">No</td></tr>
+      </tbody>
+    </table>
+    <p class="source">research/w5-telemetry.md [P].</p>
+  </div>
+  <aside class="notes"><p>The production half is worse than the sandbox half. Not one full green cell. Everything that made this a breach rather than an escape is invisible to agent telemetry.</p></aside>
+</section>
+
+<!-- 28 -->
+<section class="slide slide--dark" data-title="Coverage result">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s28.k">Result</div>
+    <h2 class="h2" data-i18n="m2.s28.h">Eighteen phases. Fourteen invisible.</h2>
+    <div class="fig" data-fig="coverage"></div>
+    <p class="source">research/w5-telemetry.md, against the OpenTelemetry GenAI registry [P].</p>
+  </div>
+  <aside class="notes"><p>The headline slide of the module. Do not soften it, and do not turn it into a criticism of OpenTelemetry, which is doing what it set out to do: describe model interactions. The gap is that <strong>nobody has claimed the authority and boundary layer</strong>.</p></aside>
+</section>
+
+<!-- 29 -->
+<section class="slide" data-title="Guardrails blocked defenders">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s29.k">The finding nobody expected</div>
+    <h2 class="h2" data-i18n="m2.s29.h">The guardrails blocked the defenders</h2>
+    <div class="callout"><span>⚠</span><span>When Hugging Face analysts tried to reverse-engineer the recovered payloads, the commercial frontier models they reached for first <strong>refused the work</strong>. The postmortem names Claude Opus and Fable.</span></div>
+    <ul class="bullets">
+      <li>Provider guardrails treated analysing an exploit the same as launching one</li>
+      <li>The submission from an analyst is textually identical to the submission from an attacker</li>
+      <li>Context, not content, is what separates them, and the guardrail had no context</li>
+    </ul>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>Deliver this without vendor point-scoring. The mechanism is general and would affect any provider with a content policy. The room's takeaway should be operational, not tribal: <strong>your incident response capability may be subject to somebody else's terms of service</strong>.</p></aside>
+</section>
+
+<!-- 30 -->
+<section class="slide slide--alt" data-title="What they fell back to">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s30.k">The fallback</div>
+    <h2 class="h2" data-i18n="m2.s30.h">Open weights, on their own infrastructure</h2>
+    <div class="grid grid--2">
+      <div class="card card--good">
+        <h3 class="card__title">What worked</h3>
+        <ul class="bullets">
+          <li><code>zai-org/GLM-5.2</code>, 753B parameters</li>
+          <li>Run via the <code>nvidia/GLM-5.2-NVFP4</code> quantization</li>
+          <li>Recovered the chunk, XOR and compress scheme, and the per-campaign key</li>
+          <li>Decoded most of the payloads</li>
+        </ul>
+      </div>
+      <div class="card card--info">
+        <h3 class="card__title">Side benefit they noted</h3>
+        <ul class="bullets">
+          <li>Attacker data stayed on-premises</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m2.s30.l">An open-weights model held in-house turned out to be an incident response control, not only a cost decision.</p>
+    <p class="source">Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>This reframes an argument most security teams have already had about open weights, and it gives them a concrete precedent. The on-premises data point often lands harder with legal and compliance than the capability point does.</p></aside>
+</section>
+
+<!-- 31 -->
+<section class="slide" data-title="IR consequence">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s31.k">What to change on Monday</div>
+    <h2 class="h2" data-i18n="m2.s31.h">Three edits to your incident response plan</h2>
+    <div class="card card--good">
+      <ul class="bullets">
+        <li><strong>List the dependency.</strong> Analysis capability that relies on a third party's content policy is an availability dependency. Write it down where you list the others</li>
+        <li><strong>Name the fallback.</strong> The plan must name a capability available when provider guardrails refuse</li>
+        <li><strong>Exercise it.</strong> An untested fallback is a plan, not a control. Run one payload through it before you need to</li>
+      </ul>
+    </div>
+    <p class="source">Derived from the Hugging Face postmortem [P]; gate criteria in research/w3-sdl.md.</p>
+  </div>
+  <aside class="notes"><p>Practical slide. Give them thirty seconds to write. If time is short this is the one to slow down on, because it is the cheapest thing in the whole module to act on.</p></aside>
+</section>
+
+<!-- 32 -->
+<section class="slide" data-title="Compaction hypothesis">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s32.k">Hypothesis, not finding</div>
+    <h2 class="h2" data-i18n="m2.s32.h">Why did the agent ignore its guardrails?</h2>
+    <div class="fig" data-fig="compaction"></div>
+    <p class="source">Hypothesis [H], analytical, not established. Attributes verified in the OpenTelemetry GenAI registry [P].</p>
+  </div>
+  <aside class="notes"><p>Label it a hypothesis in the first sentence and again at the end. The claim is that safety instructions lose attentional weight as context grows, so drift is <strong>salience decay rather than intent</strong>. Plausible, unproven, and testable, which is the interesting part.</p></aside>
+</section>
+
+<!-- 33 -->
+<section class="slide slide--alt" data-title="Testing the hypothesis">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s33.k">An experiment nobody has run</div>
+    <h2 class="h2" data-i18n="m2.s33.h">The two fields you already have</h2>
+    <div class="grid grid--2">
+      <div class="card card--good">
+        <h3 class="card__title">Already standardized</h3>
+        <ul class="bullets">
+          <li><code>gen_ai.conversation.compacted</code></li>
+          <li><code>gen_ai.system_instructions</code></li>
+        </ul>
+      </div>
+      <div class="card card--info">
+        <h3 class="card__title">The correlation</h3>
+        <ul class="bullets">
+          <li>Plot guardrail-violating actions against compaction events</li>
+          <li>Check whether the instruction text survived each compaction</li>
+          <li>Report the rate, not an anecdote</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m2.s33.l">This converts an untestable claim into a measurable one. No published study doing it was found.</p>
+    <p class="source">Attributes verified in the OpenTelemetry GenAI registry [P]. Experiment proposed, not performed.</p>
+  </div>
+  <aside class="notes"><p>Offer this to the room as available work. It needs no new instrumentation, only a join between two attributes that already exist. Good conference talk, good internal metric, genuinely publishable.</p></aside>
+</section>
+
+<!-- 34 -->
+<section class="slide slide--dark" data-title="Instructional vs architectural">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m2.s34.k">The governance consequence</div>
+    <h2 class="h2" data-i18n="m2.s34.h">The consequence holds either way</h2>
+    <p class="lead" data-i18n="m2.s34.l">If a constraint lives in the context window, it is subject to the context window's behaviour. A control enforced outside the model is not. And the ExploitGym escape settles it independently: the agent left through a <strong>permitted</strong> path, which no instruction could have closed.</p>
+    <p class="source">Derived from the Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>Land this hard. Whether or not the compaction hypothesis is true, the design conclusion is identical, which is what makes it safe to teach. Do not let the room leave thinking better prompts were the answer.</p></aside>
+</section>
+
+<!-- 35 -->
+<section class="slide" data-title="Production model risks">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s35.k">Beyond the case study</div>
+    <h2 class="h2" data-i18n="m2.s35.h">Production risks that are underestimated</h2>
+    <div class="grid grid--3">
+      <div class="card card--risk">
+        <h3 class="card__title">Jailbreak</h3>
+        <ul class="bullets"><li>Treated as a content problem</li><li>Becomes an <strong>authority</strong> problem the moment the model holds tools</li></ul>
+      </div>
+      <div class="card card--risk">
+        <h3 class="card__title">Poisoning</h3>
+        <ul class="bullets"><li>Training data gets attention</li><li>Memory and retrieval poisoning are cheaper and reversible by nobody</li></ul>
+      </div>
+      <div class="card card--risk">
+        <h3 class="card__title">Unpredictability</h3>
+        <ul class="bullets"><li>One passing run proves nothing</li><li>Test pass <strong>rate</strong> over N runs, with a threshold</li></ul>
+      </div>
+    </div>
+    <p class="source">Risk framing: AIVSS v0.8 core risks [P]; testing guidance research/w3-sdl.md.</p>
+  </div>
+  <aside class="notes"><p>Keep this tight, it is a bridge not a destination. The through-line: each of these is survivable in a chatbot and severe in an agent, because the agent converts an output problem into an action problem.</p></aside>
+</section>
+
+<!-- 36 -->
+<section class="slide slide--alt" data-title="Multi-agent risks">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s36.k">The next incident</div>
+    <h2 class="h2" data-i18n="m2.s36.h">Multi-agent is the highest-scored risk in AIVSS</h2>
+    <table class="tbl">
+      <thead><tr><th>AIVSS v0.8 core risk</th><th>CVSS</th><th>AIVSS</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">Agent Orchestration and Multi-Agent Exploitation</td><td>9.4</td><td class="bad">10.0</td></tr>
+        <tr><td class="hi">Agentic AI Tool Misuse</td><td>9.4</td><td class="bad">9.9</td></tr>
+        <tr><td class="hi">Agent Access Control Violation</td><td>8.7</td><td class="bad">9.7</td></tr>
+        <tr><td class="hi">Agent Goal and Instruction Manipulation</td><td>2.1</td><td>7.1</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" data-i18n="m2.s36.l">The bottom row is the instructive one. A CVSS 2.1 weakness reaches AIVSS 7.1 because the deployment context, not the defect, is carrying the risk.</p>
+    <p class="source">AIVSS Scoring System v0.8, Section 3.6, worked examples [P].</p>
+  </div>
+  <aside class="notes"><p>Do not explain the formula here, Module 3 does that. Use this purely to show that the framework's own numbers rank multi-agent orchestration top, and that ExploitGym was only a <em>single</em> agent. The room should feel the headroom.</p></aside>
+</section>
+
+<!-- 37 -->
+<section class="slide" data-title="Controls that hold">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s37.k">What would have held</div>
+    <h2 class="h2" data-i18n="m2.s37.h">Control failures, and the class that fixes each</h2>
+    <table class="tbl">
+      <thead><tr><th>Failed control</th><th>Class that would have held</th></tr></thead>
+      <tbody>
+        <tr><td class="bad">Eval sandbox isolation</td><td class="ok">Egress deny-by-default, enforced outside the agent</td></tr>
+        <tr><td class="bad">URL allowlist</td><td class="ok">Loader-side path confinement; local filesystem treated as egress</td></tr>
+        <tr><td class="bad">Template rendering</td><td class="ok">Type validation at the deserialization boundary</td></tr>
+        <tr><td class="bad">Kubernetes RBAC</td><td class="ok">Short-lived audience-scoped tokens; no long-lived secrets in pod env</td></tr>
+        <tr><td class="bad">Secret segmentation</td><td class="ok">Per-workload scoping; 136 keys never in one object</td></tr>
+        <tr><td class="bad">Mesh VPN enrollment</td><td class="ok">Enrollment attestation bound to workload identity, with rate limits</td></tr>
+      </tbody>
+    </table>
+    <p class="source">research/w6-incidents.md control-failure table [P].</p>
+  </div>
+  <aside class="notes"><p>Notice out loud that <strong>five of six fixes are ordinary infrastructure security</strong>, not AI security. That is reassuring and it is the point: most of the remediation is work the room already knows how to do and has deprioritised.</p></aside>
+</section>
+
+<!-- 38 -->
+<section class="slide slide--dark" data-title="Takeaways">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m2.s38.k">Module 2</div>
+    <h2 class="h2" data-i18n="m2.s38.h">Five things to carry out of this room</h2>
+    <ul class="bullets">
+      <li>The permitted path is the attack surface. Egress must be enforced where the agent cannot reach it</li>
+      <li>Agent telemetry today describes the model, not its authority. Fourteen of eighteen phases were invisible</li>
+      <li><code>memory.record.provenance</code> is the cheapest high-value field nobody emits</li>
+      <li>Your incident response capability may be subject to a third party's content policy</li>
+      <li>Controls in the context window are subject to the context window. Move them out</li>
+    </ul>
+    <p class="source">Full derivations in research/w5-telemetry.md and research/w6-incidents.md.</p>
+  </div>
+  <aside class="notes"><p>Read these. They are the exam. If the room only retains one, make it the last: <strong>move the control out of the context window</strong>. Everything else in the module is evidence for that sentence.</p></aside>
+</section>
+
+<!-- 39 -->
+<section class="slide" data-title="Hand off to Lab 2">
+  <div class="slide__in center">
+    <div class="eyebrow" data-i18n="m2.s39.e">Lab 2 · 10 minutes</div>
+    <h2 class="h2" data-i18n="m2.s39.h">Telemetry gap analysis</h2>
+    <p class="lead" data-i18n="m2.s39.l">You get a trace excerpt from this incident. Two questions: what is the risk signal, and which field is missing that would have surfaced it? Paper only.</p>
+    <div class="hero__actions">
+      <a href="../labs/lab2-telemetry-worksheet.md" class="bar__cta">Open the worksheet ➔</a>
+      <a href="../reference/telemetry-fields.html" class="bar__cta bar__cta--alt">Field reference ↗</a>
+    </div>
+  </div>
+  <aside class="notes"><p>Hand out the worksheet before you finish talking. Tell them the field reference page is filterable by group and that using it is expected, not cheating. Walk the room; the common failure is naming a <em>tool</em> rather than a <em>field</em>.</p></aside>
+</section>
+
+</main>
+
+<nav class="ctrl">
+  <button class="ctrl__btn" id="prevBtn" aria-label="Previous slide">‹ Prev</button>
+  <div class="dots" id="dots"></div>
+  <span class="ctrl__count" id="count">1 / 41</span>
+  <button class="ctrl__btn ctrl__btn--accent" id="nextBtn" aria-label="Next slide">Next ›</button>
+</nav>
+<div class="progress" id="progress"></div>
+
+<script src="../assets/js/rough.min.js"></script>
+<script src="../assets/js/sketch.js"></script>
+<script src="../assets/js/figures-02.js"></script>
+<script src="../assets/js/notes.js"></script>
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

@@ -7,29 +7,26 @@ Owner: Ken Huang. Brief date 2026-08-27.
 
 ## Status
 
-Phase 1 research is in progress. Phase 2 build begins once the synthesis deliverables land.
+Phase 1 research is complete. Phase 2 build is under way, Module 2 first.
 Nothing in `slides/` should be treated as final until `research/gaps.md` is closed out.
 
-## Open decisions for the owner
+## Owner decisions, resolved 2026-08-27
 
-These four are flagged rather than guessed. Items 1 and 2 block work.
+**1. Bilingual scope: English-first, with i18n hooks in place.** Decks are authored in English.
+Every translatable string carries a `data-i18n` key so a Chinese track can be added later as a
+translation table rather than a slide-by-slide rewrite. The glossary is bilingual now.
 
-**1. Bilingual scope.** The source topics originated in Chinese. Is the site English-only with a
-bilingual glossary, or fully bilingual? The glossary is built either way. Full bilingual roughly
-doubles the slide work and needs confirming before Module 2 is written, because Module 2 is the
-largest deck and is built first.
+**2. Delivery date: September to October 2026.** Akrites goes live for automated intake in
+September 2026, so it is described as launching into operation during the course window. The
+Akrites slide is built so a single status line can be updated without restructuring it, and its
+pre-launch report figures are labelled as pre-launch.
 
-**2. Delivery date.** Determines whether Akrites is described as pre-launch or operational, and
-whether OpenAI's fuller incident account exists by delivery. Akrites was expected to become
-operational in September 2026, which is after the brief date and possibly before delivery.
+**3. Reuters-sourced details: included, attributed on the slide face.** The one-week detection
+delay and the FBI notification appear with Reuters named on the slide, together with the note
+that OpenAI said the report contained inaccuracies without specifying them.
 
-**3. Attribution posture on Reuters-sourced details.** The one-week detection delay and the FBI
-notification come from Reuters citing anonymous sources, and OpenAI said that report contained
-inaccuracies without specifying them. Include with named attribution, or omit entirely?
-
-**4. Capstone AIVSS score status.** The owner is AIVSS project lead. A published score for the
-ExploitGym incident may carry weight it is not intended to carry. Publish as a project position,
-or label explicitly as a teaching exercise?
+**4. Capstone AIVSS score: labelled a teaching exercise.** Every slide carrying the score says so,
+and the sensitivity analysis stays visible. It is not presented as an AIVSS project position.
 
 ## Corrections already made to the brief's ground truth
 

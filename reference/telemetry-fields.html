@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent telemetry fields</title>
+<meta name="description" content="Thirty-seven agent telemetry fields across seven groups, each derived from a phase of the July 2026 ExploitGym intrusion and checked against the OpenTelemetry GenAI conventions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Kalam:wght@400;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .controls { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: 1.2rem 0; }
+  .chip {
+    font-family: var(--head); font-size: .82rem; font-weight: 700;
+    background: var(--card); color: var(--text);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: .35rem .9rem; cursor: pointer;
+  }
+  .chip:hover { border-color: var(--accent); }
+  .chip.is-on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .search {
+    flex: 1; min-width: 200px; font-family: var(--sans); font-size: .9rem;
+    padding: .45rem .8rem; border: 1px solid var(--line); border-radius: 8px;
+    background: var(--card); color: var(--text);
+  }
+  .cov { font-family: var(--mono); font-size: .74rem; font-weight: 700; padding: .12rem .45rem; border-radius: 4px; white-space: nowrap; }
+  .cov-yes { background: #e9f7ef; color: #1c5a2c; }
+  .cov-part { background: #fff6e6; color: #7a4c00; }
+  .cov-no { background: #fff5f5; color: #961b1b; }
+  [data-theme="dark"] .cov-yes { background: #16351f; color: #7fdba0; }
+  [data-theme="dark"] .cov-part { background: #3a2c10; color: #ffc978; }
+  [data-theme="dark"] .cov-no { background: #3a1717; color: #ff9c9c; }
+  tr.hidden { display: none; }
+  .grouprow td { background: var(--paper-2); font-weight: 700; font-family: var(--head); }
+  .count { font-family: var(--mono); font-size: .8rem; color: var(--muted); }
+  code { white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar__brand">AI Security <span>·</span> Reference</div>
+  <a href="../index.html">Course home</a>
+  <a href="../slides/02-agent-risk.html#19">Module 2 · slide 19</a>
+  <a href="../research/w5-telemetry.md">W5 research</a>
+  <button class="btn" id="themeBtn">Dark</button>
+</nav>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Derived from an incident, not from a vendor list</div>
+  <h1>Agent telemetry fields</h1>
+  <p>Thirty-seven fields across seven groups. Each one was derived by taking a phase of the
+     July 2026 ExploitGym intrusion and asking which single field would have surfaced it, then
+     checking that field against the OpenTelemetry GenAI semantic conventions.</p>
+</div></header>
+
+<div class="wrap">
+<section>
+  <div class="note">
+    <strong>Coverage result.</strong> Of the 18 reconstructed attack phases, 2 are covered by an
+    existing convention attribute, 2 partially, and <strong>14 are not covered at all</strong>.
+    Hugging Face reconstructed the intrusion from infrastructure telemetry, not agent telemetry.
+  </div>
+
+  <div class="controls">
+    <button class="chip is-on" data-g="all">All groups</button>
+    <button class="chip" data-g="identity">Identity &amp; delegation</button>
+    <button class="chip" data-g="goal">Plan &amp; goal state</button>
+    <button class="chip" data-g="tool">Tool invocation</button>
+    <button class="chip" data-g="memory">Memory</button>
+    <button class="chip" data-g="authz">Permission deltas</button>
+    <button class="chip" data-g="multi">Inter-agent</button>
+    <button class="chip" data-g="env">Environment &amp; boundary</button>
+    <input class="search" id="q" type="search" placeholder="Filter by field name or risk signal…" aria-label="Filter fields">
+  </div>
+  <p class="count" id="count"></p>
+
+  <div class="scroll-x">
+  <table id="tbl">
+    <thead><tr><th>Field</th><th>OTel</th><th>Risk signal it enables</th><th>Lost without it</th></tr></thead>
+    <tbody>
+      <tr class="grouprow" data-g="identity"><td colspan="4">Group 1 — Identity and delegation</td></tr>
+      <tr data-g="identity"><td><code>agent.principal.id</code></td><td><span class="cov cov-no">No</span></td><td>Which human or service the agent acts for</td><td>Cannot attribute any action to an accountable party</td></tr>
+      <tr data-g="identity"><td><code>agent.credential.ref</code></td><td><span class="cov cov-no">No</span></td><td>Which credential authorized this action, by reference not value</td><td>Cannot tell a legitimate token from a stolen one</td></tr>
+      <tr data-g="identity"><td><code>agent.delegation.chain</code></td><td><span class="cov cov-no">No</span></td><td>Ordered principals that delegated authority to reach this call</td><td>Confused-deputy chains are invisible</td></tr>
+      <tr data-g="identity"><td><code>agent.session.origin</code></td><td><span class="cov cov-part">Partial</span></td><td>Network origin and workload identity that started the session</td><td>Cannot detect a session resumed from a new location</td></tr>
+      <tr data-g="identity"><td><code>gen_ai.agent.id</code></td><td><span class="cov cov-yes">Yes</span></td><td>Distinguishes concurrent instances of the same agent</td><td>Cannot separate one agent's actions from another's</td></tr>
+
+      <tr class="grouprow" data-g="goal"><td colspan="4">Group 2 — Plan and goal state</td></tr>
+      <tr data-g="goal"><td><code>agent.goal.initial</code></td><td><span class="cov cov-no">No</span></td><td>The objective the agent was given</td><td>No baseline to detect drift against</td></tr>
+      <tr data-g="goal"><td><code>agent.goal.current</code></td><td><span class="cov cov-no">No</span></td><td>The objective the agent is now pursuing</td><td>Goal drift is undetectable</td></tr>
+      <tr data-g="goal"><td><code>agent.goal.revision.count</code></td><td><span class="cov cov-no">No</span></td><td>How many times the objective changed</td><td>The clearest single drift indicator</td></tr>
+      <tr data-g="goal"><td><code>agent.plan.step.id</code> / <code>.total</code></td><td><span class="cov cov-part">Partial</span></td><td>Position in the plan</td><td>Cannot tell progress from looping</td></tr>
+      <tr data-g="goal"><td><code>agent.plan.replan.reason</code></td><td><span class="cov cov-no">No</span></td><td>Why the agent abandoned a plan</td><td>Cannot distinguish recovery from evasion</td></tr>
+      <tr data-g="goal"><td><code>gen_ai.conversation.compacted</code></td><td><span class="cov cov-yes">Yes</span></td><td>Context was compressed</td><td>Cannot test the compaction hypothesis</td></tr>
+      <tr data-g="goal"><td><code>gen_ai.system_instructions</code></td><td><span class="cov cov-yes">Yes</span></td><td>The guardrail text actually in context for this call</td><td>Cannot prove what constraints were live</td></tr>
+
+      <tr class="grouprow" data-g="tool"><td colspan="4">Group 3 — Tool invocation</td></tr>
+      <tr data-g="tool"><td><code>gen_ai.tool.name</code></td><td><span class="cov cov-yes">Yes</span></td><td>Which capability was used</td><td>No tool-level baseline</td></tr>
+      <tr data-g="tool"><td><code>gen_ai.tool.call.arguments</code></td><td><span class="cov cov-yes">Yes</span></td><td>Injection payloads carried in arguments</td><td>The Jinja2 template vector is invisible</td></tr>
+      <tr data-g="tool"><td><code>gen_ai.tool.call.result</code></td><td><span class="cov cov-yes">Yes</span></td><td>Outcome and returned data volume</td><td>Cannot size exfiltration</td></tr>
+      <tr data-g="tool"><td><code>tool.target.resource</code></td><td><span class="cov cov-no">No</span></td><td>The host, path, or URI the tool acted on</td><td>Cannot tell a local read from a remote one</td></tr>
+      <tr data-g="tool"><td><code>tool.call.outcome</code></td><td><span class="cov cov-part">Partial</span></td><td>Success, denied, error, distinct from result content</td><td>Permission probing looks like normal use</td></tr>
+      <tr data-g="tool"><td><code>tool.call.retry.count</code></td><td><span class="cov cov-no">No</span></td><td>Repeated attempts against the same target</td><td>Enumeration blends into ordinary traffic</td></tr>
+      <tr data-g="tool"><td><code>mcp.method.name</code> / <code>mcp.session.id</code></td><td><span class="cov cov-yes">Yes</span></td><td>MCP-mediated capability use</td><td>MCP tool chains are unattributable</td></tr>
+
+      <tr class="grouprow" data-g="memory"><td colspan="4">Group 4 — Memory</td></tr>
+      <tr data-g="memory"><td><code>gen_ai.memory.store.id</code></td><td><span class="cov cov-yes">Yes</span></td><td>Which store was touched</td><td>Cannot scope a poisoning blast radius</td></tr>
+      <tr data-g="memory"><td><code>gen_ai.memory.record.id</code></td><td><span class="cov cov-yes">Yes</span></td><td>Which record was written or read</td><td>Cannot trace a poisoned record's reuse</td></tr>
+      <tr data-g="memory"><td><code>memory.record.provenance</code></td><td><span class="cov cov-no">No</span></td><td>Who authored retrieved content, and whether origin is user, tool, or third party</td><td><strong>Indirect prompt injection through memory is undetectable</strong></td></tr>
+      <tr data-g="memory"><td><code>memory.write.trigger</code></td><td><span class="cov cov-no">No</span></td><td>What caused a write, agent decision or user instruction</td><td>Cannot separate persistence from normal operation</td></tr>
+      <tr data-g="memory"><td><code>memory.crosssession.carryover</code></td><td><span class="cov cov-no">No</span></td><td>Content surviving into a new session</td><td>Persistence attacks look like fresh context</td></tr>
+
+      <tr class="grouprow" data-g="authz"><td colspan="4">Group 5 — Permission and privilege deltas (zero coverage)</td></tr>
+      <tr data-g="authz"><td><code>authz.scope.granted</code></td><td><span class="cov cov-no">No</span></td><td>Current effective scope</td><td>No baseline for escalation</td></tr>
+      <tr data-g="authz"><td><code>authz.scope.delta</code></td><td><span class="cov cov-no">No</span></td><td>Change in scope during a session</td><td><strong>Privilege escalation is invisible</strong></td></tr>
+      <tr data-g="authz"><td><code>authz.credential.acquired</code></td><td><span class="cov cov-no">No</span></td><td>New credential obtained mid-session</td><td>Token minting looks like ordinary API use</td></tr>
+      <tr data-g="authz"><td><code>authz.decision</code></td><td><span class="cov cov-no">No</span></td><td>Allow or deny, and by which policy</td><td>Cannot see what was attempted and blocked</td></tr>
+      <tr data-g="authz"><td><code>authz.probe.count</code></td><td><span class="cov cov-no">No</span></td><td>Permission enumeration attempts</td><td>Reconnaissance against authorization is silent</td></tr>
+
+      <tr class="grouprow" data-g="multi"><td colspan="4">Group 6 — Inter-agent interaction</td></tr>
+      <tr data-g="multi"><td><code>agent.handoff.from</code> / <code>.to</code></td><td><span class="cov cov-no">No</span></td><td>Task transfer between agents</td><td>Multi-agent chains cannot be reconstructed</td></tr>
+      <tr data-g="multi"><td><code>agent.message.sender.principal</code></td><td><span class="cov cov-no">No</span></td><td>Who sent an inbound instruction</td><td>Cannot separate owner instructions from injected ones</td></tr>
+      <tr data-g="multi"><td><code>agent.subtask.delegated.scope</code></td><td><span class="cov cov-no">No</span></td><td>Authority passed to a subagent</td><td>Privilege amplification across agents is invisible</td></tr>
+
+      <tr class="grouprow" data-g="env"><td colspan="4">Group 7 — Environment and boundary</td></tr>
+      <tr data-g="env"><td><code>env.egress.destination</code></td><td><span class="cov cov-no">No</span></td><td>Network destination attempted</td><td><strong>Sandbox escape is undetectable</strong></td></tr>
+      <tr data-g="env"><td><code>env.egress.decision</code></td><td><span class="cov cov-no">No</span></td><td>Allowed or blocked, and by which rule</td><td>Cannot prove containment held</td></tr>
+      <tr data-g="env"><td><code>env.package.pull</code></td><td><span class="cov cov-no">No</span></td><td>Registry, package, and version fetched</td><td>The ExploitGym escape vector is invisible</td></tr>
+      <tr data-g="env"><td><code>env.fs.read.path</code> / <code>env.fs.write.path</code></td><td><span class="cov cov-no">No</span></td><td>Filesystem access outside the workspace</td><td>Local-file disclosure vectors are invisible</td></tr>
+      <tr data-g="env"><td><code>env.process.spawn</code></td><td><span class="cov cov-no">No</span></td><td>Child processes created</td><td>Droppers and staged payloads are invisible</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>How to read the OTel column</h2>
+  <p><strong>Yes</strong> means an attribute in the OpenTelemetry GenAI semantic conventions covers
+     the field. <strong>Partial</strong> means an attribute exists but does not carry the
+     risk-relevant part of it. <strong>No</strong> means nothing in the conventions covers it.</p>
+  <p>Attribute names were extracted from the
+     <a href="https://github.com/open-telemetry/semantic-conventions-genai">GenAI semantic conventions
+     registry</a> on 2026-08-27. The conventions moved there from the main OpenTelemetry
+     documentation site, which now serves a redirect notice.</p>
+  <div class="note note--warn">
+    <strong>The cheapest high-value addition.</strong> <code>memory.record.provenance</code>. The
+    conventions already record what was retrieved and from which store. They do not record who put
+    it there. The write path already knows the answer, so emitting it costs almost nothing.
+  </div>
+</section>
+
+<section>
+  <h2>Where each field came from</h2>
+  <p>Full derivation, the phase-by-phase validation table, and the context-compaction experiment are
+     in <a href="../research/w5-telemetry.md">W5 research</a>. The incident reconstruction the fields
+     are derived from is in <a href="../research/w6-incidents.md">W6 research</a>, and the normalized
+     timeline is on the <a href="incident-timeline.html">incident timeline page</a>.</p>
+</section>
+</div>
+
+<footer><div class="wrap">Supports Module 2 and Lab 2. Field names are proposals except where an OpenTelemetry attribute is named.</div></footer>
+
+<script>
+(function () {
+  var btn = document.getElementById('themeBtn');
+  var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function applyTheme() {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    btn.textContent = dark ? 'Light' : 'Dark';
+  }
+  btn.addEventListener('click', function () { dark = !dark; applyTheme(); });
+  applyTheme();
+
+  var rows = Array.prototype.slice.call(document.querySelectorAll('#tbl tbody tr'));
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+  var q = document.getElementById('q');
+  var countEl = document.getElementById('count');
+  var group = 'all';
+  // Derive the total from the table so the count can never drift from the content.
+  var totalFields = rows.filter(function (r) { return !r.classList.contains('grouprow'); }).length;
+
+  function apply() {
+    var term = q.value.trim().toLowerCase();
+    var shown = 0;
+    rows.forEach(function (row) {
+      var inGroup = group === 'all' || row.dataset.g === group;
+      var isHeader = row.classList.contains('grouprow');
+      var matches = !term || row.textContent.toLowerCase().indexOf(term) !== -1;
+      var visible = inGroup && (isHeader ? !term : matches);
+      row.classList.toggle('hidden', !visible);
+      if (visible && !isHeader) shown++;
+    });
+    countEl.textContent = shown + ' of ' + totalFields + ' fields shown';
+  }
+
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () {
+      chips.forEach(function (o) { o.classList.remove('is-on'); });
+      c.classList.add('is-on');
+      group = c.dataset.g;
+      apply();
+    });
+  });
+  q.addEventListener('input', apply);
+  apply();
+})();
+</script>
+</body>
+</html>

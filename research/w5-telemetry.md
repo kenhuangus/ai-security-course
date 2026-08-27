@@ -58,7 +58,7 @@ Tool invocation and memory retrieval are well covered. **Identity delegation, go
 
 ## The telemetry field list
 
-Twenty-nine fields across seven groups. `OTel` column: **Yes** means a convention attribute covers it, **Partial** means an attribute exists but does not carry the risk-relevant part, **No** means nothing covers it.
+Thirty-seven fields across seven groups. `OTel` column: **Yes** means a convention attribute covers it, **Partial** means an attribute exists but does not carry the risk-relevant part, **No** means nothing covers it.
 
 ### Group 1 — Identity and delegation
 
