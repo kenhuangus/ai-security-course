@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 3 · Standards and Coordination</title>
+<meta name="description" content="AIVSS v0.8, the SSVC track, AI CVE and CWE direction, Akrites and FLARE-AI, and the disclosure routing tree.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Kalam:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/deck.css">
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar__brand"><span class="bar__logo">◆</span><span data-i18n="ui.brand">MODULE 3</span></div>
+  <div class="bar__title" id="slideTitle">Standards and Coordination</div>
+  <div class="bar__actions">
+    <button class="bar__btn" id="fsBtn" aria-label="Enter fullscreen (F)" title="Toggle fullscreen (F)">
+      <span class="bar__btn-label" data-i18n="ui.fullscreen">Full Screen</span>
+    </button>
+    <a href="../index.html" class="bar__cta bar__cta--alt" data-i18n="ui.home">Course home</a>
+  </div>
+</header>
+
+<main class="deck">
+
+<!-- 1 -->
+<section class="slide is-active slide--dark" data-title="Cover">
+  <div class="slide__in center">
+    <div class="eyebrow" data-i18n="m3.eyebrow">Module 3</div>
+    <h1 class="hero__title" data-i18n="m3.title">STANDARDS AND COORDINATION</h1>
+    <p class="hero__sub" data-i18n="m3.sub">How the industry scores an agentic flaw, how it decides what to do about it, and where a reporter is supposed to send it.</p>
+    <div class="hero__meta" data-i18n="m3.meta">AIVSS v0.8 · the SSVC track · AI CVE and CWE · Akrites · FLARE-AI · the routing tree</div>
+  </div>
+  <aside class="notes"><p>Frame the module as three questions in order: <strong>how bad is it</strong>, <strong>how urgently do I act</strong>, and <strong>where do I send it</strong>. Different models answer each one. Conflating them is the most common mistake in this space, and it is the mistake this module is built to prevent.</p></aside>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-title="Three questions">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s2.k">Where this sits</div>
+    <h2 class="h2" data-i18n="m3.s2.h">Three questions, three different instruments</h2>
+    <table class="tbl">
+      <thead><tr><th>Question</th><th>Instrument</th><th>What it gives you</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">How bad is it?</td><td>AIVSS v0.8</td><td>A severity number, 0 to 10</td></tr>
+        <tr><td class="hi">How urgently do I act?</td><td>AIVSS-SSVC track</td><td>Defer, Scheduled, Out-of-Cycle, Immediate</td></tr>
+        <tr><td class="hi">Where do I send it?</td><td class="bad">Nothing published</td><td class="bad">You work it out yourself</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" data-i18n="m3.s2.l">The third row is why the routing tree at the end of this module had to be built rather than cited.</p>
+    <p class="source">AIVSS Scoring System v0.8 [P]; research/synthesis-routing-tree.md.</p>
+  </div>
+  <aside class="notes"><p>Do not rush this slide. The whole module hangs off it. The third row is an honest statement of absence: nine destinations resolve and none publishes a decision procedure. Say that the routing tree is <strong>our proposal</strong>, not established practice, and that we will say so again when we get there.</p></aside>
+</section>
+
+<!-- 3 -->
+<section class="slide slide--alt" data-title="What AIVSS scores">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s3.k">Question one</div>
+    <h2 class="h2" data-i18n="m3.s3.h">AIVSS scores a vulnerability in a deployment context</h2>
+    <div class="grid grid--2">
+      <div class="card card--info">
+        <h3 class="card__title">What CVSS answers</h3>
+        <ul class="bullets">
+          <li>How severe is this defect, considered as a defect</li>
+          <li>Stable across everywhere the software is installed</li>
+        </ul>
+      </div>
+      <div class="card card--warn">
+        <h3 class="card__title">What it cannot answer</h3>
+        <ul class="bullets">
+          <li>The same defect reached by an agent with shell, egress and cloud credentials</li>
+          <li>Autonomy, tool reach and persistence are properties of the <strong>deployment</strong>, not the defect</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m3.s3.l">AIVSS exists to express that amplification as a number. Whether a number is the right instrument is a fair question, and we will come back to it.</p>
+    <p class="source">AIVSS Scoring System for OWASP Agentic AI Core Security Risks v0.8 [P].</p>
+  </div>
+  <aside class="notes"><p>Ken is AIVSS project lead. Say so, and then be visibly harder on AIVSS than an outsider would be. The room's trust depends on hearing the caveats from the person with the most incentive to omit them. The caveats are on slides 12 to 15 and they are all drawn from the framework's own text.</p></aside>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-title="The v0.5 defect">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s4.k">A scoring-design defect</div>
+    <h2 class="h2" data-i18n="m3.s4.h">Version 0.5 could make a severe flaw score lower</h2>
+    <div class="callout"><span>⚠</span><span>v0.5 averaged the two scores: <strong>AIVSS = ((CVSS_Base + AARS) / 2) × ThM</strong>. Averaging a 9.4 CVE with an 8.5 agentic score gives you less than 9.4.</span></div>
+    <table class="tbl">
+      <thead><tr><th>Agentic AI Tool Misuse</th><th>CVSS</th><th>AIVSS</th><th>Direction</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">Under v0.5</td><td>9.4</td><td>8.7</td><td class="bad">Amplification made it smaller</td></tr>
+        <tr><td class="hi">Under v0.8</td><td>9.4</td><td class="ok">9.9</td><td class="ok">Amplification can only add</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" data-i18n="m3.s4.l">Teach this as a lesson about building severity models. A model whose purpose is to express amplification must not be able to subtract.</p>
+    <p class="source">AIVSS v0.5 and v0.8 worked examples, both [P]. Arithmetic in research/w1-aivss.md.</p>
+  </div>
+  <aside class="notes"><p>This is the most transferable slide in the module and it is a criticism of our own framework's earlier version. Anyone in the room building an internal risk score has probably made this exact mistake. Ask: <em>who here has a scoring formula with an average in it?</em> Hands go up.</p></aside>
+</section>
+
+<!-- 5 -->
+<section class="slide slide--alt" data-title="The v0.8 model">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s5.k">The current model</div>
+    <h2 class="h2" data-i18n="m3.s5.h">v0.8 closes a gap rather than averaging</h2>
+    <div class="fig" data-fig="aivss-model"></div>
+    <p class="source">AIVSS v0.8, Sections 3.3, 3.4 and 3.6 [P].</p>
+  </div>
+  <aside class="notes"><p>Walk the bar left to right. Blue is what the CVE is worth on its own. Everything to its right is headroom. <strong>Factor_Sum/10</strong> is the proportion of that headroom the deployment context closes. Say the key consequence out loud: the model can never reduce a score, and it can never exceed 10.</p></aside>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-title="The variables">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s6.k">Every term defined</div>
+    <h2 class="h2" data-i18n="m3.s6.h">Seven variables, two of them your inputs</h2>
+    <table class="tbl">
+      <thead><tr><th>Variable</th><th>Definition</th><th>Range</th><th>Default</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">CVSS_Base</td><td>CVSS <strong>v4.0</strong> base score of the underlying vulnerability</td><td>0.0 – 10.0</td><td class="bad">required</td></tr>
+        <tr><td class="hi">Factor_Sum</td><td>Sum of ten Risk Amplification Factors, each 0.0, 0.5 or 1.0</td><td>0.0 – 10.0</td><td class="bad">required</td></tr>
+        <tr><td class="hi">Risk_Gap</td><td>10 − CVSS_Base. Headroom above the technical defect</td><td>0.0 – 10.0</td><td>derived</td></tr>
+        <tr><td class="hi">ThM</td><td>Threat Multiplier, keyed to exploit maturity</td><td>0.50 – 1.00</td><td>0.97</td></tr>
+        <tr><td class="hi">Mitigation_Factor</td><td>Higher means weaker mitigation</td><td>0.67 – 1.00</td><td>1.00</td></tr>
+        <tr><td class="hi">AARS</td><td>Intermediate uplift. Explicitly <strong>not</strong> the reported output</td><td>0.0 – 10.0</td><td>derived</td></tr>
+      </tbody>
+    </table>
+    <p class="source">AIVSS v0.8, Sections 3.3 and 3.4 [P].</p>
+  </div>
+  <aside class="notes"><p>Two rows matter for the lab and the capstone. <strong>CVSS_Base says v4.0</strong>, which becomes a real problem on slide 13. <strong>AARS is not the output</strong>, which people get wrong constantly because v0.5 published it in the vector string.</p></aside>
+</section>
+
+<!-- 7 -->
+<section class="slide slide--alt" data-title="The ten factors">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s7.k">Factor_Sum</div>
+    <h2 class="h2" data-i18n="m3.s7.h">Ten Risk Amplification Factors, scored 0, 0.5 or 1</h2>
+    <div class="grid grid--2">
+      <div class="card card--info">
+        <h3 class="card__title">What the agent can do</h3>
+        <ul class="bullets">
+          <li><strong>Autonomy</strong> — acts without a human in the loop</li>
+          <li><strong>Tools</strong> — breadth of what it can invoke</li>
+          <li><strong>Language</strong> — natural-language driven</li>
+          <li><strong>Context</strong> — adapts across environments</li>
+          <li><strong>Multi-Agent</strong> — collaborates with other agents</li>
+        </ul>
+      </div>
+      <div class="card card--warn">
+        <h3 class="card__title">How hard it is to see or stop</h3>
+        <ul class="bullets">
+          <li><strong>Non-Determinism</strong> — behaviour is emergent</li>
+          <li><strong>Opacity</strong> — reasoning is not inspectable</li>
+          <li><strong>Persistence</strong> — survives across sessions</li>
+          <li><strong>Identity</strong> — holds or mints credentials</li>
+          <li><strong>Self-Mod</strong> — changes its own behaviour</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m3.s7.l">These describe how the system is deployed. Two organizations running the identical CVE will score it differently, which is the point.</p>
+    <p class="source">AIVSS v0.8, Section 2.3 [P].</p>
+  </div>
+  <aside class="notes"><p>The grouping into <em>capability</em> and <em>observability</em> is ours, not the document's. Say so. It helps people score faster because the second column is usually where they have been optimistic.</p></aside>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-title="Threat multiplier">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s8.k">ThM</div>
+    <h2 class="h2" data-i18n="m3.s8.h">The default sits close to "actively attacked", by design</h2>
+    <div class="cols">
+      <div class="pane">
+        <table class="tbl">
+          <thead><tr><th>Exploit maturity</th><th>ThM</th></tr></thead>
+          <tbody>
+            <tr><td class="hi">Attacked</td><td>1.00</td></tr>
+            <tr><td class="hi">Proof-of-Concept</td><td class="hi">0.97 (default)</td></tr>
+            <tr><td class="hi">Unreported</td><td>0.50</td></tr>
+          </tbody>
+        </table>
+        <div class="card card--info">
+          <h3 class="card__title">The stated reasoning</h3>
+          <ul class="bullets">
+            <li>Agentic exploits are often natural language, needing no compilation</li>
+            <li>An offensive agent can ingest a proof of concept and weaponize it autonomously</li>
+            <li>So the disclosure-to-attack interval collapses</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pane">
+        <div class="callout"><span>⚠</span><span>This is a <strong>design judgment declared by the framework</strong>, not a measurement. No published dataset establishes the interval.</span></div>
+        <div class="card card--risk">
+          <h3 class="card__title">Teach it as such</h3>
+          <ul class="bullets">
+            <li>The reasoning is plausible and Module 1's calibration data does not contradict it</li>
+            <li>It is also unfalsified rather than verified</li>
+            <li>Anyone adopting AIVSS inherits this assumption whether or not they notice it</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="source">AIVSS v0.8, Table 4a and surrounding text [P]. Characterization as a design judgment is ours.</p>
+  </div>
+  <aside class="notes"><p>Defaults are policy. A 0.97 default means almost every score is computed as though a working exploit exists. That may well be right for agentic systems, and it is still a choice somebody made that most adopters will never see.</p></aside>
+</section>
+
+<!-- 9 -->
+<section class="slide slide--alt" data-title="Mitigation factor">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s9.k">Mitigation_Factor</div>
+    <h2 class="h2" data-i18n="m3.s9.h">The best mitigation you can claim is 0.67</h2>
+    <table class="tbl">
+      <thead><tr><th>Strength</th><th>Description</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">No / Weak</td><td>Absent or ineffective</td><td>1.00</td></tr>
+        <tr><td class="hi">Partial</td><td>Incomplete, not reliably enforceable, or not validated against realistic adversarial conditions</td><td>0.83</td></tr>
+        <tr><td class="hi">Strong</td><td>Validated, consistently enforceable, fail-closed where applicable</td><td class="ok">0.67</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><span>⚠</span><span>The 0.67 floor is described in the document as a <strong>provisional anchor set by framework design consensus</strong>, open to community review and awaiting empirical calibration.</span></div>
+    <p class="lead" data-i18n="m3.s9.l">The stated rationale is that no mitigation fully eliminates residual risk from agentic amplification. That is a declared assumption, not a finding.</p>
+    <p class="source">AIVSS v0.8, Table 4b and surrounding text [P].</p>
+  </div>
+  <aside class="notes"><p>Note what this does in practice: perfect controls cannot pull a Critical into High. Some rooms will find that motivating and some will find it demoralizing. Both reactions are reasonable. The honest line is that the number is awaiting calibration and should not be treated as settled.</p></aside>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-title="The ten core risks">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s10.k">Section 3.6, worked examples</div>
+    <h2 class="h2" data-i18n="m3.s10.h">The ten OWASP agentic core risks, scored</h2>
+    <table class="tbl">
+      <thead><tr><th>Core risk</th><th>CVSS v4.0</th><th>FS/10</th><th>AIVSS</th><th>Band</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">Agent Orchestration and Multi-Agent Exploitation</td><td>9.4</td><td>0.95</td><td class="bad">10.0</td><td>Critical</td></tr>
+        <tr><td class="hi">Agentic AI Tool Misuse</td><td>9.4</td><td>0.90</td><td class="bad">9.9</td><td>Critical</td></tr>
+        <tr><td class="hi">Agent Access Control Violation</td><td>8.7</td><td>0.80</td><td class="bad">9.7</td><td>Critical</td></tr>
+        <tr><td class="hi">Agent Supply Chain and Dependency</td><td>9.3</td><td>0.65</td><td class="bad">9.7</td><td>Critical</td></tr>
+        <tr><td class="hi">Agent Cascading Failures</td><td>7.1</td><td>0.80</td><td class="bad">9.4</td><td>Critical</td></tr>
+        <tr><td class="hi">Agent Identity Impersonation</td><td>7.4</td><td>0.75</td><td class="bad">9.3</td><td>Critical</td></tr>
+        <tr><td class="hi">Insecure Agent Critical Systems Interaction</td><td>6.9</td><td>0.75</td><td class="bad">9.2</td><td>Critical</td></tr>
+        <tr><td class="hi">Agent Memory and Context Manipulation</td><td>5.8</td><td>0.75</td><td>8.9</td><td>High</td></tr>
+        <tr><td class="hi">Agent Untraceability</td><td>5.3</td><td>0.65</td><td>8.3</td><td>High</td></tr>
+        <tr><td class="hi">Agent Goal and Instruction Manipulation</td><td>2.1</td><td>0.65</td><td>7.1</td><td>High</td></tr>
+      </tbody>
+    </table>
+    <p class="source">AIVSS v0.8, Section 3.6 [P]. All ten use ThM 0.97 and Mitigation_Factor 1.0.</p>
+  </div>
+  <aside class="notes"><p>Do not read the table. Point at the top row and the bottom row and move on. The next two slides do the actual work: where the uplift lands, and what it means that seven of ten are Critical.</p></aside>
+</section>
+
+<!-- 11 -->
+<section class="slide slide--alt" data-title="Where uplift lands">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s11.k">Reading the table properly</div>
+    <h2 class="h2" data-i18n="m3.s11.h">The weaker the CVE, the larger the uplift</h2>
+    <div class="fig" data-fig="uplift"></div>
+    <p class="source">AIVSS v0.8, Section 3.6 [P].</p>
+  </div>
+  <aside class="notes"><p>The framework says this directly: when AARS uplift substantially exceeds CVSS_Base, <strong>the deployment context rather than the technical defect is the primary risk driver</strong>. That is the single most useful sentence in the document for an engineering audience, because it tells you what the number is claiming. Goal and Instruction Manipulation at CVSS 2.1 is barely a defect. At AIVSS 7.1 it is a deployment problem.</p></aside>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-title="Everything is critical">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s12.k">The honest caution</div>
+    <h2 class="h2" data-i18n="m3.s12.h">Seven of ten are Critical. What is that prioritizing?</h2>
+    <div class="cols">
+      <div class="pane">
+        <div class="card card--risk">
+          <h3 class="card__title">The problem</h3>
+          <ul class="bullets">
+            <li>Seven of the ten core risks land in the Critical band</li>
+            <li>The remaining three are High</li>
+            <li>None is Medium or Low</li>
+            <li>A model that rates almost everything Critical has limited power to <strong>rank</strong></li>
+          </ul>
+        </div>
+        <div class="callout"><span>⚠</span><span>Severity is not urgency. That is exactly why the SSVC track exists alongside the score.</span></div>
+      </div>
+      <div class="pane">
+        <div class="card card--info">
+          <h3 class="card__title">What the framework itself flags</h3>
+          <ul class="bullets">
+            <li>Section 3.2 is titled "Important Statistical Caveat: Ordinal vs. Interval Scales"</li>
+            <li>Arithmetic on ordinal severity inputs is not fully sound, and the document says so</li>
+            <li>AIVSS scores are <strong>not</strong> directly comparable to CVSS base scores</li>
+          </ul>
+        </div>
+        <p class="lead" data-i18n="m3.s12.l">Present the caveat in the same breath as the formula. A framework that flags its own limits deserves to have them repeated, not quietly dropped.</p>
+      </div>
+    </div>
+    <p class="source">AIVSS v0.8, Sections 3.2 and 3.6 [P]. Band distribution counted from the Section 3.6 table.</p>
+  </div>
+  <aside class="notes"><p>This is the slide that earns the room's trust. Ken leads this project and is saying the number clusters at the top. If anyone is going to push back on AIVSS, invite it here rather than in the corridor afterwards.</p></aside>
+</section>
+
+<!-- 13 -->
+<section class="slide slide--alt" data-title="The v4.0 problem">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s13.k">A real friction point</div>
+    <h2 class="h2" data-i18n="m3.s13.h">AIVSS wants CVSS v4.0. The corpus is v3.1.</h2>
+    <div class="callout"><span>⚠</span><span>v0.8 specifies <strong>CVSS v4.0</strong> as the base input. NVD publishes only a <strong>v3.1</strong> score for CVE-2026-65617, the anchor for our capstone: 8.8 HIGH. No v4.0 vector exists for it.</span></div>
+    <div class="grid grid--2">
+      <div class="card card--warn">
+        <h3 class="card__title">What an assessor actually does</h3>
+        <ul class="bullets">
+          <li>Compute a v4.0 vector themselves, or</li>
+          <li>Substitute v3.1 quietly and never mention it</li>
+        </ul>
+      </div>
+      <div class="card card--good">
+        <h3 class="card__title">What we do in the capstone</h3>
+        <ul class="bullets">
+          <li>Substitute v3.1 and say so on the slide</li>
+          <li>Carry a sensitivity range instead of a single number</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m3.s13.l">A framework that requires inputs most of the corpus does not have is a framework with an adoption problem, not a footnote.</p>
+    <p class="source">AIVSS v0.8, Section 3.3 [P]; NVD record for CVE-2026-65617 [P]. Full working in research/synthesis-capstone.md.</p>
+  </div>
+  <aside class="notes"><p>This one came out of actually trying to score a real incident rather than reading the document. That is worth saying: the friction is invisible until you use the framework in anger. Flag that the capstone shows the sensitivity table, and that a 3.3-point swing in the input moves the output by only 0.5, which is a genuine strength of the gap-closing design.</p></aside>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-title="SSVC track">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s14.k">Question two</div>
+    <h2 class="h2" data-i18n="m3.s14.h">The SSVC track answers urgency, not severity</h2>
+    <div class="grid grid--2">
+      <div class="card card--info">
+        <h3 class="card__title">Inputs</h3>
+        <ul class="bullets">
+          <li><strong>P(Threat)</strong> — exploitation state</li>
+          <li><strong>P(Vulnerability)</strong> — exploit success probability</li>
+          <li><strong>Impact</strong> — systemic consequence</li>
+          <li><strong>Agent Level</strong> — exposure multiplier: Copilot 2×, Specialist 4×, Prime Mover 8×</li>
+        </ul>
+      </div>
+      <div class="card card--good">
+        <h3 class="card__title">Outputs</h3>
+        <ul class="bullets">
+          <li>Defer</li>
+          <li>Scheduled</li>
+          <li>Out-of-Cycle</li>
+          <li>Immediate</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout"><span>⚠</span><span>The AIVSS track scores its ten factors <strong>0 / 0.5 / 1</strong>. The SSVC track scores its ten factors <strong>1 to 5</strong>. They are not the same ten factors and the numbers are not interchangeable.</span></div>
+    <p class="source">AIVSS-SSVC calculator, OWASP AIVSS Project [P]. Scale mismatch observed during the capstone working.</p>
+  </div>
+  <aside class="notes"><p>Say the scale mismatch out loud and slowly. It is exactly the kind of detail that produces confidently wrong answers in practice, because both are "ten factors" and both come from the same project.</p></aside>
+</section>
+
+<!-- 15 -->
+<section class="slide slide--dark" data-title="Volume">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s15.k">Question three, and the pressure behind it</div>
+    <h2 class="h2" data-i18n="m3.s15.h">The identifier system is already at capacity</h2>
+    <table class="tbl">
+      <thead><tr><th>Measure</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">Total CVE records to date</td><td>~327,000</td></tr>
+        <tr><td class="hi">Reported in 2026, as of 15 April</td><td>18,247</td></tr>
+        <tr><td class="hi">Year-over-year growth, same period</td><td class="bad">27.9%</td></tr>
+        <tr><td class="hi">CVEs per day, 2026 vs 2025</td><td>174 vs 132</td></tr>
+        <tr><td class="hi">2025 actual total</td><td>48,171</td></tr>
+        <tr><td class="hi">Gamblin (Cisco) projection for 2026</td><td class="bad">70,135, reflecting 45.6% growth</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" data-i18n="m3.s15.l">This is the backlog that AI-assisted discovery is being added to, and the projection is a projection.</p>
+    <p class="source">Infosecurity Magazine, 2026-04-15 [S]. The 70,135 figure is a labelled projection, not a count.</p>
+  </div>
+  <aside class="notes"><p>Label the projection as a projection on the slide face, which it is. The 174-per-day number is the one that lands: that is what a triage team is drinking from before anyone points an agent at a codebase.</p></aside>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-title="CISA on signal">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m3.s16.k">VulnCon26, Scottsdale, 14 April 2026</div>
+    <h2 class="h2" data-i18n="m3.s16.h">A regulator naming the signal-to-noise problem</h2>
+    <p class="lead" data-i18n="m3.s16.l">Lindsey Cerkovnik, Chief of the Vulnerability Response and Coordination Branch at CISA, said AI firms should be better represented in the CVE program, and characterized the moment as a turning point given new AI tools, some finding valid vulnerabilities and <strong>others finding things of less value</strong>.</p>
+    <div class="callout callout--info"><span>◆</span><span>Pair this with the Akrites duplicate rate two slides ahead, and with the Module 1 triage ratio. Three independent sources, one problem: absorbing findings, not producing them.</span></div>
+    <p class="source">Infosecurity Magazine, 2026-04-15 [S]. Paraphrased from the report, not a verbatim quote.</p>
+  </div>
+  <aside class="notes"><p>Flag explicitly that this is a paraphrase of secondary reporting, not a transcript. The half of the statement that matters is the second half. A regulator saying out loud that some AI-sourced reports have less value is permission for the room to say it too.</p></aside>
+</section>
+
+<!-- 17 -->
+<section class="slide slide--alt" data-title="Akrites">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s17.k">New institution, June 2026</div>
+    <h2 class="h2" data-i18n="m3.s17.h">Akrites: a shared SIRT for critical open source</h2>
+    <div class="cols">
+      <div class="pane">
+        <div class="card card--info">
+          <h3 class="card__title">What it is</h3>
+          <ul class="bullets">
+            <li>Co-founded by the Linux Foundation and OpenSSF, announced 25 June 2026</li>
+            <li><strong>19 named founding organizations</strong></li>
+            <li>Seed funding from Alpha-Omega</li>
+            <li>One standardized CVD process, confidentiality first</li>
+            <li>Built on CVE, TLP, CWE, CVSS, EPSS, SSVC and VEX</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pane">
+        <div class="card card--good">
+          <h3 class="card__title">Three commitments that define it</h3>
+          <ul class="bullets">
+            <li>Success is measured in <strong>patch deployment, not patch publication</strong></li>
+            <li>A predictable partner for maintainers rather than a flood of uncoordinated reports</li>
+            <li><strong>Maintainer of last resort</strong> for packages with no active maintainer</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="source">Linux Foundation press release, 2026-06-25 [P]. Secondary coverage saying "over 20 founding members" does not match the 19 named in the release.</p>
+  </div>
+  <aside class="notes"><p>The first commitment is the interesting one and it is a rebuke to how the industry currently measures itself. Publishing a patch is not the outcome; a deployed patch is. If the room takes one institutional idea away from this module, make it that one.</p></aside>
+</section>
+
+<!-- 18 -->
+<section class="slide" data-title="Akrites first data">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s18.k">The first operational number</div>
+    <h2 class="h2" data-i18n="m3.s18.h">Roughly 3,000 reports. Roughly 30% duplicates.</h2>
+    <div class="grid grid--3">
+      <div class="card card--info">
+        <h3 class="card__title">Reports received</h3>
+        <ul class="bullets"><li>~3,000 in the first two months</li></ul>
+      </div>
+      <div class="card card--warn">
+        <h3 class="card__title">Duplicates</h3>
+        <ul class="bullets"><li>~30% of them</li></ul>
+      </div>
+      <div class="card card--risk">
+        <h3 class="card__title">Automated intake</h3>
+        <ul class="bullets"><li>Not open until September 2026</li></ul>
+      </div>
+    </div>
+    <div class="callout"><span>⚠</span><span>A 30% duplicate rate <strong>before</strong> automated AI-sourced intake has opened. The deduplication problem exists at human submission volumes already.</span></div>
+    <p class="lead" data-i18n="m3.s18.l">This is direct evidence for the Module 1 thesis. The engineering problem is absorbing findings, not producing them.</p>
+    <p class="source">Infosecurity Magazine, 2026-08-19 [S], quoting Christopher Robinson, CTO of both OpenSSF and Akrites.</p>
+  </div>
+  <aside class="notes"><p>Eight days before this course was built. If you are delivering after September 2026, check whether intake has gone live and whether newer numbers exist, because this slide will be stale. Note the dual role: Robinson is CTO of both bodies, which is worth knowing when reading the framing.</p></aside>
+</section>
+
+<!-- 19 -->
+<section class="slide slide--alt" data-title="Akrites tension">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m3.s19.k">A question worth raising, not smoothing over</div>
+    <h2 class="h2" data-i18n="m3.s19.h">Maintainer of last resort, without fragmenting the ecosystem</h2>
+    <p class="lead" data-i18n="m3.s19.l">The release commits that fixes flow back to each project's original home, on maintainers' terms, and that the initiative will not bypass maintainers or fragment the ecosystem with proprietary solutions. It also commits to acting as maintainer of last resort where no maintainer is active.</p>
+    <div class="callout"><span>⚠</span><span>Those two commitments sit in tension. Who decides that a maintainer is inactive, and what happens when that maintainer disagrees?</span></div>
+    <p class="source">Linux Foundation press release, 2026-06-25 [P]. The tension is our reading, not a stated position.</p>
+  </div>
+  <aside class="notes"><p>Mark this clearly as our reading. It is not a criticism, and Akrites may well have an answer that simply is not in the press release. Good open-floor question if the room includes maintainers, because they will have strong views.</p></aside>
+</section>
+
+<!-- 20 -->
+<section class="slide" data-title="FLARE-AI">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s20.k">New mechanism, June 2026</div>
+    <h2 class="h2" data-i18n="m3.s20.h">FLARE-AI: flaw reporting built for model behaviour</h2>
+    <div class="cols">
+      <div class="pane">
+        <div class="card card--info">
+          <h3 class="card__title">What it is</h3>
+          <ul class="bullets">
+            <li>arXiv 2606.31567, submitted 30 June 2026</li>
+            <li>Longpre and 17 co-authors, 18 total</li>
+            <li>Audited <strong>12</strong> existing flaw reporting systems</li>
+            <li>Consulted <strong>49</strong> experts across <strong>32</strong> organizations</li>
+          </ul>
+        </div>
+        <div class="card card--good">
+          <h3 class="card__title">Mechanism</h3>
+          <ul class="bullets">
+            <li>Collects triage information through conditional logic with early classification</li>
+            <li>Optionally disseminates a standardized machine-readable report to <strong>multiple</strong> developers</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pane">
+        <div class="card card--warn">
+          <h3 class="card__title">Five design challenges it names</h3>
+          <ul class="bullets">
+            <li>Discoverability</li>
+            <li>Scope</li>
+            <li>Information collection</li>
+            <li>Coordination</li>
+            <li>Guidance for strict-liability cases</li>
+          </ul>
+        </div>
+        <div class="callout"><span>⚠</span><span><strong>Adoption and volume numbers are unpublished.</strong> A reporter choosing FLARE-AI in 2026 is choosing on stated intent.</span></div>
+      </div>
+    </div>
+    <p class="source">FLARE-AI, Longpre et al., arXiv 2606.31567, 2026-06-30 [P]; MIT AI Risk Initiative announcement [P].</p>
+  </div>
+  <aside class="notes"><p>The multi-developer dissemination is the genuinely new capability. Every other destination is one-to-one. A behavioural flaw that affects six providers currently means six separate reports, or five that never get filed.</p></aside>
+</section>
+
+<!-- 21 -->
+<section class="slide slide--alt" data-title="CWE gap">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s21.k">The corpus</div>
+    <h2 class="h2" data-i18n="m3.s21.h">The AI weakness gap is acknowledged and still open</h2>
+    <div class="grid grid--2">
+      <div class="card card--info">
+        <h3 class="card__title">What exists</h3>
+        <ul class="bullets">
+          <li>A CWE <strong>Artificial Intelligence Working Group</strong>, established by CWE and CVE community stakeholders</li>
+          <li>Scope: identify and address gaps where AI-related weaknesses are not adequately covered</li>
+          <li>A <code>CVE-AI-Discussion</code> subgroup that resolves</li>
+        </ul>
+      </div>
+      <div class="card card--risk">
+        <h3 class="card__title">What does not</h3>
+        <ul class="bullets">
+          <li><strong>No AI-specific CWE entries are listed.</strong> No published or proposed AI-related CWE IDs on the page</li>
+          <li>The gap is acknowledged institutionally and not yet closed in the corpus</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m3.s21.l">This matters more than it sounds. Without weakness classes that describe agent failures, a vulnerability record has nothing to point at.</p>
+    <p class="source">CWE community working groups page, MITRE [P], read 2026-08-27.</p>
+  </div>
+  <aside class="notes"><p>An earlier draft of this course claimed a Cross-Domain SIG had consolidated the domain-specific groups. The page does not say that, and still lists the Hardware and ICS/OT SIGs separately. We marked the claim unverified and left it off. Mention that if anyone asks, because it is how the course is supposed to work.</p></aside>
+</section>
+
+<!-- 22 -->
+<section class="slide slide--dark" data-title="Nine destinations">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m3.s22.k">Question three</div>
+    <h2 class="h2" data-i18n="m3.s22.h">Nine destinations. No decision procedure.</h2>
+    <p class="lead" data-i18n="m3.s22.l">Akrites, FLARE-AI, a CNA, a vendor VDP, AVID, AIID, CERT/CC VINCE, CISA, and the EU's EUVD. All nine endpoints resolve. None of them publishes a procedure telling a reporter which one to use.</p>
+    <div class="callout"><span>⚠</span><span>So we built one. What follows is an <strong>original proposal</strong> assembled from each destination's own stated scope. It is a starting position for discussion, not established practice.</span></div>
+    <p class="source">Endpoint checks 2026-08-27, research/w2-ecosystem.md. The tree is our proposal.</p>
+  </div>
+  <aside class="notes"><p>Say the disclaimer as written. The value of the tree is that it forces the decision to be explicit, not that it is authoritative. If someone in the room disagrees with a branch, that is the tree doing its job.</p></aside>
+</section>
+
+<!-- 23 -->
+<section class="slide" data-title="Routing tree">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s23.k">Our proposal</div>
+    <h2 class="h2" data-i18n="m3.s23.h">Four branches, and one that nothing serves</h2>
+    <div class="fig" data-fig="routing"></div>
+    <p class="source">research/synthesis-routing-tree.md. Built from each destination's stated scope [P]; the routing logic is ours.</p>
+  </div>
+  <aside class="notes"><p>The most common routing error is treating every AI-related finding as an AI flaw. A memory-safety bug in an inference server is an ordinary vulnerability that happens to live in AI infrastructure, and it routes like any other CVE. CVE-2026-4747 is the proof: found by an AI system, routed through FreeBSD's own security team, produced an ordinary advisory. The discovery method changed nothing.</p></aside>
+</section>
+
+<!-- 24 -->
+<section class="slide slide--alt" data-title="The hard case">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s24.k">Worked example</div>
+    <h2 class="h2" data-i18n="m3.s24.h">One incident, three branches at once</h2>
+    <div class="cols">
+      <div class="pane">
+        <div class="callout"><span>⚠</span><span>The ExploitGym escape was simultaneously a software defect, an agent runtime failure, and arguably a behavioural flaw.</span></div>
+        <div class="card card--risk">
+          <h3 class="card__title">Why no single route works</h3>
+          <ul class="bullets">
+            <li>The identifier system and the behavioural record system are separate</li>
+            <li>Neither subsumes the other</li>
+            <li>Branch C decomposes the flaw into parts other systems accept</li>
+            <li>That decomposition <strong>loses the thing that made it an agent flaw</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pane pane--figure">
+        <div class="fig" data-fig="one-flaw-three-routes"></div>
+      </div>
+    </div>
+    <p class="source">research/synthesis-routing-tree.md and synthesis-capstone.md; incident facts from the Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>The capstone takes this further and finds <strong>five</strong> routes across four organizations. Do not spend that ammunition here. The point on this slide is only that the tree is not a switch statement.</p></aside>
+</section>
+
+<!-- 25 -->
+<section class="slide" data-title="Two terminals unevaluable">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s25.k">What we cannot tell you</div>
+    <h2 class="h2" data-i18n="m3.s25.h">Two of the newest terminals cannot yet be evaluated</h2>
+    <table class="tbl">
+      <thead><tr><th>Terminal</th><th>Status</th><th>What is missing</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">Akrites</td><td>Launched 2026-06-25</td><td class="bad">No post-launch outcome data. Automated intake opens September 2026</td></tr>
+        <tr><td class="hi">FLARE-AI</td><td>Published 2026-06-30</td><td class="bad">Adoption and volume unpublished</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" data-i18n="m3.s25.l">A reporter choosing between them in 2026 is choosing on stated intent rather than on demonstrated outcomes. That is not a criticism of either. It is the age of the institutions.</p>
+    <div class="callout callout--info"><span>◆</span><span>Both were announced in June 2026. The ExploitGym intrusion began on 9 July 2026.</span></div>
+    <p class="source">research/w2-ecosystem.md and synthesis-routing-tree.md; incident dates from the Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>Let the callout sit for a beat before explaining it. The coordination infrastructure for exactly this class of event was announced weeks before the event, and could not have been used for it. That gap between announcing a standard and being able to use one is what this whole module is about.</p></aside>
+</section>
+
+<!-- 26 -->
+<section class="slide slide--alt" data-title="Disclosure asymmetry">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s26.k">A structural problem, not a villain</div>
+    <h2 class="h2" data-i18n="m3.s26.h">Who explains, and who waits</h2>
+    <div class="grid grid--2">
+      <div class="card card--good">
+        <h3 class="card__title">Hugging Face</h3>
+        <ul class="bullets">
+          <li>Full technical postmortem with a timeline and interactive replay</li>
+          <li>Named its own failures, including the guardrail problem that blocked its analysts</li>
+        </ul>
+      </div>
+      <div class="card card--warn">
+        <h3 class="card__title">OpenAI</h3>
+        <ul class="bullets">
+          <li>A short update and a promise of more</li>
+          <li>Statement returns HTTP 403 to automated retrieval and was not read for this course</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m3.s26.l">The organization that was intruded upon had every incentive to explain. The organization whose agent did the intruding had every incentive to wait. Any coordination body inherits that asymmetry, and neither Akrites nor FLARE-AI has published a mechanism that changes the incentive.</p>
+    <p class="source">Hugging Face postmortem [P]. All OpenAI-side claims [S]; see research/gaps.md.</p>
+  </div>
+  <aside class="notes"><p>Resist making this a morality slide. It is an incentive-design observation and it generalizes: whoever is harmed publishes, whoever caused it waits for counsel. If the room wants to argue about it, that is a good use of five minutes.</p></aside>
+</section>
+
+<!-- 27 -->
+<section class="slide" data-title="What to take away">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m3.s27.k">Module 3 in five lines</div>
+    <h2 class="h2" data-i18n="m3.s27.h">What to take back to work</h2>
+    <ul class="bullets">
+      <li>Severity, urgency and routing are <strong>three different questions</strong>. Do not let one number answer all three.</li>
+      <li>If your internal risk model contains an average, check that amplification cannot make a score go down.</li>
+      <li>Read the defaults. A 0.97 threat multiplier and a 0.67 mitigation floor are policy decisions you inherit silently.</li>
+      <li>When a framework wants inputs your corpus does not have, say which substitution you made and show a sensitivity range.</li>
+      <li>Decide your routing <strong>before</strong> you find something. The worst time to design a disclosure process is during a disclosure.</li>
+    </ul>
+    <p class="source">Drawn from AIVSS v0.8 [P], research/w2-ecosystem.md, and synthesis-routing-tree.md.</p>
+  </div>
+  <aside class="notes"><p>Five lines, no new material. If you are running short, this is the slide to land on, and the capstone can be shortened instead.</p></aside>
+</section>
+
+<!-- 28 -->
+<section class="slide slide--dark" data-title="Hand off to capstone">
+  <div class="slide__in center">
+    <div class="eyebrow" data-i18n="m3.s28.e">Capstone</div>
+    <h2 class="h2" data-i18n="m3.s28.h">Score it, prioritize it, route it</h2>
+    <p class="lead" data-i18n="m3.s28.l">One real incident taken end to end. AIVSS v0.8 with the arithmetic shown, then the SSVC track, then the routing tree. Every substitution and every assumption stated on the slide that uses it.</p>
+    <div class="hero__actions">
+      <a href="04-capstone.html" class="bar__cta" data-i18n="m3.s28.cta">Open the capstone →</a>
+      <a href="../reference/routing-tree.html" class="bar__cta bar__cta--alt" data-i18n="m3.s28.ref">Routing tree ↗</a>
+    </div>
+    <p class="source">Full working in research/synthesis-capstone.md. The capstone score is a teaching exercise, not an AIVSS project position.</p>
+  </div>
+  <aside class="notes"><p>Say the last line before you move on. Ken is AIVSS project lead, so a number he publishes carries weight this exercise is not meant to carry. It is labelled a teaching exercise on every slide that shows it, and that labelling is deliberate.</p></aside>
+</section>
+
+</main>
+
+<div class="ctrl">
+  <button class="ctrl__btn" id="prevBtn" aria-label="Previous slide">&lsaquo; Prev</button>
+  <div class="dots" id="dots"></div>
+  <div class="ctrl__count" id="count">1 / 28</div>
+  <button class="ctrl__btn ctrl__btn--accent" id="nextBtn" aria-label="Next slide">Next &rsaquo;</button>
+</div>
+<div class="progress" id="progress"></div>
+
+<script src="../assets/js/rough.min.js"></script>
+<script src="../assets/js/sketch.js"></script>
+<script src="../assets/js/figures-03.js"></script>
+<script src="../assets/js/notes.js"></script>
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>

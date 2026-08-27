@@ -164,6 +164,35 @@
               out.overlap.push({ n, fig: host.dataset.fig,
                 a: labels[a].t.slice(0, 20), b: labels[b].t.slice(0, 20) });
 
+        // A label can sit inside the viewBox and still hang out of the box it
+        // was drawn in, which is what a stack of lines does when txt() enlarges
+        // them to hold the floor. rough.js emits rectangles as paths, so any
+        // box-shaped path is a candidate container; thin ones are rules and
+        // arrowheads and are skipped.
+        //
+        // Ownership is decided by the label's centre rather than by how much
+        // of it overlaps: a label hanging halfway out of its box overlaps by
+        // less than half, which is exactly the case that must be caught. The
+        // smallest box containing the centre wins, so a label inside a chip
+        // inside a card is judged against the chip. TOL absorbs the wobble
+        // rough.js adds to a stroked edge.
+        const TOL = 4;
+        const containers = [...svg.querySelectorAll('path')]
+          .map(p => { try { return p.getBBox(); } catch (e) { return null; } })
+          .filter(b => b && b.width > 60 && b.height > 40)
+          .map(b => ({ x: b.x, y: b.y, w: b.width, h: b.height, a: b.width * b.height }))
+          .sort((p, q) => p.a - q.a);
+        labels.forEach(t => {
+          const cx = t.x + t.w / 2, cy = t.y + t.h / 2;
+          const box = containers.find(b =>
+            cx >= b.x && cx <= b.x + b.w && cy >= b.y && cy <= b.y + b.h);
+          if (!box) return;                        // free-standing label, nothing to escape
+          if (t.x < box.x - TOL || t.y < box.y - TOL ||
+              t.x + t.w > box.x + box.w + TOL || t.y + t.h > box.y + box.h + TOL)
+            out.figOutOfBounds.push({ n, fig: host.dataset.fig,
+              txt: t.t.slice(0, 24), escapes: 'its box' });
+        });
+
         figs.push(host.dataset.fig + '  scale ' + scale.toFixed(2) +
                   '  smallest ' + (px.length ? Math.min(...px).toFixed(1) : '-') + 'px');
       });

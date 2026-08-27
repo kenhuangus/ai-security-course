@@ -330,7 +330,10 @@ html[lang^='zh'] body, .is-zh { font-family: 'Noto Sans SC', var(--sans); }
   padding: 0.8vh 1.0rem; border: 1px solid #2e3d55;
   font-size: clamp(0.95rem, 2.12vh, 1.18rem);
 }
-.tbl td { padding: 0.8vh 1.0rem; border: 1px solid var(--line); line-height: 1.42; }
+/* The table paints its own white background, so cells state their colour
+   rather than inheriting it. Without this a table on a .slide--dark inherits
+   that slide's light text and renders near-white on white. */
+.tbl td { padding: 0.8vh 1.0rem; border: 1px solid var(--line); line-height: 1.42; color: var(--text); }
 .tbl td.hi  { font-weight: 700; color: var(--ink); background: #f8fafc; }
 .tbl td.bad { color: #c92a2a; background: #fff5f5; font-weight: 600; }
 .tbl td.ok  { color: #2b6a35; background: #f4fbf6; font-weight: 600; }
