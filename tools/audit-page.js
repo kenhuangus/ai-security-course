@@ -99,10 +99,14 @@
     Object.keys(out).forEach(k => { counts[k] = out[k].length; });
     const findings = [].concat(...Object.keys(out).map(k => out[k].map(v => Object.assign({ check: k }, v))));
 
+    // A run made before the webfonts resolve measures fallback metrics.
+    const fontsReady = document.fonts ? document.fonts.status === 'loaded' : true;
+
     return {
       at: innerWidth + 'x' + innerHeight,
       theme: document.documentElement.getAttribute('data-theme') || 'unset',
-      clean: findings.length === 0,
+      fontsReady,
+      clean: fontsReady && findings.length === 0,
       counts,
       findings: opt.verbose ? findings : findings.slice(0, 10),
       more: opt.verbose ? 0 : Math.max(0, findings.length - 10)

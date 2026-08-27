@@ -84,34 +84,39 @@
      room needs from a picture is the shape: almost nothing survives untouched,
      and the new gates outnumber the ones that were already fine. */
   S.register('gates', host => {
-    const s = S.scene(host, 880, 436);
+    const s = S.scene(host, 880, 446);
     S.txt(s, 440, 30, 'Nine classical gates, and what happens to each', { size: 17, weight: 700, col: C.ink });
 
+    /* Kalam measures 1.60x its font size: 22.0 above the baseline and 10.4
+       below, at the 20.3 units the 14px floor forces in a narrow window. Two
+       stacked baselines therefore need at least 26 units between them before
+       their boxes stop overlapping, and the row has to be tall enough to hold
+       22 above the first and 10.4 below the second. */
     const verdicts = [
       ['1', 'Survives unchanged', 'Static analysis', C.green],
       ['7', 'Needs new evidence', 'Requirements through release approval', C.orange],
       ['1', 'Needs the most change', 'Incident response', C.red]
     ];
     verdicts.forEach(([n, verdict, which, col], i) => {
-      const y = 62 + i * 84;
-      S.rect(s, 30, y, 500, 66, { fill: S.tint(col, 0.08), fillStyle: 'solid', stroke: col, strokeWidth: 1.8 });
-      S.txt(s, 66, y + 44, n, { size: 26, weight: 700, col: col });
+      const y = 58 + i * 88;
+      S.rect(s, 30, y, 500, 72, { fill: S.tint(col, 0.08), fillStyle: 'solid', stroke: col, strokeWidth: 1.8 });
+      S.txt(s, 66, y + 48, n, { size: 26, weight: 700, col: col });
       S.txt(s, 104, y + 30, verdict, { size: 16, weight: 700, anchor: 'start', col: col });
-      S.txt(s, 104, y + 54, which, { size: 15.5, anchor: 'start', col: C.ink });
+      S.txt(s, 104, y + 60, which, { size: 15.5, anchor: 'start', col: C.ink });
     });
 
-    S.rect(s, 560, 62, 290, 234, { fill: S.tint(C.blue, 0.08), fillStyle: 'solid', stroke: C.blue, strokeWidth: 1.8 });
+    S.rect(s, 560, 58, 290, 248, { fill: S.tint(C.blue, 0.08), fillStyle: 'solid', stroke: C.blue, strokeWidth: 1.8 });
     S.txt(s, 705, 100, '8', { size: 34, weight: 700, col: C.blue });
-    S.txt(s, 705, 132, 'entirely new gates', { size: 16, weight: 700, col: C.blue });
+    S.txt(s, 705, 140, 'entirely new gates', { size: 16, weight: 700, col: C.blue });
     /* The box only has room for five lines, so it names four and says so.
        All eight are enumerated on the "Eight new gates" table slide. */
-    S.lines(s, 580, 166, [
+    S.lines(s, 580, 176, [
       'Data provenance', 'Model registry', 'Agent permission review',
       'Containment review', 'and four more.'
     ], { size: 15.5, anchor: 'start', col: C.ink });
 
-    S.rect(s, 30, 312, 820, 116, { fill: S.tint(C.red, 0.06), fillStyle: 'solid', stroke: C.red, strokeWidth: 1.8 });
-    S.lines(s, 52, 346, [
+    S.rect(s, 30, 322, 820, 116, { fill: S.tint(C.red, 0.06), fillStyle: 'solid', stroke: C.red, strokeWidth: 1.8 });
+    S.lines(s, 52, 356, [
       'Containment review is the spine. All three incidents in this course are',
       'the same failure: a boundary expected to hold, which held only as long',
       'as the agent kept cooperating.'

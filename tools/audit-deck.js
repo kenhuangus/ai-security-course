@@ -18,6 +18,15 @@
      AUDIT.run()              audit the current window size
      AUDIT.run({verbose:1})   include every finding, not just the first few
 
+   Wait for the webfont before running. Kalam's glyph box is 1.60x its font
+   size and the fallback's is smaller, so a run made before Kalam resolves
+   measures the wrong metrics and reports overlapping labels as clean:
+
+     await document.fonts.ready; AUDIT.run()
+
+   The result carries fontsReady, and a run with fontsReady false is not
+   evidence of anything.
+
    From the console of a served deck:
      var s=document.createElement('script');
      s.src='/tools/audit-deck.js'; document.head.appendChild(s);
@@ -217,10 +226,15 @@
     Object.keys(out).forEach(k => { counts[k] = out[k].length; });
     const findings = [].concat(...Object.keys(out).map(k => out[k].map(v => Object.assign({ check: k }, v))));
 
+    // Measuring before the webfont resolves gives fallback metrics, which are
+    // narrower and shorter than Kalam's and hide both overlap and box escape.
+    const fontsReady = document.fonts ? document.fonts.status === 'loaded' : true;
+
     return {
       at: innerWidth + 'x' + innerHeight,
       slides: total,
-      clean: findings.length === 0,
+      fontsReady,
+      clean: fontsReady && findings.length === 0,
       counts,
       figures: figs,
       findings: opt.verbose ? findings : findings.slice(0, 10),

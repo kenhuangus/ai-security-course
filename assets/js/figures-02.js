@@ -121,12 +121,15 @@
     S.txt(s, 440, 214, 'Hypothesis [H]: salience decay, not intent. Not established.',
       { size: 15, weight: 700, col: C.grape });
 
-    S.cardBox(s, 90, 246, 320, 130, 'Already in OpenTelemetry',
+    /* cardBox stacks its items at 1.6x the drawn size, and the 14px floor
+       drives that to 20.3 in a narrow window. Three items then need 152 units
+       of box, not 130, or the last one drops through the bottom edge. */
+    S.cardBox(s, 90, 238, 320, 152, 'Already in OpenTelemetry',
       ['gen_ai.conversation.compacted', 'gen_ai.system_instructions'], C.green, { titleSize: 14.5, size: 14 });
-    S.cardBox(s, 470, 246, 320, 130, 'The experiment nobody has run',
+    S.cardBox(s, 470, 238, 320, 152, 'The experiment nobody has run',
       ['correlate violations against', 'compaction events, then check', 'if instructions survived'], C.blue, { titleSize: 14.5, size: 14 });
 
-    S.txt(s, 440, 412, 'Governance consequence holds either way: move the control out of the context window.',
+    S.txt(s, 440, 424, 'Governance consequence holds either way: move the control out of the context window.',
       { size: 14.5, weight: 700, col: C.ink });
   });
 })();
