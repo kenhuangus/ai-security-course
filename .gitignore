@@ -1,0 +1,4 @@
+﻿# Downloaded source PDFs and extracted text are large; keep the repo lean.
+research/sources/*.pdf
+research/sources/*.txt
+*.tmp

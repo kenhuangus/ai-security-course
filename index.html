@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Security Engineering, Agent Risk Governance, and Vulnerability Standards</title>
+<meta name="description" content="A three-hour course on product security engineering in the AI era, agent risk governance, and AI vulnerability standards. Built on primary sources.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Kalam:wght@400;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar__brand">AI Security <span>·</span> 3-Hour Course</div>
+  <a href="#agenda">Agenda</a>
+  <a href="#decks">Decks</a>
+  <a href="#reference">Reference</a>
+  <a href="#labs">Labs</a>
+  <a href="#research">Research</a>
+  <button class="btn" id="themeBtn" aria-label="Toggle dark and light theme">Dark</button>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Containment failure as a single narrative spine</div>
+    <h1>AI Security Engineering, Agent Risk Governance, and Vulnerability Standards</h1>
+    <p>Three 2026 incidents are the same failure class at three severity levels. This course follows
+       that spine from the SDL gates that should have caught it, through the telemetry that would
+       have surfaced it, to the standards bodies now deciding where such a flaw even gets reported.</p>
+    <p class="card__meta">Ken Huang · OWASP AIVSS Project Lead · OWASP AST10 Project Lead · Co-Chair, CSA AI Safety Working Group</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section id="agenda">
+  <h2>Agenda</h2>
+  <div class="scroll-x">
+  <table>
+    <thead><tr><th>Block</th><th>Min</th><th>Content</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Opening: the 2026 inflection</strong></td><td>15</td><td>Capability curve, the unpatched backlog, discovery-to-weaponization compression, then ExploitGym as the concrete consequence.</td></tr>
+      <tr><td><strong>Module 1: SDL and proactive defense</strong></td><td>40</td><td>Gate-by-gate walkthrough. Offensive and defensive symmetry with honest calibration.</td></tr>
+      <tr><td>Lab 1: MAESTRO threat model</td><td>15</td><td>Paper-based worksheet against a supplied agentic reference architecture.</td></tr>
+      <tr><td>Break</td><td>10</td><td></td></tr>
+      <tr><td><strong>Module 2: Model and agent risk governance</strong></td><td>50</td><td>ExploitGym walked phase by phase. Telemetry field list derived backward from the reconstruction.</td></tr>
+      <tr><td>Lab 2: telemetry gap analysis</td><td>10</td><td>Given a trace excerpt, identify the risk signal and the missing field.</td></tr>
+      <tr><td><strong>Module 3: Standards and coordination</strong></td><td>30</td><td>AIVSS v0.8, SSVC track, AI CVE and CWE direction, Akrites and FLARE-AI, the disclosure routing tree.</td></tr>
+      <tr><td>Capstone and Q&amp;A</td><td>10</td><td>Score ExploitGym with AIVSS, run SSVC, route it.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="decks">
+  <h2>Slide decks</h2>
+  <div class="cards">
+    <a class="card" href="slides/00-opening.html"><h3>Opening</h3><p>The 2026 inflection and the containment spine.</p><div class="card__meta">15 min</div></a>
+    <a class="card" href="slides/01-sdl.html"><h3>Module 1 · SDL and proactive defense</h3><p>Which classical gates survive, which need new evidence, which are new.</p><div class="card__meta">40 min</div></a>
+    <a class="card" href="slides/02-agent-risk.html"><h3>Module 2 · Agent risk governance</h3><p>ExploitGym phase by phase, and the telemetry that reconstructs it.</p><div class="card__meta">50 min</div></a>
+    <a class="card" href="slides/03-standards.html"><h3>Module 3 · Standards and coordination</h3><p>AIVSS v0.8, AI CVE and CWE, Akrites, FLARE-AI, disclosure routing.</p><div class="card__meta">30 min</div></a>
+    <a class="card" href="slides/04-capstone.html"><h3>Capstone</h3><p>Score, prioritize, and route one real incident end to end.</p><div class="card__meta">10 min</div></a>
+  </div>
+  <div class="note">Decks present in the browser. Arrow keys or space to advance, <code>F</code> for fullscreen,
+    <code>#7</code> in the URL to deep-link a slide. Print from the browser with background graphics on to export a PDF.</div>
+</section>
+
+<section id="reference">
+  <h2>Reference pages</h2>
+  <div class="cards">
+    <a class="card card--ref" href="reference/telemetry-fields.html"><h3>Agent telemetry fields</h3><p>The field list required to detect agent risk, filterable by group.</p></a>
+    <a class="card card--ref" href="reference/routing-tree.html"><h3>Disclosure routing tree</h3><p>You found a flaw in an agentic system. Where does it go?</p></a>
+    <a class="card card--ref" href="reference/incident-timeline.html"><h3>Incident timeline</h3><p>Normalized ExploitGym reconstruction with confidence tags.</p></a>
+    <a class="card card--ref" href="reference/aivss-primer.html"><h3>AIVSS v0.8 primer</h3><p>The scoring model with every variable defined and a worked example.</p></a>
+    <a class="card card--ref" href="reference/glossary.html"><h3>Glossary</h3><p>Bilingual EN / 中文 terminology.</p></a>
+    <a class="card card--ref" href="reference/bibliography.html"><h3>Bibliography</h3><p>Every source with date, publisher, and confidence tag.</p></a>
+  </div>
+</section>
+
+<section id="labs">
+  <h2>Labs</h2>
+  <div class="cards">
+    <a class="card card--lab" href="labs/lab1-maestro-worksheet.md"><h3>Lab 1 · MAESTRO threat model</h3><p>Paper worksheet against an agentic reference architecture.</p><div class="card__meta">15 min</div></a>
+    <a class="card card--lab" href="labs/lab2-telemetry-worksheet.md"><h3>Lab 2 · Telemetry gap analysis</h3><p>Find the risk signal and the missing field in a real trace excerpt.</p><div class="card__meta">10 min</div></a>
+  </div>
+</section>
+
+<section id="research">
+  <h2>Research</h2>
+  <p>Phase 1 output is published as written. Every material claim carries a confidence tag, and
+     everything that could not be verified is listed rather than quietly dropped.</p>
+  <div class="cards">
+    <a class="card card--res" href="research/w1-aivss.md"><h3>W1 · AIVSS</h3><p>Scoring model verified against the v0.8 document.</p></a>
+    <a class="card card--res" href="research/w2-ecosystem.md"><h3>W2 · Vulnerability governance</h3><p>Akrites, FLARE-AI, AI CVE and CWE.</p></a>
+    <a class="card card--res" href="research/w3-sdl.md"><h3>W3 · SDL evolution</h3><p>Gate-by-gate analysis.</p></a>
+    <a class="card card--res" href="research/w4-offensive.md"><h3>W4 · Offensive capability</h3><p>Calibrated, with benchmarks labeled.</p></a>
+    <a class="card card--res" href="research/w5-telemetry.md"><h3>W5 · Agent telemetry</h3><p>Field list, validated against the incident.</p></a>
+    <a class="card card--res" href="research/w6-incidents.md"><h3>W6 · Incident forensics</h3><p>Normalized timelines and control failures.</p></a>
+    <a class="card card--res" href="research/gaps.md"><h3>Gaps</h3><p>What is not yet known, stated plainly.</p></a>
+    <a class="card card--res" href="research/bibliography.md"><h3>Bibliography</h3><p>Full source list.</p></a>
+  </div>
+</section>
+
+</div>
+
+<footer><div class="wrap">
+  Course material. Defensive and governance oriented. No exploit code or reproduction steps.
+</div></footer>
+
+<script>
+// Theme toggle. Session-lifetime only, held in a variable. No localStorage, no sessionStorage.
+(function () {
+  var btn = document.getElementById('themeBtn');
+  var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function apply() {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    btn.textContent = dark ? 'Light' : 'Dark';
+  }
+  btn.addEventListener('click', function () { dark = !dark; apply(); });
+  apply();
+})();
+</script>
+</body>
+</html>
