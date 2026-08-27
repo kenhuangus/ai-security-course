@@ -177,6 +177,11 @@ html[lang^='zh'] body, .is-zh { font-family: 'Noto Sans SC', var(--sans); }
 .slide--dark .h2   { color: #fff; }
 .slide--dark .lead { color: var(--muted-light); }
 .slide--dark .card { background: var(--ink-2); border-color: var(--line-dark); }
+/* .card__title pins itself to --ink so it stays dark on the white card it
+   normally sits on. On a dark slide the card turns dark too and that pin
+   becomes dark-on-dark, so it has to be released here. Same shape as the
+   .tbl td case below. */
+.slide--dark .card__title { color: #fff; }
 
 .slide__in {
   width: 100%; max-width: 1360px;
