@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glossary, English and 中文</title>
+<meta name="description" content="Bilingual terminology for the course, grouped by where each term first appears, written for an engineer who knows security but not agentic AI or the reverse.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Kalam:wght@400;700&amp;family=Noto+Sans+SC:wght@400;500;700&amp;family=Space+Grotesk:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .search {
+    width: 100%; font-family: var(--sans); font-size: 1rem;
+    padding: .5rem .85rem; border: 1px solid var(--line); border-radius: 8px;
+    background: var(--card); color: var(--text); margin: 1rem 0 .4rem;
+  }
+  .count { font-family: var(--mono); font-size: .95rem; color: var(--muted); margin: 0 0 1rem; }
+  tr.hidden, section.hidden { display: none; }
+  .conf {
+    font-family: var(--mono); font-size: .875rem; font-weight: 700;
+    padding: .1rem .4rem; border-radius: 4px; white-space: nowrap;
+  }
+  .conf--primary   { background: #e9f7ef; color: #1c5a2c; }
+  .conf--secondary { background: #fff6e6; color: #7a4c00; }
+  .conf--anonymous { background: #fff5f5; color: #961b1b; }
+  .conf--hypothesis{ background: #eef1fb; color: #303a86; }
+  [data-theme="dark"] .conf--primary   { background: #16351f; color: #7fdba0; }
+  [data-theme="dark"] .conf--secondary { background: #3a2c10; color: #ffc978; }
+  [data-theme="dark"] .conf--anonymous { background: #3a1717; color: #ff9c9c; }
+  [data-theme="dark"] .conf--hypothesis{ background: #1c2148; color: #aab4f5; }
+  td a { word-break: break-word; }
+  .zh { font-family: "Noto Sans SC", var(--sans); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar__brand">AI Security <span>&middot;</span> Reference</div>
+  <a href="../index.html">Course home</a>
+  <a href="../research/glossary-en-zh.md">Source file</a>
+  <button class="btn" id="themeBtn">Dark</button>
+</nav>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">English / 中文</div>
+  <h1>Glossary</h1>
+  <p>Terms are grouped by where they first appear in the course. Definitions are written for an engineer who knows security but not agentic AI, or the other way round.</p>
+</div></header>
+
+<div class="wrap">
+  <input class="search" id="q" type="search" placeholder="Filter by term, 中文, or definition…" aria-label="Filter">
+  <p class="count" id="count"></p>
+<section>
+  <h2>Standards, scoring, and coordination</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>English</th><th>中文</th><th>Definition</th></tr></thead>
+    <tbody>
+      <tr><td>AIVSS (AI Vulnerability Scoring System)</td><td class="zh">人工智能漏洞评分系统</td><td>OWASP scoring framework for agentic AI risks. v0.8 adds an agentic uplift to a CVSS base score, closing part of the gap to 10.0</td></tr>
+      <tr><td>AARS (Agentic AI Risk Score)</td><td class="zh">智能体风险评分</td><td>The intermediate uplift value in AIVSS v0.8. Explicitly not the reported output</td></tr>
+      <tr><td>Risk Amplification Factor</td><td class="zh">风险放大因子</td><td>One of ten agentic capabilities scored 0.0, 0.5, or 1.0 that determine how much of the risk gap is closed</td></tr>
+      <tr><td>Threat Multiplier (ThM)</td><td class="zh">威胁乘数</td><td>AIVSS multiplier keyed to exploit maturity. Attacked 1.00, Proof-of-Concept 0.97, Unreported 0.50</td></tr>
+      <tr><td>Mitigation Factor</td><td class="zh">缓解因子</td><td>AIVSS v0.8 scaling factor, 0.67 to 1.00. Higher means weaker mitigation</td></tr>
+      <tr><td>SSVC (Stakeholder-Specific Vulnerability Categorization)</td><td class="zh">特定利益相关者漏洞分类</td><td>Decision-tree prioritization producing Defer, Scheduled, Out-of-Cycle, or Immediate</td></tr>
+      <tr><td>CVD (Coordinated Vulnerability Disclosure)</td><td class="zh">协同漏洞披露</td><td>Process for disclosing a flaw to the party who can fix it before it becomes public</td></tr>
+      <tr><td>SIRT (Security Incident Response Team)</td><td class="zh">安全事件响应团队</td><td>The team that runs coordination. Akrites operates a shared one across member organizations</td></tr>
+      <tr><td>CNA (CVE Numbering Authority)</td><td class="zh">CVE 编号授权机构</td><td>An organization authorized to assign CVE identifiers within its scope</td></tr>
+      <tr><td>CVE</td><td class="zh">通用漏洞披露编号</td><td>The public identifier for a specific software vulnerability</td></tr>
+      <tr><td>CWE</td><td class="zh">通用缺陷枚举</td><td>The classification of the weakness class underlying a vulnerability</td></tr>
+      <tr><td>CVSS</td><td class="zh">通用漏洞评分系统</td><td>Severity score for a vulnerability. AIVSS v0.8 requires the v4.0 variant</td></tr>
+      <tr><td>EPSS</td><td class="zh">漏洞利用预测评分系统</td><td>Probability that a vulnerability will be exploited in the near term</td></tr>
+      <tr><td>VEX (Vulnerability Exploitability eXchange)</td><td class="zh">漏洞可利用性交换</td><td>A machine-readable statement that a product is or is not affected by a given vulnerability</td></tr>
+      <tr><td>CSAF</td><td class="zh">通用安全公告框架</td><td>Machine-readable format for security advisories</td></tr>
+      <tr><td>TLP (Traffic Light Protocol)</td><td class="zh">交通灯协议</td><td>Sharing-sensitivity labels: red, amber, green, clear</td></tr>
+      <tr><td>Akrites</td><td class="zh">Akrites 计划</td><td>Linux Foundation and OpenSSF initiative running a shared SIRT and one standardized CVD process for critical open source. Automated intake from September 2026</td></tr>
+      <tr><td>FLARE-AI</td><td class="zh">AI 缺陷报告系统</td><td>Standardized machine-readable AI flaw reporting with optional multi-developer dissemination</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Agentic AI concepts</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>English</th><th>中文</th><th>Definition</th></tr></thead>
+    <tbody>
+      <tr><td>Agentic AI</td><td class="zh">智能体人工智能</td><td>An AI system that plans, invokes tools, and acts over multiple steps toward a goal, rather than answering a single prompt</td></tr>
+      <tr><td>Autonomy</td><td class="zh">自主性</td><td>The degree to which a system acts without human approval at each step</td></tr>
+      <tr><td>Tool invocation</td><td class="zh">工具调用</td><td>An agent calling an external capability such as a shell, an API, or a database</td></tr>
+      <tr><td>Multi-agent collaboration</td><td class="zh">多智能体协作</td><td>Several agents delegating subtasks to one another, which amplifies privilege if delegation is unbounded</td></tr>
+      <tr><td>Goal drift</td><td class="zh">目标漂移</td><td>The objective the agent pursues diverging from the objective it was given</td></tr>
+      <tr><td>Specification gaming</td><td class="zh">规则钻空子</td><td>Satisfying the stated objective in a way that defeats its intent. The Hugging Face conclusion about the intruding agent</td></tr>
+      <tr><td>Prompt injection</td><td class="zh">提示词注入</td><td>Untrusted content in the context causing the model to follow instructions it should not</td></tr>
+      <tr><td>Indirect prompt injection</td><td class="zh">间接提示词注入</td><td>Prompt injection delivered through retrieved content rather than direct user input</td></tr>
+      <tr><td>Memory poisoning</td><td class="zh">记忆投毒</td><td>Writing content into an agent's persistent memory so it influences later sessions</td></tr>
+      <tr><td>Context compaction</td><td class="zh">上下文压缩</td><td>Compressing conversation history to fit the context window. Observable in OpenTelemetry as <code>gen_ai.conversation.compacted</code></td></tr>
+      <tr><td>Salience decay</td><td class="zh">显著性衰减</td><td>Hypothesis that safety instructions lose attentional weight as context grows. Untested</td></tr>
+      <tr><td>Delegation chain</td><td class="zh">授权链</td><td>The ordered list of principals whose authority an agent is exercising</td></tr>
+      <tr><td>Confused deputy</td><td class="zh">混淆代理</td><td>A privileged component tricked into using its authority on an attacker's behalf</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Containment, failure, and defense</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>English</th><th>中文</th><th>Definition</th></tr></thead>
+    <tbody>
+      <tr><td>Sandbox escape</td><td class="zh">沙箱逃逸</td><td>An agent or process leaving its isolation boundary. The failure class this course is organized around</td></tr>
+      <tr><td>Containment</td><td class="zh">围堵 / 隔离控制</td><td>Controls that bound what a system can reach, enforced independently of the system's cooperation</td></tr>
+      <tr><td>Blast radius</td><td class="zh">影响范围 / 爆炸半径</td><td>Everything reachable if a component is fully compromised</td></tr>
+      <tr><td>Guardrail</td><td class="zh">护栏</td><td>A constraint on model behavior. Instructional if it lives in the prompt, architectural if enforced outside the model</td></tr>
+      <tr><td>Architectural control</td><td class="zh">架构性控制</td><td>A control enforced outside the model, which the model cannot argue past</td></tr>
+      <tr><td>Instructional control</td><td class="zh">指令性控制</td><td>A control expressed as text in the context window, subject to the context window's behavior</td></tr>
+      <tr><td>Egress control</td><td class="zh">出口控制</td><td>Restriction on outbound network connections. Deny-by-default is the relevant posture</td></tr>
+      <tr><td>Trust boundary</td><td class="zh">信任边界</td><td>The line between two components with different levels of trust. The ExploitGym agent crossed five</td></tr>
+      <tr><td>Telemetry</td><td class="zh">遥测</td><td>Structured runtime signals emitted for observation</td></tr>
+      <tr><td>Provenance</td><td class="zh">来源溯源</td><td>The origin and authorship of data. The highest-value missing field in agent memory telemetry</td></tr>
+      <tr><td>Red teaming</td><td class="zh">红队演练</td><td>Adversarial testing to find failures before an attacker does</td></tr>
+      <tr><td>Threat model</td><td class="zh">威胁模型</td><td>A structured account of what can go wrong, for whom, and through which path</td></tr>
+      <tr><td>MAESTRO</td><td class="zh">MAESTRO 威胁建模框架</td><td>CSA layered threat modeling framework for agentic systems</td></tr>
+      <tr><td>Least privilege</td><td class="zh">最小权限</td><td>Granting only the access needed for the task, at the tool level for agents</td></tr>
+      <tr><td>Vulnerability research</td><td class="zh">漏洞挖掘</td><td>Finding previously unknown defects</td></tr>
+      <tr><td>Exploit development</td><td class="zh">漏洞利用开发</td><td>Turning a defect into reliable code execution. The task AI systems remain least reliable at</td></tr>
+      <tr><td>False positive</td><td class="zh">误报</td><td>A reported finding that is not a real vulnerability. 68 of Forescout's 72 raw alerts</td></tr>
+      <tr><td>False negative</td><td class="zh">漏报</td><td>A real vulnerability that was not reported</td></tr>
+      <tr><td>Triage</td><td class="zh">定级分流</td><td>Deciding which reports are real and which matter. The binding constraint in the AI era</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Note on translation choices</h2>
+  <p>Two terms have no settled Chinese rendering and are given with alternatives above. "Blast radius" is often left in English in Chinese security writing; 影响范围 is the safer choice in a governance document, with 爆炸半径 reserved for informal use. "Containment" splits between 围堵, which carries a policy connotation, and 隔离控制, which is more precise in an engineering context.</p>
+  <p>Where a term is an acronym for a specific artifact (AIVSS, SSVC, CVE, VEX), Chinese technical writing generally keeps the acronym and glosses it once. The glossary follows that convention rather than inventing translations.</p>
+</section>
+</div>
+
+<footer><div class="wrap">Generated from research/glossary-en-zh.md by tools/build-reference.py. Edit the research file, not this page.</div></footer>
+
+<script>
+(function () {
+  var btn = document.getElementById('themeBtn');
+  var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function applyTheme() {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    btn.textContent = dark ? 'Light' : 'Dark';
+  }
+  btn.addEventListener('click', function () { dark = !dark; applyTheme(); });
+  applyTheme();
+
+  var q = document.getElementById('q');
+  var countEl = document.getElementById('count');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('tbody tr'));
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section'));
+
+  function apply() {
+    var term = q.value.trim().toLowerCase();
+    var shown = 0;
+    rows.forEach(function (r) {
+      var hit = !term || r.textContent.toLowerCase().indexOf(term) !== -1;
+      r.classList.toggle('hidden', !hit);
+      if (hit) shown++;
+    });
+    // Hide a section whose every row is filtered out, so the page does not
+    // fill with empty headings while searching.
+    sections.forEach(function (s) {
+      var own = s.querySelectorAll('tbody tr');
+      var vis = s.querySelectorAll('tbody tr:not(.hidden)');
+      s.classList.toggle('hidden', own.length > 0 && vis.length === 0);
+    });
+    countEl.textContent = shown + ' of ' + rows.length + ' terms shown';
+  }
+  q.addEventListener('input', apply);
+  apply();
+})();
+</script>
+</body>
+</html>

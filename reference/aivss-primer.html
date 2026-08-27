@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIVSS v0.8 primer</title>
+<meta name="description" content="The AIVSS v0.8 gap-closing model with every variable defined, a working calculator, and the ten published worked examples recomputed from the formula.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Kalam:wght@400;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .formula {
+    font-family: var(--mono); font-size: 1rem; line-height: 1.9;
+    background: var(--paper-2); border: 1px solid var(--line);
+    border-left: 4px solid var(--c-blue); border-radius: 8px;
+    padding: 1rem 1.2rem; margin: 1rem 0;
+    /* The line breaks are the layout here, and HTML collapses them without
+       this. Long lines scroll sideways inside the block via .scroll-x. */
+    white-space: pre;
+  }
+  .calc {
+    display: grid; grid-template-columns: 1fr 340px; gap: 1.4rem;
+    align-items: start; margin: 1.2rem 0;
+  }
+  @media (max-width: 820px) { .calc { grid-template-columns: 1fr; } }
+  .panel {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: var(--card); padding: 1.1rem 1.3rem;
+  }
+  .row { display: flex; align-items: center; gap: .8rem; margin-bottom: .7rem; flex-wrap: wrap; }
+  .row label { font-family: var(--head); font-weight: 700; font-size: 1rem; min-width: 150px; color: var(--ink); }
+  .row select, .row input[type=number] {
+    font-family: var(--sans); font-size: 1rem; padding: .35rem .6rem;
+    border: 1px solid var(--line); border-radius: 6px;
+    background: var(--paper-2); color: var(--text);
+  }
+  .factors { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: .5rem; }
+  .factor {
+    display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+    background: var(--paper-2); border: 1px solid var(--line);
+    border-radius: 8px; padding: .45rem .7rem;
+  }
+  .factor span { font-size: .97rem; }
+  .factor select { font-family: var(--mono); font-size: .95rem; padding: .2rem .4rem;
+    border: 1px solid var(--line); border-radius: 5px; background: var(--card); color: var(--text); }
+  .out { font-family: var(--mono); font-size: 1rem; }
+  .out div { display: flex; justify-content: space-between; gap: 1rem; padding: .3rem 0; border-bottom: 1px dashed var(--line); }
+  .out div:last-child { border-bottom: 0; }
+  .score { font-family: var(--head); font-size: 3rem; font-weight: 800; line-height: 1.1; margin: .3rem 0 0; }
+  .band { font-family: var(--head); font-weight: 700; font-size: 1.05rem; padding: .2rem .7rem; border-radius: 999px; display: inline-block; }
+  .band--crit { background: #fff5f5; color: #961b1b; }
+  .band--high { background: #fff6e6; color: #7a4c00; }
+  .band--med  { background: #eef1fb; color: #303a86; }
+  .band--low  { background: #e9f7ef; color: #1c5a2c; }
+  [data-theme="dark"] .band--crit { background: #3a1717; color: #ff9c9c; }
+  [data-theme="dark"] .band--high { background: #3a2c10; color: #ffc978; }
+  [data-theme="dark"] .band--med  { background: #1c2148; color: #aab4f5; }
+  [data-theme="dark"] .band--low  { background: #16351f; color: #7fdba0; }
+  .ok  { font-family: var(--mono); font-weight: 700; color: #1c5a2c; }
+  .bad { font-family: var(--mono); font-weight: 700; color: #961b1b; }
+  [data-theme="dark"] .ok  { color: #7fdba0; }
+  [data-theme="dark"] .bad { color: #ff9c9c; }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar__brand">AI Security <span>&middot;</span> Reference</div>
+  <a href="../index.html">Course home</a>
+  <a href="../slides/03-standards.html">Module 3</a>
+  <a href="../slides/04-capstone.html">Capstone</a>
+  <a href="../research/w1-aivss.md">AIVSS research</a>
+  <button class="btn" id="themeBtn">Dark</button>
+</nav>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Version 0.8, the gap-closing model</div>
+  <h1>AIVSS v0.8 primer</h1>
+  <p>Version 0.8 replaced the averaging model in v0.5 with one that closes part of the distance
+     between a CVSS base score and 10.0. The change matters because averaging pulled severe
+     technical vulnerabilities down, which is the wrong direction for a framework whose purpose is
+     to express amplification.</p>
+</div></header>
+
+<div class="wrap">
+
+<section>
+  <h2>The formula</h2>
+  <div class="formula scroll-x">Risk_Gap&nbsp;&nbsp;= 10 &minus; CVSS_Base
+AARS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Risk_Gap &times; (Factor_Sum / 10) &times; ThM
+AIVSS_raw = (CVSS_Base + AARS) &times; Mitigation_Factor
+AIVSS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= RoundHalfUp(AIVSS_raw, 1)</div>
+  <p>The shape of it is worth reading before the variables. AARS can only ever be a fraction of the
+     headroom left above the CVSS score, so the result can rise toward 10.0 and can never fall
+     below the technical severity it started from. AARS is an intermediate value and the document
+     is explicit that it is not the reported output.</p>
+  <div class="scroll-x"><table>
+    <thead><tr><th>Variable</th><th>Definition</th><th>Range</th><th>Default</th></tr></thead>
+    <tbody>
+      <tr><td><code>CVSS_Base</code></td><td>CVSS <strong>v4.0</strong> base score of the underlying vulnerability</td><td>0.0 to 10.0</td><td>Required input</td></tr>
+      <tr><td><code>Risk_Gap</code></td><td>The headroom agentic capability can contribute on top of the technical vulnerability</td><td>0.0 to 10.0</td><td>Derived</td></tr>
+      <tr><td><code>Factor_Sum</code></td><td>Sum of the ten Risk Amplification Factors, each scored 0.0, 0.5, or 1.0</td><td>0.0 to 10.0</td><td>Required input</td></tr>
+      <tr><td><code>ThM</code></td><td>Threat Multiplier, keyed to exploit maturity</td><td>0.50 to 1.00</td><td>0.97</td></tr>
+      <tr><td><code>AARS</code></td><td>Agentic AI Risk Score, an intermediate uplift value</td><td>0.0 to 10.0</td><td>Derived</td></tr>
+      <tr><td><code>Mitigation_Factor</code></td><td>Scaling for mitigation strength. Higher means weaker mitigation</td><td>0.67 to 1.00</td><td>1.00</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Score something</h2>
+  <p>Every input below is one the framework asks for. The intermediate values are shown because the
+     arithmetic is the part worth arguing with.</p>
+  <div class="calc">
+    <div class="panel">
+      <div class="row">
+        <label for="cvss">CVSS v4.0 base</label>
+        <input type="number" id="cvss" min="0" max="10" step="0.1" value="8.8">
+      </div>
+      <div class="row">
+        <label for="thm">Exploit maturity</label>
+        <select id="thm">
+          <option value="1.00">Attacked, exploited in the wild (1.00)</option>
+          <option value="0.97" selected>Proof-of-Concept (0.97)</option>
+          <option value="0.50">Unreported, theoretical only (0.50)</option>
+        </select>
+      </div>
+      <div class="row">
+        <label for="mit">Mitigation strength</label>
+        <select id="mit">
+          <option value="1.00" selected>No or weak (1.00)</option>
+          <option value="0.83">Partial (0.83)</option>
+          <option value="0.67">Strong (0.67)</option>
+        </select>
+      </div>
+      <h3 style="margin-top:1.2rem">The ten Risk Amplification Factors</h3>
+      <div class="factors" id="factors"></div>
+    </div>
+    <div class="panel">
+      <div class="out" id="out"></div>
+      <p class="score" id="score">&mdash;</p>
+      <p><span class="band" id="band">&mdash;</span></p>
+      <p class="card__meta">AIVSS scores express amplified agentic risk and are not directly
+         comparable to CVSS base scores.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The ten core risks, recomputed</h2>
+  <p>These are the worked examples from Section 3.6 of the v0.8 document. The <em>Recomputed</em>
+     column is this page's calculator run against the same inputs, so a disagreement anywhere would
+     mean the formula on this page is wrong. All ten use ThM 0.97 and Mitigation_Factor 1.00.</p>
+  <div class="scroll-x"><table id="examples">
+    <thead><tr><th>Core risk</th><th>CVSS v4.0</th><th>FS / 10</th><th>AARS</th><th>Published AIVSS</th><th>Recomputed</th><th>Band</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <p id="agreement" class="count"></p>
+</section>
+
+<section>
+  <h2>What changed from v0.5, and why it matters</h2>
+  <div class="formula scroll-x">v0.5&nbsp;&nbsp;AIVSS = ((CVSS_Base + AARS) / 2) &times; ThM
+v0.8&nbsp;&nbsp;AIVSS = (CVSS_Base + Risk_Gap &times; (Factor_Sum / 10) &times; ThM) &times; Mitigation_Factor</div>
+  <p>Agentic AI Tool Misuse carries a CVSS base of 9.4. Under v0.5 it scored <strong>8.7</strong>,
+     so adding agentic capability made the number smaller. Under v0.8 the same risk scores
+     <strong>9.9</strong>. This is worth teaching as a scoring-design defect and its repair rather
+     than as an endorsement of the framework.</p>
+</section>
+
+<section>
+  <h2>Three caveats to carry with the number</h2>
+  <div class="note note--warn">
+    <strong>Ordinal inputs, interval arithmetic.</strong> Section 3.2 of the v0.8 document is
+    titled "Important Statistical Caveat: Ordinal vs. Interval Scales". The framework itself flags
+    that doing arithmetic on ordinal severity inputs is not fully sound. Present the caveat in the
+    same breath as the formula.
+  </div>
+  <div class="note note--warn">
+    <strong>The 0.67 mitigation floor is a declared assumption.</strong> The document describes it
+    as a provisional anchor set by framework design consensus, open to community review and
+    awaiting empirical calibration. The stated reasoning is that no mitigation fully eliminates
+    residual risk from agentic amplification.
+  </div>
+  <div class="note note--warn">
+    <strong>Almost everything lands Critical.</strong> Eight of the ten core risks score Critical
+    and the other two score High. A severity model whose outputs cluster at the top has limited
+    power to prioritize, which is part of why the AIVSS-SSVC decision track exists. Scoring and
+    prioritization are separate questions and the capstone runs both.
+  </div>
+  <div class="note">
+    <strong>On the default.</strong> The document sets ThM to 0.97 by default and argues it should
+    sit near the actively-attacked value, because agentic exploits are often natural language that
+    needs no compilation and because offensive agentic systems can turn a raw proof of concept into
+    a working exploit. That is a design judgment stated by the framework, not a measurement.
+  </div>
+</section>
+
+</div>
+
+<footer><div class="wrap">Formula, variables, and worked examples from the AIVSS v0.8 document, Sections 3.3, 3.4 and 3.6 [P]. Extracted in research/w1-aivss.md.</div></footer>
+
+<script>
+(function () {
+  var btn = document.getElementById('themeBtn');
+  var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function applyTheme() {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    btn.textContent = dark ? 'Light' : 'Dark';
+  }
+  btn.addEventListener('click', function () { dark = !dark; applyTheme(); });
+  applyTheme();
+
+  /* Named exactly as the v0.8 document sums them. */
+  var FACTORS = ['Autonomy', 'Tools', 'Language', 'Context', 'Non-Determinism',
+                 'Opacity', 'Persistence', 'Identity', 'Multi-Agent', 'Self-Mod'];
+
+  /* RoundHalfUp at one decimal. Math.round is half-away-from-zero on positives
+     but drifts on values a float cannot hold exactly, so nudge before flooring:
+     9.3504 must land on 9.4, and 9.15525 on 9.2. */
+  function round1(v) { return Math.floor(v * 10 + 0.5 + 1e-9) / 10; }
+
+  function aivss(cvss, factorSum, thm, mit) {
+    var gap = 10 - cvss;
+    var aars = gap * (factorSum / 10) * thm;
+    var raw = (cvss + aars) * mit;
+    return { gap: gap, aars: aars, raw: raw, score: round1(raw) };
+  }
+
+  function band(s) {
+    if (s >= 9.0) return ['Critical', 'band--crit'];
+    if (s >= 7.0) return ['High', 'band--high'];
+    if (s >= 4.0) return ['Medium', 'band--med'];
+    return ['Low', 'band--low'];
+  }
+
+  var wrap = document.getElementById('factors');
+  FACTORS.forEach(function (name) {
+    var d = document.createElement('div');
+    d.className = 'factor';
+    var s = document.createElement('span');
+    s.textContent = name;
+    var sel = document.createElement('select');
+    ['1.0', '0.5', '0.0'].forEach(function (v) {
+      var o = document.createElement('option');
+      o.value = v; o.textContent = v;
+      sel.appendChild(o);
+    });
+    sel.className = 'f';
+    sel.addEventListener('change', calc);
+    d.appendChild(s); d.appendChild(sel);
+    wrap.appendChild(d);
+  });
+
+  var cvssEl = document.getElementById('cvss');
+  var thmEl = document.getElementById('thm');
+  var mitEl = document.getElementById('mit');
+  [cvssEl, thmEl, mitEl].forEach(function (e) {
+    e.addEventListener('input', calc);
+    e.addEventListener('change', calc);
+  });
+
+  function calc() {
+    var cvss = Math.min(10, Math.max(0, parseFloat(cvssEl.value) || 0));
+    var fs = 0;
+    [].forEach.call(document.querySelectorAll('.f'), function (s) { fs += parseFloat(s.value); });
+    var r = aivss(cvss, fs, parseFloat(thmEl.value), parseFloat(mitEl.value));
+    var b = band(r.score);
+    document.getElementById('out').innerHTML =
+      row('CVSS_Base', cvss.toFixed(1)) +
+      row('Risk_Gap', r.gap.toFixed(2)) +
+      row('Factor_Sum', fs.toFixed(1)) +
+      row('Factor_Sum / 10', (fs / 10).toFixed(2)) +
+      row('ThM', parseFloat(thmEl.value).toFixed(2)) +
+      row('AARS', r.aars.toFixed(4)) +
+      row('Mitigation_Factor', parseFloat(mitEl.value).toFixed(2)) +
+      row('AIVSS_raw', r.raw.toFixed(4));
+    document.getElementById('score').textContent = r.score.toFixed(1);
+    var be = document.getElementById('band');
+    be.textContent = b[0];
+    be.className = 'band ' + b[1];
+  }
+  function row(k, v) { return '<div><span>' + k + '</span><span>' + v + '</span></div>'; }
+  calc();
+
+  /* The published examples double as a test of the formula above. If any row
+     disagrees, the arithmetic on this page is wrong and the page says so. */
+  var EXAMPLES = [
+    ['Agentic AI Tool Misuse', 9.4, 0.90, 0.5238, 9.9],
+    ['Agent Access Control Violation', 8.7, 0.80, 1.0088, 9.7],
+    ['Agent Cascading Failures', 7.1, 0.80, 2.2504, 9.4],
+    ['Agent Orchestration and Multi-Agent Exploitation', 9.4, 0.95, 0.5529, 10.0],
+    ['Agent Identity Impersonation', 7.4, 0.75, 1.8915, 9.3],
+    ['Agent Memory and Context Manipulation', 5.8, 0.75, 3.0555, 8.9],
+    ['Insecure Agent Critical Systems Interaction', 6.9, 0.75, 2.25525, 9.2],
+    ['Agent Supply Chain and Dependency', 9.3, 0.65, 0.44135, 9.7],
+    ['Agent Untraceability', 5.3, 0.65, 2.96335, 8.3],
+    ['Agent Goal and Instruction Manipulation', 2.1, 0.65, 4.98095, 7.1]
+  ];
+
+  var tb = document.querySelector('#examples tbody');
+  var agree = 0;
+  EXAMPLES.forEach(function (e) {
+    var r = aivss(e[1], e[2] * 10, 0.97, 1.00);
+    var same = Math.abs(r.score - e[4]) < 0.05;
+    if (same) agree++;
+    var b = band(r.score);
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><strong>' + e[0] + '</strong></td>' +
+      '<td>' + e[1].toFixed(1) + '</td>' +
+      '<td>' + e[2].toFixed(2) + '</td>' +
+      '<td>' + e[3] + '</td>' +
+      '<td>' + e[4].toFixed(1) + '</td>' +
+      '<td class="' + (same ? 'ok' : 'bad') + '">' + r.score.toFixed(1) +
+        (same ? '' : ' (disagrees)') + '</td>' +
+      '<td><span class="band ' + b[1] + '">' + b[0] + '</span></td>';
+    tb.appendChild(tr);
+  });
+  document.getElementById('agreement').textContent =
+    agree + ' of ' + EXAMPLES.length + ' published scores reproduced by the formula on this page.';
+  window.AIVSS_SELFTEST = { agree: agree, total: EXAMPLES.length, aivss: aivss, round1: round1 };
+})();
+</script>
+</body>
+</html>

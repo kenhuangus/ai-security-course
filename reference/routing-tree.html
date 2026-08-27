@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disclosure routing tree</title>
+<meta name="description" content="You found a flaw in an AI or agentic system. An interactive decision tree from each destination's own stated scope, with what every terminal requires and produces.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Kalam:wght@400;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .walk {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: var(--card); padding: 1.4rem; margin: 1.2rem 0;
+  }
+  .walk__q { font-family: var(--head); font-size: 1.35rem; font-weight: 700; color: var(--ink); margin: 0 0 1rem; }
+  .opt {
+    display: block; width: 100%; text-align: left; cursor: pointer;
+    font-family: var(--sans); font-size: 1rem; color: var(--text);
+    background: var(--paper-2); border: 1px solid var(--line);
+    border-left: 4px solid var(--c-blue);
+    border-radius: 8px; padding: .75rem 1rem; margin-bottom: .6rem;
+  }
+  .opt:hover { border-color: var(--accent); border-left-color: var(--accent); }
+  .opt b { font-family: var(--head); display: block; margin-bottom: .2rem; color: var(--ink); }
+  .opt span { color: var(--muted); font-size: .95rem; }
+  .trail { font-family: var(--mono); font-size: .95rem; color: var(--muted); margin: 0 0 1rem; }
+  .trail b { color: var(--accent-text); }
+  .term {
+    border: 1px solid var(--line); border-left: 4px solid var(--c-green);
+    border-radius: 8px; background: var(--paper-2); padding: .9rem 1.1rem; margin-bottom: .8rem;
+  }
+  .term h4 { font-family: var(--head); font-size: 1.15rem; margin: 0 0 .5rem; color: var(--ink); }
+  .term dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: .35rem .9rem; }
+  .term dt { font-family: var(--mono); font-size: .875rem; font-weight: 700; color: var(--muted); }
+  .term dd { margin: 0; font-size: .97rem; }
+  .term--also { border-left-color: var(--c-orange); }
+  .tree { font-size: 1rem; }
+  .tree ul { list-style: none; padding-left: 1.3rem; border-left: 1px solid var(--line); margin: .4rem 0; }
+  .tree > ul { padding-left: 0; border-left: 0; }
+  .tree li { margin: .45rem 0; }
+  .tree .a { font-family: var(--head); font-weight: 700; color: var(--ink); }
+  .tree .t { font-family: var(--mono); font-weight: 700; color: var(--accent-text); }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar__brand">AI Security <span>·</span> Reference</div>
+  <a href="../index.html">Course home</a>
+  <a href="../slides/03-standards.html">Module 3</a>
+  <a href="../research/synthesis-routing-tree.md">Routing research</a>
+  <button class="btn" id="themeBtn">Dark</button>
+</nav>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">An original proposal, not a summary of practice</div>
+  <h1>Disclosure routing tree</h1>
+  <p>You found a flaw in an AI or agentic system. Where does it go? Nine destinations resolve and
+     none of them publishes a procedure telling a reporter which to use. This tree is built from
+     each destination's own stated scope, so treat it as a starting position for argument rather
+     than as established practice.</p>
+</div></header>
+
+<div class="wrap">
+
+<section>
+  <h2>Walk it</h2>
+  <p>The most common routing error is treating every AI-related finding as an AI flaw. A
+     memory-safety bug in an inference server is an ordinary software vulnerability that happens
+     to live in AI infrastructure, and it routes like any other CVE.</p>
+  <div class="walk">
+    <p class="trail" id="trail"></p>
+    <div id="walk"></div>
+  </div>
+</section>
+
+<section>
+  <h2>The whole tree at once</h2>
+  <div class="tree" id="tree"></div>
+</section>
+
+<section>
+  <h2>The hard case</h2>
+  <div class="note note--warn">
+    <strong>The ExploitGym escape needed at least three routes at once.</strong> It was a Branch A
+    defect, with a zero-day in a package registry cache proxy and a fixable vendor. It was a Branch
+    C runtime failure, with an agent pursuing an unintended goal across five trust boundaries. It
+    was arguably a Branch B behavioural flaw, because the agent was gaming its specification. No
+    single destination would have captured it. The capstone routes it end to end.
+  </div>
+</section>
+
+<section>
+  <h2>What every terminal requires and produces</h2>
+  <div class="scroll-x"><table id="termtbl">
+    <thead><tr><th>Terminal</th><th>Requires as input</th><th>Produces as output</th><th>Status, 2026-08-27</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Three things the tree makes visible</h2>
+  <p><strong>One flaw often needs several routes.</strong> The tree is not a switch. Branch C
+     routes to two destinations at once, because the identifier system and the behavioural record
+     system are separate and neither one subsumes the other.</p>
+  <p><strong>Two terminals cannot yet be evaluated.</strong> Akrites has no post-launch outcome
+     data and FLARE-AI publishes no adoption numbers. Anyone choosing between them in 2026 is
+     choosing on stated intent.</p>
+  <p><strong>No terminal accepts an agent runtime flaw natively.</strong> Branch C works by
+     decomposing the flaw into parts that existing systems can accept, and that decomposition
+     loses the thing that made it an agent flaw in the first place. This is the strongest argument
+     in the course for why the CWE AI Working Group's corpus gap matters. Without weakness classes
+     that describe agent failures, there is nothing for a record to point at.</p>
+  <div class="note">
+    <strong>Not to be confused with prioritization.</strong> The SSVC decision track published by
+    the AIVSS project answers how urgently to act. This tree answers where to send it. The two are
+    complementary and should not be blended together.
+  </div>
+</section>
+
+</div>
+
+<footer><div class="wrap">Supports Module 3 and the capstone. Built from research/synthesis-routing-tree.md, which cites each destination's own published scope.</div></footer>
+
+<script>
+(function () {
+  var btn = document.getElementById('themeBtn');
+  var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function applyTheme() {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    btn.textContent = dark ? 'Light' : 'Dark';
+  }
+  btn.addEventListener('click', function () { dark = !dark; applyTheme(); });
+  applyTheme();
+
+  /* Every terminal states what it takes and what it gives back, so that
+     choosing one is a decision about outcome rather than about familiarity. */
+  var T = {
+    akrites: {
+      name: 'Akrites',
+      req: 'Affected open-source project, version range, technical detail, willingness to embargo',
+      out: 'Coordinated remediation with upstream maintainers through a shared SIRT, and standard identifiers (CVE, CWE, CVSS, EPSS, SSVC, VEX). Acts as maintainer of last resort where no maintainer is active',
+      status: 'Launched 2026-06-25. Automated intake goes live September 2026. About 3,000 reports in the first two months, roughly 30% duplicates [S]'
+    },
+    cna: {
+      name: 'CNA (vendor or project)',
+      req: 'Reproducible technical detail, affected versions, impact statement',
+      out: 'A CVE identifier and a published record',
+      status: 'Operational. About 327,000 records to date, 174 per day in 2026 [S]'
+    },
+    policy: {
+      name: "The project's own security policy",
+      req: 'Whatever the project asks for, usually a private report to a named contact',
+      out: 'A fix on the maintainer’s timeline. Pair it with a CNA to get an identifier',
+      status: 'Varies by project'
+    },
+    vdp: {
+      name: 'Vendor VDP or vendor CNA',
+      req: "Whatever the vendor's policy demands",
+      out: "A fix on the vendor's timeline. No identifier is guaranteed unless the vendor is also a CNA",
+      status: 'Varies by vendor'
+    },
+    certcc: {
+      name: 'CERT/CC VINCE',
+      req: 'Technical detail, affected parties, a stated need for coordination',
+      out: 'Multi-party coordination, case management, CSAF output',
+      status: 'Operational'
+    },
+    cisa: {
+      name: 'CISA',
+      req: 'Evidence of active exploitation, affected sectors',
+      out: 'KEV listing where applicable, federal directive authority, VEX and CSAF tooling',
+      status: 'Operational'
+    },
+    flare: {
+      name: 'FLARE-AI',
+      req: 'Triage-relevant information gathered through conditional logic with early classification',
+      out: 'A standardized machine-readable report, optionally disseminated to several developers at once',
+      status: 'Published 2026-06-30. Adoption and volume unpublished [P]'
+    },
+    avid: {
+      name: 'AVID',
+      req: 'Flaw description, affected model or system, a taxonomy fit',
+      out: 'A public taxonomy record',
+      status: 'Operational'
+    },
+    aiid: {
+      name: 'AIID',
+      req: 'Evidence of realized harm',
+      out: 'A public incident record',
+      status: 'Operational'
+    },
+    euvd: {
+      name: 'EUVD (ENISA)',
+      req: 'EU-relevant vulnerability detail',
+      out: 'An EU vulnerability record',
+      status: 'Operational'
+    },
+    provider: {
+      name: 'Provider model-flaw programme',
+      req: "Whatever the provider's programme asks for, usually a reproducible prompt or trace",
+      out: 'A model or policy change on the provider’s timeline',
+      status: 'Varies by provider'
+    },
+    platform: {
+      name: 'Platform abuse process',
+      req: 'The artifact, where it is hosted, and what it does',
+      out: 'Takedown of the artifact. No identifier and usually no public record',
+      status: 'Varies by platform'
+    }
+  };
+
+  /* A question node has options. A result node has terminals, and may carry a
+     conditional terminal that applies to the whole branch. */
+  var N = {
+    start: { q: 'What kind of flaw is it?', opts: [
+      { b: 'A traditional software defect in AI infrastructure',
+        s: 'Memory safety, injection, or an authorization bypass in a server, runtime, registry, orchestrator, or SDK',
+        next: 'a1', tag: 'Branch A' },
+      { b: 'A model behavioural flaw',
+        s: 'Jailbreak, refusal failure, bias, unsafe output, or a capability that violates a stated policy',
+        next: 'b1', tag: 'Branch B' },
+      { b: 'An agent runtime flaw',
+        s: 'Goal drift, tool misuse, permission escalation, memory poisoning, sandbox escape, multi-agent exploitation',
+        next: 'c1', tag: 'Branch C' },
+      { b: 'A dataset or supply-chain flaw',
+        s: 'Poisoned corpus, malicious model artifact, trojanized skill or tool package, compromised registry',
+        next: 'd1', tag: 'Branch D' }
+    ]},
+
+    a1: { q: 'Is the affected software open source?', opts: [
+      { b: 'Yes', next: 'a2' },
+      { b: 'No', next: 'a3' }
+    ]},
+    a2: { q: 'Is it a critical or widely depended-upon project?', opts: [
+      { b: 'Yes', r: ['akrites'], note: 'Akrites accepts reports through its automated intake from September 2026. Until then, route to the project and a CNA.' },
+      { b: 'No', r: ['policy', 'cna'] }
+    ]},
+    a3: { q: 'Does the vendor publish a VDP or run a CNA?', opts: [
+      { b: 'Yes', r: ['vdp'] },
+      { b: 'No', r: ['certcc'] }
+    ]},
+
+    b1: { q: 'Does the provider run a published VDP or model-flaw programme?', opts: [
+      { b: 'Yes', r: ['provider', 'flare'], note: 'FLARE-AI carries the report onward if the flaw is not specific to one provider.' },
+      { b: 'No', next: 'b2' }
+    ]},
+    b2: { q: 'Is the flaw likely to affect more than one provider?', opts: [
+      { b: 'Yes', r: ['flare'] },
+      { b: 'No', r: ['avid'] }
+    ]},
+
+    c1: { q: 'Is there an identifiable software defect with a fixable owner?', opts: [
+      { b: 'Yes', r: ['cna', 'flare'],
+        note: 'Route the defect itself as Branch A to get the identifier and the fix, and file the agentic context through FLARE-AI so the behavioural half of the finding is not lost.' },
+      { b: 'No, the behaviour is emergent with no single defect', next: 'c2' }
+    ]},
+    c2: { q: 'Who does the behaviour affect?', opts: [
+      { b: 'One specific product', r: ['provider'] },
+      { b: 'A pattern across several products', r: ['flare'] },
+      { b: 'Harm has already occurred to someone', r: ['aiid'] }
+    ]},
+
+    d1: { q: 'Is there a malicious artifact in a distribution channel right now?', opts: [
+      { b: 'Yes', r: ['platform', 'akrites', 'avid'],
+        note: 'Takedown is the urgent step, so the platform abuse process goes first. Akrites applies if it is an open-source package. AVID keeps the taxonomy record.' },
+      { b: 'No, it is an integrity or provenance defect rather than active abuse', next: 'd2' }
+    ]},
+    d2: { q: 'What carries the defect?', opts: [
+      { b: 'An open-source package', r: ['akrites'] },
+      { b: 'A model or dataset artifact', r: ['platform', 'avid'] },
+      { b: 'A systemic pattern across artifacts', r: ['flare'] }
+    ]}
+  };
+
+  /* Conditions that apply to a whole branch rather than to one leaf. */
+  var ALSO = {
+    a: { t: 'cisa', when: 'if it is being actively exploited and affects US federal systems or critical infrastructure' },
+    b: { t: 'aiid', when: 'if real-world harm has already occurred' },
+    c: { t: 'certcc', when: 'if severity and exploitability are high and several organizations have to coordinate' }
+  };
+
+  var walk = document.getElementById('walk');
+  var trailEl = document.getElementById('trail');
+  var trail = [];
+  var branch = '';
+
+  function el(tag, cls, html) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (html !== undefined) e.innerHTML = html;
+    return e;
+  }
+
+  function termCard(key, cls, when) {
+    var t = T[key];
+    var d = el('div', 'term' + (cls ? ' ' + cls : ''));
+    d.appendChild(el('h4', null, when ? t.name + ' — ' + when : t.name));
+    var dl = el('dl');
+    [['Requires', t.req], ['Produces', t.out], ['Status', t.status]].forEach(function (pair) {
+      dl.appendChild(el('dt', null, pair[0]));
+      dl.appendChild(el('dd', null, pair[1]));
+    });
+    d.appendChild(dl);
+    return d;
+  }
+
+  function render(key) {
+    var n = N[key];
+    walk.innerHTML = '';
+    var h = el('p', 'walk__q', n.q);
+    walk.appendChild(h);
+    n.opts.forEach(function (o) {
+      var b = el('button', 'opt');
+      b.type = 'button';
+      b.appendChild(el('b', null, o.b));
+      if (o.s) b.appendChild(el('span', null, o.s));
+      b.addEventListener('click', function () {
+        trail.push(o.tag || o.b);
+        if (o.tag) branch = o.next.charAt(0);
+        if (o.next) { render(o.next); } else { result(o); }
+        drawTrail();
+      });
+      walk.appendChild(b);
+    });
+    drawTrail();
+  }
+
+  function result(o) {
+    walk.innerHTML = '';
+    walk.appendChild(el('p', 'walk__q', 'Send it here'));
+    o.r.forEach(function (k) { walk.appendChild(termCard(k)); });
+    if (o.note) walk.appendChild(el('p', null, o.note));
+    var also = ALSO[branch];
+    if (also && o.r.indexOf(also.t) === -1) {
+      walk.appendChild(el('p', null, '<strong>And also</strong>, ' + also.when + ':'));
+      walk.appendChild(termCard(also.t, 'term--also'));
+    }
+    var again = el('button', 'btn', 'Start over');
+    again.type = 'button';
+    again.addEventListener('click', function () { trail = []; branch = ''; render('start'); });
+    walk.appendChild(again);
+  }
+
+  function drawTrail() {
+    trailEl.innerHTML = trail.length
+      ? 'You chose: <b>' + trail.join('</b> › <b>') + '</b>'
+      : 'Start here.';
+  }
+
+  render('start');
+
+  /* The static view exists because a decision tree you can only click through
+     is impossible to argue with, and this one is a proposal that invites it. */
+  var TREE = [
+    ['Branch A — traditional software defect in AI infrastructure', [
+      ['Open source, and a critical or widely depended-upon project', ['Akrites, from September 2026']],
+      ['Open source, everything else', ['The project’s security policy', 'then a CNA for the identifier']],
+      ['Closed source, vendor publishes a VDP or runs a CNA', ['Vendor VDP or vendor CNA']],
+      ['Closed source, vendor publishes neither', ['CERT/CC VINCE']],
+      ['In every case, if actively exploited against federal systems or critical infrastructure', ['CISA as well']]
+    ]],
+    ['Branch B — model behavioural flaw', [
+      ['Provider runs a published programme', ['Provider programme', 'then FLARE-AI for cross-provider issues']],
+      ['No programme, and the flaw likely affects several providers', ['FLARE-AI']],
+      ['No programme, and the flaw is specific to one', ['AVID']],
+      ['In every case, if real-world harm has occurred', ['AIID as well']]
+    ]],
+    ['Branch C — agent runtime flaw', [
+      ['There is an identifiable defect with a fixable owner', ['Branch A for the identifier and the fix', 'and FLARE-AI for the agentic context']],
+      ['Emergent behaviour affecting one product', ['Provider programme']],
+      ['Emergent behaviour affecting a pattern across products', ['FLARE-AI']],
+      ['Emergent behaviour that has already caused harm', ['AIID']],
+      ['In every case, if coordination across organizations is needed', ['CERT/CC VINCE as well']]
+    ]],
+    ['Branch D — dataset or supply-chain flaw', [
+      ['A malicious artifact is live in a distribution channel', ['Platform abuse process first', 'then Akrites for an open-source package', 'then AVID for the record']],
+      ['An integrity or provenance defect in an open-source package', ['Akrites']],
+      ['An integrity or provenance defect in a model or dataset artifact', ['Platform', 'and AVID']],
+      ['A systemic pattern rather than one artifact', ['FLARE-AI']]
+    ]]
+  ];
+
+  var tree = document.getElementById('tree');
+  var top = el('ul');
+  TREE.forEach(function (br) {
+    var li = el('li');
+    li.appendChild(el('span', 'a', br[0]));
+    var sub = el('ul');
+    br[1].forEach(function (row) {
+      var l2 = el('li', null, row[0] + ' → ');
+      row[1].forEach(function (t, i) {
+        if (i) l2.appendChild(document.createTextNode(', '));
+        l2.appendChild(el('span', 't', t));
+      });
+      sub.appendChild(l2);
+    });
+    li.appendChild(sub);
+    top.appendChild(li);
+  });
+  tree.appendChild(top);
+
+  /* The reference table is generated from the same terminal data the walker
+     uses, so the two can never disagree. */
+  var tb = document.querySelector('#termtbl tbody');
+  Object.keys(T).forEach(function (k) {
+    var t = T[k];
+    var tr = el('tr');
+    tr.appendChild(el('td', null, '<strong>' + t.name + '</strong>'));
+    tr.appendChild(el('td', null, t.req));
+    tr.appendChild(el('td', null, t.out));
+    tr.appendChild(el('td', null, t.status));
+    tb.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>

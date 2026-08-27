@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bibliography</title>
+<meta name="description" content="Every source consulted for this course with publisher, date, confidence tag, and the live HTTP status recorded when it was checked.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Kalam:wght@400;700&amp;family=Noto+Sans+SC:wght@400;500;700&amp;family=Space+Grotesk:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  .search {
+    width: 100%; font-family: var(--sans); font-size: 1rem;
+    padding: .5rem .85rem; border: 1px solid var(--line); border-radius: 8px;
+    background: var(--card); color: var(--text); margin: 1rem 0 .4rem;
+  }
+  .count { font-family: var(--mono); font-size: .95rem; color: var(--muted); margin: 0 0 1rem; }
+  tr.hidden, section.hidden { display: none; }
+  .conf {
+    font-family: var(--mono); font-size: .875rem; font-weight: 700;
+    padding: .1rem .4rem; border-radius: 4px; white-space: nowrap;
+  }
+  .conf--primary   { background: #e9f7ef; color: #1c5a2c; }
+  .conf--secondary { background: #fff6e6; color: #7a4c00; }
+  .conf--anonymous { background: #fff5f5; color: #961b1b; }
+  .conf--hypothesis{ background: #eef1fb; color: #303a86; }
+  [data-theme="dark"] .conf--primary   { background: #16351f; color: #7fdba0; }
+  [data-theme="dark"] .conf--secondary { background: #3a2c10; color: #ffc978; }
+  [data-theme="dark"] .conf--anonymous { background: #3a1717; color: #ff9c9c; }
+  [data-theme="dark"] .conf--hypothesis{ background: #1c2148; color: #aab4f5; }
+  td a { word-break: break-word; }
+  .zh { font-family: "Noto Sans SC", var(--sans); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar__brand">AI Security <span>&middot;</span> Reference</div>
+  <a href="../index.html">Course home</a>
+  <a href="../research/bibliography.md">Source file</a>
+  <a href="../research/gaps.md">Gaps</a>
+  <button class="btn" id="themeBtn">Dark</button>
+</nav>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Every claim on a slide traces to a row here</div>
+  <h1>Bibliography</h1>
+  <p>Publisher, date, confidence tag, and the HTTP status each URL returned on 2026-08-27. A 403 means the host blocks automated retrieval rather than that the page is missing. Sources listed as not read for content resolve but were not consulted, and anything cited from them has to be read first.</p>
+</div></header>
+
+<div class="wrap">
+  <input class="search" id="q" type="search" placeholder="Filter by title, publisher, or URL…" aria-label="Filter">
+  <p class="count" id="count"></p>
+<section>
+  <h2>Primary sources consulted for content</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>Title</th><th>Publisher</th><th>Date</th><th>Conf</th><th>Status</th><th>URL</th></tr></thead>
+    <tbody>
+      <tr><td>AIVSS Scoring System for OWASP Agentic AI Core Security Risks v0.8</td><td>OWASP AIVSS Project</td><td>2026</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://aivss.owasp.org/assets/publications/AIVSS%20Scoring%20System%20For%20OWASP%20Agentic%20AI%20Core%20Security%20Risks%20v0.8.pdf" target="_blank" rel="noopener">https://aivss.owasp.org/assets/publications/AIVSS%20Scoring%20System%20For%20OWASP%20Agentic%20AI%20Core%20Security%20Risks%20v0.8.pdf</a></td></tr>
+      <tr><td>AIVSS Scoring System v0.5</td><td>OWASP AIVSS Project</td><td>2025</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://aivss.owasp.org/assets/publications/AIVSS%20Scoring%20System%20For%20OWASP%20Agentic%20AI%20Core%20Security%20Risks%20v0.5.pdf" target="_blank" rel="noopener">https://aivss.owasp.org/assets/publications/AIVSS%20Scoring%20System%20For%20OWASP%20Agentic%20AI%20Core%20Security%20Risks%20v0.5.pdf</a></td></tr>
+      <tr><td>AIVSS-SSVC Calculator</td><td>OWASP AIVSS Project</td><td>2026</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://aivss.owasp.org/ssvc.html" target="_blank" rel="noopener">https://aivss.owasp.org/ssvc.html</a></td></tr>
+      <tr><td>Agentic AI Threat Modeling Framework: MAESTRO</td><td>Cloud Security Alliance (Ken Huang)</td><td>2025-02-06</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro" target="_blank" rel="noopener">https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro</a></td></tr>
+      <tr><td>MAESTRO Sentinel threat modeling platform</td><td>DistributedApps.ai (Ken Huang)</td><td>2026</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://maestro-sentinel.com/" target="_blank" rel="noopener">https://maestro-sentinel.com/</a></td></tr>
+      <tr><td>Agent intrusion technical timeline</td><td>Hugging Face</td><td>2026-07-16</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://huggingface.co/blog/agent-intrusion-technical-timeline" target="_blank" rel="noopener">https://huggingface.co/blog/agent-intrusion-technical-timeline</a></td></tr>
+      <tr><td>Our evaluation of Claude Mythos Preview's cyber capabilities</td><td>UK AI Security Institute</td><td>2026</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://www.aisi.gov.uk/blog/our-evaluation-of-claude-mythos-previews-cyber-capabilities" target="_blank" rel="noopener">https://www.aisi.gov.uk/blog/our-evaluation-of-claude-mythos-previews-cyber-capabilities</a></td></tr>
+      <tr><td>FreeBSD-SA-26:08.rpcsec_gss</td><td>FreeBSD Security Team</td><td>2026-03-26</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://www.freebsd.org/security/advisories/FreeBSD-SA-26:08.rpcsec_gss.asc" target="_blank" rel="noopener">https://www.freebsd.org/security/advisories/FreeBSD-SA-26:08.rpcsec_gss.asc</a></td></tr>
+      <tr><td>AI security testing agents leap from assistants to autonomous hackers</td><td>Forescout Vedere Labs</td><td>2026-04-14</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://www.forescout.com/blog/ai-security-testing-agents-leap-from-assistants-to-autonomous-hackers/" target="_blank" rel="noopener">https://www.forescout.com/blog/ai-security-testing-agents-leap-from-assistants-to-autonomous-hackers/</a></td></tr>
+      <tr><td>Autonomous AI cyber attack campaign</td><td>Unit 42, Palo Alto Networks</td><td>2026</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://unit42.paloaltonetworks.com/autonomous-ai-cyber-attack-campaign/" target="_blank" rel="noopener">https://unit42.paloaltonetworks.com/autonomous-ai-cyber-attack-campaign/</a></td></tr>
+      <tr><td>Linux Foundation and industry leaders launch Akrites</td><td>Linux Foundation</td><td>2026-06-25</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://www.linuxfoundation.org/press/linux-foundation-and-industry-leaders-launch-akrites-to-defend-critical-open-source-software-against-ai-enabled-cyber-threats" target="_blank" rel="noopener">https://www.linuxfoundation.org/press/linux-foundation-and-industry-leaders-launch-akrites-to-defend-critical-open-source-software-against-ai-enabled-cyber-threats</a></td></tr>
+      <tr><td>FLARE-AI: Flaw Reporting for AI (arXiv 2606.31567)</td><td>Longpre, Zhu, Ezell, Ghosh, McGregor, Paeth, Klyman, Kapoor, Bommasani, Appel, Strom, McIlvenny, Jaycox, Slattery, Butters, Narayanan, Liang, Pentland</td><td>2026-06-30</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://arxiv.org/abs/2606.31567" target="_blank" rel="noopener">https://arxiv.org/abs/2606.31567</a></td></tr>
+      <tr><td>MI9: An Integrated Runtime Governance Framework for Agentic AI (arXiv 2508.03858)</td><td>Wang, Singhal, Kelkar, Tuo</td><td>2025-08-05, rev. 2025-11-18</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://arxiv.org/abs/2508.03858" target="_blank" rel="noopener">https://arxiv.org/abs/2508.03858</a></td></tr>
+      <tr><td>GenAI semantic conventions, attribute registry</td><td>OpenTelemetry</td><td>2026</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://github.com/open-telemetry/semantic-conventions-genai" target="_blank" rel="noopener">https://github.com/open-telemetry/semantic-conventions-genai</a></td></tr>
+      <tr><td>CWE community working groups</td><td>MITRE</td><td>2026</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://cwe.mitre.org/community/working_groups.html" target="_blank" rel="noopener">https://cwe.mitre.org/community/working_groups.html</a></td></tr>
+      <tr><td>NVD API records for CVE-2026-4747, -65617, -65925, -33017, -25253, -32922</td><td>NIST NVD</td><td>2026</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://services.nvd.nist.gov/rest/json/cves/2.0" target="_blank" rel="noopener">https://services.nvd.nist.gov/rest/json/cves/2.0</a></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Secondary sources consulted for content</h2>
+  <div class="scroll-x"><table>
+    <thead><tr><th>Title</th><th>Publisher</th><th>Date</th><th>Conf</th><th>Status</th><th>URL</th></tr></thead>
+    <tbody>
+      <tr><td>Linux Foundation's Akrites to go live</td><td>Infosecurity Magazine</td><td>2026-08-19</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://www.infosecurity-magazine.com/news/linux-foundations-akrites-go-live/" target="_blank" rel="noopener">https://www.infosecurity-magazine.com/news/linux-foundations-akrites-go-live/</a></td></tr>
+      <tr><td>AI companies to play bigger role in CVE program</td><td>Infosecurity Magazine</td><td>2026-04-15</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://www.infosecurity-magazine.com/news/ai-companies-to-play-bigger-role/" target="_blank" rel="noopener">https://www.infosecurity-magazine.com/news/ai-companies-to-play-bigger-role/</a></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Sources that resolve but were not read for content</h2>
+  <p>Listed for completeness. Anything cited from these on a slide must be read first.</p>
+  <div class="scroll-x"><table>
+    <thead><tr><th>Title</th><th>Publisher</th><th>Conf</th><th>Status</th><th>URL</th></tr></thead>
+    <tbody>
+      <tr><td>AIVSS project home</td><td>OWASP</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://aivss.owasp.org/" target="_blank" rel="noopener">https://aivss.owasp.org/</a></td></tr>
+      <tr><td>AIUC-1 / AIVSS crosswalk</td><td>OWASP AIVSS</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://aivss.owasp.org/aiuc-aivss-crosswalk" target="_blank" rel="noopener">https://aivss.owasp.org/aiuc-aivss-crosswalk</a></td></tr>
+      <tr><td>AIVSS project repository</td><td>OWASP</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://github.com/OWASP/www-project-artificial-intelligence-vulnerability-scoring-system" target="_blank" rel="noopener">https://github.com/OWASP/www-project-artificial-intelligence-vulnerability-scoring-system</a></td></tr>
+      <tr><td>OWASP AIVSS project announcement</td><td>Ken Huang (Substack)</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://kenhuangus.substack.com/p/owasp-aivss-project-announces-the" target="_blank" rel="noopener">https://kenhuangus.substack.com/p/owasp-aivss-project-announces-the</a></td></tr>
+      <tr><td>AISVS documentation</td><td>OWASP</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://owasp.org/www-project-artificial-intelligence-security-verification-standard-aisvs-docs/" target="_blank" rel="noopener">https://owasp.org/www-project-artificial-intelligence-security-verification-standard-aisvs-docs/</a></td></tr>
+      <tr><td>OWASP GenAI Security Project</td><td>OWASP</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://genai.owasp.org/" target="_blank" rel="noopener">https://genai.owasp.org/</a></td></tr>
+      <tr><td>OWASP Agentic Skills Top 10</td><td>OWASP</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://owasp.org/www-project-agentic-skills-top-10/" target="_blank" rel="noopener">https://owasp.org/www-project-agentic-skills-top-10/</a></td></tr>
+      <tr><td>Project Glasswing</td><td>Anthropic</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://www.anthropic.com/glasswing" target="_blank" rel="noopener">https://www.anthropic.com/glasswing</a></td></tr>
+      <tr><td>AI vuln discovery and containment, Claude Mythos</td><td>Cloud Security Alliance</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://labs.cloudsecurityalliance.org/research/ai-vuln-discovery-containment-claude-mythos-v1-0-csa-styled/" target="_blank" rel="noopener">https://labs.cloudsecurityalliance.org/research/ai-vuln-discovery-containment-claude-mythos-v1-0-csa-styled/</a></td></tr>
+      <tr><td>CSA research note, autonomous offensive threshold</td><td>Cloud Security Alliance</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://labs.cloudsecurityalliance.org/research/csa-research-note-claude-mythos-autonomous-offensive-thresho/" target="_blank" rel="noopener">https://labs.cloudsecurityalliance.org/research/csa-research-note-claude-mythos-autonomous-offensive-thresho/</a></td></tr>
+      <tr><td>Claude Mythos and the acceleration of cybersecurity risk</td><td>BISI</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://bisi.org.uk/reports/claude-mythos-and-the-acceleration-of-cybersecurity-risk" target="_blank" rel="noopener">https://bisi.org.uk/reports/claude-mythos-and-the-acceleration-of-cybersecurity-risk</a></td></tr>
+      <tr><td>When AI becomes the cyber attacker</td><td>Data Protection Report</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://www.dataprotectionreport.com/2026/05/when-ai-becomes-the-cyber-attacker-mythos-and-what-comes-next/" target="_blank" rel="noopener">https://www.dataprotectionreport.com/2026/05/when-ai-becomes-the-cyber-attacker-mythos-and-what-comes-next/</a></td></tr>
+      <tr><td>Black Hat USA 2026 AI security talks</td><td>Straiker</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://www.straiker.ai/blog/black-hat-usa-2026-ai-security-talks" target="_blank" rel="noopener">https://www.straiker.ai/blog/black-hat-usa-2026-ai-security-talks</a></td></tr>
+      <tr><td>Hugging Face CISO post-mortem</td><td>Cloud Security Alliance</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://cloudsecurityalliance.org/artifacts/hugging-face-ciso-post-mortem" target="_blank" rel="noopener">https://cloudsecurityalliance.org/artifacts/hugging-face-ciso-post-mortem</a></td></tr>
+      <tr><td>The great sandbox escape</td><td>Noma Security</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://www.noma.security/blog/the-great-sandbox-escape-analyzing-the-openai-hugging-face-security-incident" target="_blank" rel="noopener">https://www.noma.security/blog/the-great-sandbox-escape-analyzing-the-openai-hugging-face-security-incident</a></td></tr>
+      <tr><td>AI agent incident, OpenAI and Hugging Face risks</td><td>Patrowl</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://patrowl.io/en/blog/ai-agent-incident-openai-huggingface-risks" target="_blank" rel="noopener">https://patrowl.io/en/blog/ai-agent-incident-openai-huggingface-risks</a></td></tr>
+      <tr><td>OpenAI agent used exposed credentials</td><td>The Hacker News</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://thehackernews.com/2026/07/openai-agent-used-exposed-credentials.html" target="_blank" rel="noopener">https://thehackernews.com/2026/07/openai-agent-used-exposed-credentials.html</a></td></tr>
+      <tr><td>Incident coverage</td><td>TIME</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://time.com/article/2026/07/24/openai-hugging-face-attack/" target="_blank" rel="noopener">https://time.com/article/2026/07/24/openai-hugging-face-attack/</a></td></tr>
+      <tr><td>What we know and don't know</td><td>Fortune</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://fortune.com/2026/07/29/openai-hugging-face-new-details-hack-everything-we-know-dont-know/" target="_blank" rel="noopener">https://fortune.com/2026/07/29/openai-hugging-face-new-details-hack-everything-we-know-dont-know/</a></td></tr>
+      <tr><td>Hugging Face autonomous AI cyberattack</td><td>MindStudio</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://www.mindstudio.ai/blog/hugging-face-autonomous-ai-cyberattack" target="_blank" rel="noopener">https://www.mindstudio.ai/blog/hugging-face-autonomous-ai-cyberattack</a></td></tr>
+      <tr><td>Meta rogue AI agent data exposure</td><td>Kiteworks</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://www.kiteworks.com/cybersecurity-risk-management/meta-rogue-ai-agent-data-exposure-governance/" target="_blank" rel="noopener">https://www.kiteworks.com/cybersecurity-risk-management/meta-rogue-ai-agent-data-exposure-governance/</a></td></tr>
+      <tr><td>Akrites go-live coverage</td><td>Help Net Security</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://www.helpnetsecurity.com/2026/06/26/akrites-open-source-security-framework/" target="_blank" rel="noopener">https://www.helpnetsecurity.com/2026/06/26/akrites-open-source-security-framework/</a></td></tr>
+      <tr><td>Akrites and open source AI threats</td><td>InfoQ</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://www.infoq.com/news/2026/07/akrites-open-source-ai-threats/" target="_blank" rel="noopener">https://www.infoq.com/news/2026/07/akrites-open-source-ai-threats/</a></td></tr>
+      <tr><td>Project Akrites AI vulnerability disclosure</td><td>TFiR</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://tfir.io/project-akrites-ai-vulnerability-disclosure-open-source/" target="_blank" rel="noopener">https://tfir.io/project-akrites-ai-vulnerability-disclosure-open-source/</a></td></tr>
+      <tr><td>Akrites counter-AI threats</td><td>ReversingLabs</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://www.reversinglabs.com/blog/akrites-counter-ai-threats" target="_blank" rel="noopener">https://www.reversinglabs.com/blog/akrites-counter-ai-threats</a></td></tr>
+      <tr><td>Announcing FLARE-AI</td><td>MIT AI Risk Initiative</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://airisk.mit.edu/blog/announcing-flare-ai" target="_blank" rel="noopener">https://airisk.mit.edu/blog/announcing-flare-ai</a></td></tr>
+      <tr><td>CMU researchers help close a critical security gap</td><td>Carnegie Mellon University</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://www.cmu.edu/news/stories/archives/2026/july/cmu-researchers-help-close-a-critical-security-gap-across-ai-platforms" target="_blank" rel="noopener">https://www.cmu.edu/news/stories/archives/2026/july/cmu-researchers-help-close-a-critical-security-gap-across-ai-platforms</a></td></tr>
+      <tr><td>CVE program working groups</td><td>CVE Program</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://www.cve.org/ProgramOrganization/WorkingGroups" target="_blank" rel="noopener">https://www.cve.org/ProgramOrganization/WorkingGroups</a></td></tr>
+      <tr><td>CVE-AI-Discussion subgroup</td><td>CVE-CWE-Programs</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://cve-cwe-programs.groups.io/g/CVE-AI-Discussion/subgroups" target="_blank" rel="noopener">https://cve-cwe-programs.groups.io/g/CVE-AI-Discussion/subgroups</a></td></tr>
+      <tr><td>Register now, CVE AI Virtual Conference</td><td>CVE Program</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://www.cve.org/Media/News/item/blog/2026/07/14/Register-Now-CVE-AI-Virtual-Conference" target="_blank" rel="noopener">https://www.cve.org/Media/News/item/blog/2026/07/14/Register-Now-CVE-AI-Virtual-Conference</a></td></tr>
+      <tr><td>AI Vulnerability Database</td><td>AVID</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://avidml.org/" target="_blank" rel="noopener">https://avidml.org/</a></td></tr>
+      <tr><td>AI Incident Database</td><td>AIID</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://incidentdatabase.ai/" target="_blank" rel="noopener">https://incidentdatabase.ai/</a></td></tr>
+      <tr><td>CERT/CC VINCE</td><td>CERT Coordination Center</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://www.kb.cert.org/vince/" target="_blank" rel="noopener">https://www.kb.cert.org/vince/</a></td></tr>
+      <tr><td>European Union Vulnerability Database</td><td>ENISA</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://euvd.enisa.europa.eu/" target="_blank" rel="noopener">https://euvd.enisa.europa.eu/</a></td></tr>
+      <tr><td>Secure Software Development Framework SP 800-218</td><td>NIST</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://csrc.nist.gov/pubs/sp/800/218/final" target="_blank" rel="noopener">https://csrc.nist.gov/pubs/sp/800/218/final</a></td></tr>
+      <tr><td>AI Risk Management Framework</td><td>NIST</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">https://www.nist.gov/itl/ai-risk-management-framework</a></td></tr>
+      <tr><td>Center for AI Standards and Innovation</td><td>NIST</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://www.nist.gov/caisi" target="_blank" rel="noopener">https://www.nist.gov/caisi</a></td></tr>
+      <tr><td>Security Development Lifecycle</td><td>Microsoft</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://www.microsoft.com/en-us/securityengineering/sdl" target="_blank" rel="noopener">https://www.microsoft.com/en-us/securityengineering/sdl</a></td></tr>
+      <tr><td>AI/ML Security Working Group</td><td>OpenSSF</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://github.com/ossf/ai-ml-security" target="_blank" rel="noopener">https://github.com/ossf/ai-ml-security</a></td></tr>
+      <tr><td>Secure AI Framework</td><td>Google</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://safety.google/cybersecurity-advancements/saif/" target="_blank" rel="noopener">https://safety.google/cybersecurity-advancements/saif/</a></td></tr>
+      <tr><td>Coalition for Secure AI</td><td>CoSAI (OASIS)</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://www.coalitionforsecureai.org/" target="_blank" rel="noopener">https://www.coalitionforsecureai.org/</a></td></tr>
+      <tr><td>SAFECode</td><td>SAFECode</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://safecode.org/" target="_blank" rel="noopener">https://safecode.org/</a></td></tr>
+      <tr><td>OpenSSF</td><td>OpenSSF</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://openssf.org/" target="_blank" rel="noopener">https://openssf.org/</a></td></tr>
+      <tr><td>OpenInference</td><td>Arize AI</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://github.com/Arize-ai/openinference" target="_blank" rel="noopener">https://github.com/Arize-ai/openinference</a></td></tr>
+      <tr><td>Model Context Protocol</td><td>Anthropic</td><td><span class="conf conf--primary">[P]</span></td><td>308</td><td><a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">https://modelcontextprotocol.io/</a></td></tr>
+      <tr><td>Agentic AI observability playbook 2026</td><td>Arthur</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://www.arthur.ai/column/agentic-ai-observability-playbook-2026" target="_blank" rel="noopener">https://www.arthur.ai/column/agentic-ai-observability-playbook-2026</a></td></tr>
+      <tr><td>Best AI observability tools for autonomous agents</td><td>Arize</td><td><span class="conf conf--secondary">[S]</span></td><td>200</td><td><a href="https://arize.com/blog/best-ai-observability-tools-for-autonomous-agents-in-2026/" target="_blank" rel="noopener">https://arize.com/blog/best-ai-observability-tools-for-autonomous-agents-in-2026/</a></td></tr>
+      <tr><td>aiAuthZ, identity-bound authorization (arXiv 2607.05518)</td><td>arXiv</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://arxiv.org/abs/2607.05518" target="_blank" rel="noopener">https://arxiv.org/abs/2607.05518</a></td></tr>
+      <tr><td>LLM automated pentesting analysis (arXiv 2604.05719)</td><td>arXiv</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://arxiv.org/abs/2604.05719" target="_blank" rel="noopener">https://arxiv.org/abs/2604.05719</a></td></tr>
+      <tr><td>From Naptime to Big Sleep</td><td>Google Project Zero</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://googleprojectzero.blogspot.com/2024/10/from-naptime-to-big-sleep.html" target="_blank" rel="noopener">https://googleprojectzero.blogspot.com/2024/10/from-naptime-to-big-sleep.html</a></td></tr>
+      <tr><td>XBOW</td><td>XBOW</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://xbow.com/" target="_blank" rel="noopener">https://xbow.com/</a></td></tr>
+      <tr><td>METR</td><td>METR</td><td><span class="conf conf--primary">[P]</span></td><td>200</td><td><a href="https://metr.org/" target="_blank" rel="noopener">https://metr.org/</a></td></tr>
+      <tr><td>Redwood Research</td><td>Redwood Research</td><td><span class="conf conf--primary">[P]</span></td><td>308</td><td><a href="https://redwoodresearch.org/" target="_blank" rel="noopener">https://redwoodresearch.org/</a></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Sources that could not be retrieved</h2>
+  <p>These are listed so that nothing is silently dropped. Full consequences in <code>gaps.md</code>.</p>
+  <div class="scroll-x"><table>
+    <thead><tr><th>Title</th><th>Publisher</th><th>Status</th><th>Consequence</th></tr></thead>
+    <tbody>
+      <tr><td>Hugging Face model evaluation security incident</td><td>OpenAI</td><td><strong>403</strong></td><td>All OpenAI-side claims held at <span class="conf conf--secondary">[S]</span></td></tr>
+      <tr><td>Introducing Aardvark</td><td>OpenAI</td><td><strong>403</strong></td><td>92% recall figure unverified</td></tr>
+      <tr><td>Strengthening cyber resilience</td><td>OpenAI</td><td><strong>403</strong></td><td>Frontier Risk Council unverified</td></tr>
+      <tr><td>NIST AI 600-1 Generative AI Profile</td><td>NIST</td><td><strong>404</strong></td><td>Needs replacement URL</td></tr>
+      <tr><td>AI Risk-Management Standards Profile v1.2</td><td>Berkeley CLTC</td><td><strong>404</strong></td><td>Needs replacement URL</td></tr>
+      <tr><td>CSAF resource page</td><td>CISA</td><td><strong>404</strong></td><td>Needs replacement URL</td></tr>
+      <tr><td>AIVSS calculator (third-party host)</td><td>parthsohaney.online</td><td><strong>DNS</strong></td><td>Cannot cross-check arithmetic</td></tr>
+      <tr><td>AI Cyber Challenge</td><td>DARPA</td><td><strong>DNS</strong></td><td>AIxCC results unverified</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Citation discipline</h2>
+  <p>Every claim on a slide traces to a row in this file. Claims tagged <code><span class="conf conf--anonymous">[A]</span></code> name their outlet on the slide face. Claims tagged <code><span class="conf conf--hypothesis">[H]</span></code> are labelled as hypothesis. Claims sourced only from rows in the "not read for content" table must be read before they appear on a slide.</p>
+</section>
+</div>
+
+<footer><div class="wrap">Generated from research/bibliography.md by tools/build-reference.py. Edit the research file, not this page.</div></footer>
+
+<script>
+(function () {
+  var btn = document.getElementById('themeBtn');
+  var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  function applyTheme() {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    btn.textContent = dark ? 'Light' : 'Dark';
+  }
+  btn.addEventListener('click', function () { dark = !dark; applyTheme(); });
+  applyTheme();
+
+  var q = document.getElementById('q');
+  var countEl = document.getElementById('count');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('tbody tr'));
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section'));
+
+  function apply() {
+    var term = q.value.trim().toLowerCase();
+    var shown = 0;
+    rows.forEach(function (r) {
+      var hit = !term || r.textContent.toLowerCase().indexOf(term) !== -1;
+      r.classList.toggle('hidden', !hit);
+      if (hit) shown++;
+    });
+    // Hide a section whose every row is filtered out, so the page does not
+    // fill with empty headings while searching.
+    sections.forEach(function (s) {
+      var own = s.querySelectorAll('tbody tr');
+      var vis = s.querySelectorAll('tbody tr:not(.hidden)');
+      s.classList.toggle('hidden', own.length > 0 && vis.length === 0);
+    });
+    countEl.textContent = shown + ' of ' + rows.length + ' sources shown';
+  }
+  q.addEventListener('input', apply);
+  apply();
+})();
+</script>
+</body>
+</html>
