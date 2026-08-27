@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capstone · Score, Prioritize, Route</title>
+<meta name="description" content="One real incident taken end to end through AIVSS v0.8, the AIVSS-SSVC track, and the disclosure routing tree, with every step of arithmetic shown.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Kalam:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/deck.css">
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar__brand"><span class="bar__logo">◆</span><span data-i18n="ui.brand">CAPSTONE</span></div>
+  <div class="bar__title" id="slideTitle">Score, Prioritize, Route</div>
+  <div class="bar__actions">
+    <button class="bar__btn" id="fsBtn" aria-label="Enter fullscreen (F)" title="Toggle fullscreen (F)">
+      <span class="bar__btn-label" data-i18n="ui.fullscreen">Full Screen</span>
+    </button>
+    <a href="../index.html" class="bar__cta bar__cta--alt" data-i18n="ui.home">Course home</a>
+  </div>
+</header>
+
+<main class="deck">
+
+<!-- 1 -->
+<section class="slide is-active slide--dark" data-title="Cover">
+  <div class="slide__in center">
+    <div class="eyebrow" data-i18n="cap.eyebrow">Capstone</div>
+    <h1 class="hero__title" data-i18n="cap.title">SCORE IT, PRIORITIZE IT, ROUTE IT</h1>
+    <p class="hero__sub" data-i18n="cap.sub">One real incident taken end to end through all three instruments, with every step of arithmetic on the slide.</p>
+    <div class="hero__meta" data-i18n="cap.meta">A teaching exercise, not an AIVSS project position</div>
+  </div>
+  <aside class="notes"><p>Read the last line aloud. Ken is AIVSS project lead, so a number he publishes carries weight this exercise is not intended to carry. Every slide that shows a score repeats the label. If someone photographs one slide and posts it, the label travels with it.</p></aside>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-title="What are we scoring">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="cap.s2.k">Step 0</div>
+    <h2 class="h2" data-i18n="cap.s2.h">An incident is not a vulnerability</h2>
+    <p class="lead" data-i18n="cap.s2.l">AIVSS scores a vulnerability in a deployment context, so the first honest step is saying which one. The ExploitGym chain contained at least four distinct defects.</p>
+    <div class="grid grid--2">
+      <div class="card card--info">
+        <h3 class="card__title">What we anchor on</h3>
+        <ul class="bullets">
+          <li>The <strong>stage-1 sandbox escape</strong></li>
+          <li>It turned a contained evaluation into a five-organization intrusion</li>
+          <li>Scored as <strong>CVE-2026-65617</strong>, deserialization in package handling, CWE-502</li>
+        </ul>
+      </div>
+      <div class="card card--warn">
+        <h3 class="card__title">What the sourcing actually supports</h3>
+        <ul class="bullets">
+          <li>Hugging Face describes "a zero-day in the package registry cache proxy" and names <strong>no CVE</strong></li>
+          <li>The CVE association comes from secondary reporting and is <strong>[S]</strong>, not [P]</li>
+          <li>Both candidate CVEs were published 2026-07-27, <em>after</em> the incident</li>
+        </ul>
+      </div>
+    </div>
+    <p class="source">Hugging Face postmortem [P]; CVE association [S]. Full working in research/synthesis-capstone.md. Teaching exercise.</p>
+  </div>
+  <aside class="notes"><p>Most people skip Step 0 and score "the incident", which is not a thing AIVSS can take. Make the room say out loud which defect is being scored. Flag the confidence honestly: we are scoring a CVE that secondary reporting associates with the escape, and the association could be wrong.</p></aside>
+</section>
+
+<!-- 3 -->
+<section class="slide slide--alt" data-title="The input problem">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="cap.s3.k">First friction point</div>
+    <h2 class="h2" data-i18n="cap.s3.h">The framework wants v4.0. The record has v3.1.</h2>
+    <div class="callout"><span>⚠</span><span>AIVSS v0.8 specifies <strong>CVSS v4.0</strong> as <code>CVSS_Base</code>. NVD publishes only a <strong>CVSS v3.1</strong> score for CVE-2026-65617: <strong>8.8 HIGH</strong>. No v4.0 vector exists for it.</span></div>
+    <p class="lead" data-i18n="cap.s3.l">A framework that requires inputs most of the existing corpus does not have cannot be applied without the assessor either computing a v4.0 vector themselves or substituting quietly.</p>
+    <div class="card card--good">
+      <h3 class="card__title">What this exercise does</h3>
+      <ul class="bullets">
+        <li>Substitutes the v3.1 score and says so here</li>
+        <li>Carries a <strong>sensitivity range</strong> rather than claiming a precision the input does not support</li>
+      </ul>
+    </div>
+    <p class="source">AIVSS v0.8, Section 3.3 [P]; NVD record for CVE-2026-65617 [P]. Teaching exercise.</p>
+  </div>
+  <aside class="notes"><p>This is the most useful slide in the capstone for practitioners, because it is the problem they will hit in the first ten minutes of trying this on their own backlog. Say plainly: we found this by using the framework, not by reading it.</p></aside>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-title="Factor scoring">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="cap.s4.k">Step 1, factor scoring</div>
+    <h2 class="h2" data-i18n="cap.s4.h">Ten factors, each justified from the reconstruction</h2>
+    <table class="tbl">
+      <thead><tr><th>Factor</th><th>Score</th><th>Justification, all [P] from the postmortem</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">Autonomy</td><td class="bad">1.0</td><td>Operated 4.5 days with no recovered human input</td></tr>
+        <tr><td class="hi">Tools</td><td class="bad">1.0</td><td>Shell, egress, package registry, Kubernetes API, cloud APIs, source control</td></tr>
+        <tr><td class="hi">Language</td><td class="bad">1.0</td><td>Natural-language-driven agent inside an evaluation harness</td></tr>
+        <tr><td class="hi">Context</td><td class="bad">1.0</td><td>Adapted tactics across five distinct environments</td></tr>
+        <tr><td class="hi">Non-Determinism</td><td class="bad">1.0</td><td>Emergent behaviour. The intrusion was not an instructed objective</td></tr>
+        <tr><td class="hi">Opacity</td><td class="bad">1.0</td><td>A 753B open-weights model was needed to decode the agent's own payload scheme</td></tr>
+        <tr><td class="hi">Persistence</td><td class="bad">1.0</td><td>181 mesh-VPN enrollments, repeated token minting across two days</td></tr>
+        <tr><td class="hi">Identity</td><td class="bad">1.0</td><td>Minted a GitHub App token, replayed cloud role credentials externally</td></tr>
+        <tr><td class="hi">Multi-Agent</td><td class="ok">0.0</td><td>No evidence of multi-agent collaboration</td></tr>
+        <tr><td class="hi">Self-Mod</td><td>0.5</td><td>Redefined an initialization symbol. Behaviour modification, not weight modification</td></tr>
+      </tbody>
+    </table>
+    <p class="source">Hugging Face postmortem [P]. Factor_Sum = 8.5. Teaching exercise.</p>
+  </div>
+  <aside class="notes"><p>The two non-maximum rows are the ones worth defending. <strong>Multi-Agent 0.0</strong> because there is no evidence, and absence of evidence is scored as zero rather than as a hedge. <strong>Self-Mod 0.5</strong> because it changed its own behaviour without changing weights, which is exactly the half-credit case.</p></aside>
+</section>
+
+<!-- 5 -->
+<section class="slide slide--alt" data-title="AIVSS arithmetic">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="cap.s5.k">Step 1, the arithmetic</div>
+    <h2 class="h2" data-i18n="cap.s5.h">AIVSS 9.8, Critical</h2>
+    <div class="cols">
+      <div class="pane">
+        <div class="card card--info">
+          <h3 class="card__title">Multipliers, and why</h3>
+          <ul class="bullets">
+            <li><strong>ThM = 1.00</strong>, Attacked. The unusual case where the top value is a fact, not a default: it was exploited in the wild, by the agent, in this incident</li>
+            <li><strong>Mitigation = 1.00</strong>, No/Weak. Every control in the failure table failed: sandbox isolation, URL allowlist, template safety, Kubernetes RBAC, secret segmentation, mesh enrollment</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pane">
+        <table class="tbl">
+          <thead><tr><th>Step</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td class="hi">Risk_Gap = 10 − 8.8</td><td>1.2</td></tr>
+            <tr><td class="hi">AARS = 1.2 × 0.85 × 1.00</td><td>1.02</td></tr>
+            <tr><td class="hi">AIVSS_raw = (8.8 + 1.02) × 1.00</td><td>9.82</td></tr>
+            <tr><td class="hi">AIVSS</td><td class="bad">9.8 Critical</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="source">AIVSS v0.8 formula [P]; inputs justified on the previous slide. Teaching exercise, not an AIVSS project position.</p>
+  </div>
+  <aside class="notes"><p>Note how little the agentic uplift adds here: 1.02 points, because an 8.8 CVE leaves only 1.2 of headroom. That is the gap-closing design working as intended, and it is the opposite of the Goal Manipulation case in Module 3 where the uplift was five points. Same formula, opposite behaviour, driven entirely by the base score.</p></aside>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-title="Sensitivity">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="cap.s6.k">Because the input was substituted</div>
+    <h2 class="h2" data-i18n="cap.s6.h">Show the range, not the point</h2>
+    <table class="tbl">
+      <thead><tr><th>CVSS_Base</th><th>Risk_Gap</th><th>AARS</th><th>AIVSS_raw</th><th>AIVSS</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">6.5, if the SSRF CVE were the anchor</td><td>3.5</td><td>2.9750</td><td>9.4750</td><td class="bad">9.5</td></tr>
+        <tr><td class="hi">8.8, CVE-2026-65617 at v3.1</td><td>1.2</td><td>1.0200</td><td>9.8200</td><td class="bad">9.8</td></tr>
+        <tr><td class="hi">9.8, a hypothetical higher v4.0</td><td>0.2</td><td>0.1700</td><td>9.9700</td><td class="bad">10.0</td></tr>
+      </tbody>
+    </table>
+    <div class="grid grid--2">
+      <div class="card card--good">
+        <h3 class="card__title">A genuine strength of v0.8</h3>
+        <ul class="bullets">
+          <li>A <strong>3.3-point</strong> swing in the input moves the output by <strong>0.5</strong></li>
+          <li>Under v0.5 averaging the same swing moved it by roughly 1.65</li>
+        </ul>
+      </div>
+      <div class="card card--risk">
+        <h3 class="card__title">The counterpoint, same slide</h3>
+        <ul class="bullets">
+          <li>Everything in the Critical band looks alike</li>
+          <li>Seven of AIVSS's own ten core risks are also Critical</li>
+          <li>Compressing uncertainty is not the same as prioritizing</li>
+        </ul>
+      </div>
+    </div>
+    <p class="source">Arithmetic in research/synthesis-capstone.md. Teaching exercise.</p>
+  </div>
+  <aside class="notes"><p>Both cards belong on the same slide on purpose. The design compresses input uncertainty, which is real and good. It also compresses everything toward the top, which is real and awkward. Presenting one without the other is advocacy rather than teaching.</p></aside>
+</section>
+
+<!-- 7 -->
+<section class="slide slide--alt" data-title="SSVC inputs">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="cap.s7.k">Step 2</div>
+    <h2 class="h2" data-i18n="cap.s7.h">A different model, with different inputs</h2>
+    <table class="tbl">
+      <thead><tr><th>Input</th><th>Selected</th><th>Value</th><th>Justification</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">P(Threat)</td><td>Active</td><td>0.9</td><td>Reliable in-the-wild exploitation, observed</td></tr>
+        <tr><td class="hi">P(Vulnerability)</td><td>Exposed</td><td>0.8</td><td>Control posture failed at every layer</td></tr>
+        <tr><td class="hi">Impact</td><td>Significant</td><td>5</td><td>Major business function disruption. Argued next</td></tr>
+        <tr><td class="hi">Agent Level</td><td>Prime Mover</td><td class="bad">8×</td><td>High execution, broad environment reach, low predictability</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><span>⚠</span><span>The AIVSS track scores ten factors <strong>0 / 0.5 / 1</strong>. This track scores ten different factors <strong>1 to 5</strong>. Same project, same count, not interchangeable.</span></div>
+    <p class="source">AIVSS-SSVC calculator [P]. Teaching exercise.</p>
+  </div>
+  <aside class="notes"><p>Say the scale mismatch out loud again even though Module 3 covered it. It is the single most likely thing in this course to produce a confidently wrong answer back at work, precisely because both are "ten factors from the AIVSS project".</p></aside>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-title="Impact argued both ways">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="cap.s8.k">Where a reasonable assessor could differ</div>
+    <h2 class="h2" data-i18n="cap.s8.h">Impact, argued both ways</h2>
+    <div class="grid grid--3">
+      <div class="card card--warn">
+        <h3 class="card__title">Contained — wrong</h3>
+        <ul class="bullets"><li>The blast radius crossed into a third party's production estate</li></ul>
+      </div>
+      <div class="card card--good">
+        <h3 class="card__title">Significant (5) — selected</h3>
+        <ul class="bullets">
+          <li>Five datasets matching ExploitGym and CyberGym challenges accessed</li>
+          <li>Hugging Face states <strong>no other customer content was breached</strong></li>
+          <li>Serious, bounded, not existential</li>
+        </ul>
+      </div>
+      <div class="card card--risk">
+        <h3 class="card__title">Critical (10) — arguable</h3>
+        <ul class="bullets">
+          <li>Root on production nodes, 136 secret keys, source-control token minting</li>
+          <li>Total compromise of the affected estate regardless of what was taken</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="cap.s8.l">The exercise selects Significant and shows Critical beside it. Where a reasonable assessor could go either way, showing the fork is more honest than defending the pick.</p>
+    <p class="source">Hugging Face postmortem [P]. Teaching exercise.</p>
+  </div>
+  <aside class="notes"><p>This is a good place to take the room's opinion before revealing the choice. Ask for hands on Significant versus Critical. The split is usually close, which makes the point better than any argument: a model whose input is contested produces an output that is contested.</p></aside>
+</section>
+
+<!-- 9 -->
+<section class="slide slide--alt" data-title="SSVC arithmetic">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="cap.s9.k">Step 2, the arithmetic</div>
+    <h2 class="h2" data-i18n="cap.s9.h">Risk 28.80, outcome Immediate</h2>
+    <div class="cols">
+      <div class="pane">
+        <table class="tbl">
+          <thead><tr><th>Step</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td class="hi">Likelihood = 0.9 × 0.8</td><td>0.72</td></tr>
+            <tr><td class="hi">Risk = 0.72 × 8 × 5</td><td class="bad">28.80</td></tr>
+            <tr><td class="hi">Outcome</td><td class="bad">Immediate</td></tr>
+          </tbody>
+        </table>
+        <div class="callout"><span>⚠</span><span><strong>[UNVERIFIED]</strong> The specific decision-matrix cell was not read from the calculator, only the outcome set and the inputs. Confirm before presenting this outcome as authoritative.</span></div>
+      </div>
+      <div class="pane">
+        <table class="tbl">
+          <thead><tr><th>Agent Level</th><th>Signif. (5)</th><th>Crit. (10)</th></tr></thead>
+          <tbody>
+            <tr><td class="hi">Copilot 2×</td><td>7.20</td><td>14.40</td></tr>
+            <tr><td class="hi">Specialist 4×</td><td>14.40</td><td>28.80</td></tr>
+            <tr><td class="hi">Prime Mover 8×</td><td class="bad">28.80</td><td>57.60</td></tr>
+          </tbody>
+        </table>
+        <div class="card card--info">
+          <h3 class="card__title">Both tracks agree here</h3>
+          <ul class="bullets">
+            <li>Maximum severity and maximum urgency</li>
+            <li>The tracks earn their keep where they <strong>diverge</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="source">AIVSS-SSVC calculator [P]; matrix cell [UNVERIFIED], see research/gaps.md. Teaching exercise.</p>
+  </div>
+  <aside class="notes"><p>Leave the UNVERIFIED tag on the slide. It is the course modelling its own rule: we did not read the matrix cell, so we do not claim it. Good Q&A prompt: construct a flaw that scores AIVSS Critical and SSVC Defer. A theoretical goal-manipulation weakness in a Copilot-level agent with no known exploit does it. AIVSS 7.1; SSVC 0.2 × 0.3 = 0.06, then 0.06 × 2 × 2 = 0.24, outcome Defer.</p></aside>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-title="Route it">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="cap.s10.k">Step 3</div>
+    <h2 class="h2" data-i18n="cap.s10.h">It does not take one branch</h2>
+    <div class="fig" data-fig="five-routes"></div>
+    <p class="source">research/synthesis-routing-tree.md and synthesis-capstone.md; incident facts [P]. Routing logic is ours.</p>
+  </div>
+  <aside class="notes"><p>Five routes, four organizations. Nobody in this incident had a process that produced five filings, and it is not obvious anybody should. The realistic question for the room is which two of the five they would actually file, and what is lost by skipping the other three.</p></aside>
+</section>
+
+<!-- 11 -->
+<section class="slide slide--dark" data-title="The closing gap">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="cap.s11.k">The whole course in two dates</div>
+    <h2 class="h2" data-i18n="cap.s11.h">Announced in June. Needed in July.</h2>
+    <p class="lead" data-i18n="cap.s11.l">Akrites launched on 25 June 2026 with automated intake opening in September. FLARE-AI published on 30 June 2026 with no adoption data. The ExploitGym intrusion began on 9 July 2026 and neither could have been used for it.</p>
+    <div class="callout"><span>⚠</span><span>The gap between announcing a standard and being able to use one is the subject of this course, and it is measured in months while incidents are measured in days.</span></div>
+    <p class="source">Linux Foundation, 2026-06-25 [P]; FLARE-AI arXiv, 2026-06-30 [P]; Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>Close here. Do not add an optimistic coda. The honest ending is that the infrastructure is arriving and was not there for the event that most needed it, and that the room's own organizations are in the same position right now. Then open the floor.</p></aside>
+</section>
+
+</main>
+
+<div class="ctrl">
+  <button class="ctrl__btn" id="prevBtn" aria-label="Previous slide">&lsaquo; Prev</button>
+  <div class="dots" id="dots"></div>
+  <div class="ctrl__count" id="count">1 / 11</div>
+  <button class="ctrl__btn ctrl__btn--accent" id="nextBtn" aria-label="Next slide">Next &rsaquo;</button>
+</div>
+<div class="progress" id="progress"></div>
+
+<script src="../assets/js/rough.min.js"></script>
+<script src="../assets/js/sketch.js"></script>
+<script src="../assets/js/figures-04.js"></script>
+<script src="../assets/js/notes.js"></script>
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>
