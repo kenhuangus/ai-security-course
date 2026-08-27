@@ -3,6 +3,13 @@
   --paper: #fdfcf9; --paper-2: #f5f2eb; --card: #ffffff;
   --ink: #0b0e14; --text: #181b22; --muted: #5e6676; --line: #e4dfd5;
   --accent: #ff6a2b; --accent-2: #ffb454;
+  /* --accent is for rules, rails and borders. As text on paper it reads
+     at 2.79:1, so anything that sets a text colour uses --accent-text,
+     which is darkened here and lightened again for the dark theme. */
+  --accent-text: #c2410c;
+  /* Fixed in both themes: a filled control carrying white text needs a
+     background dark enough for it, and --accent-text lightens on dark. */
+  --accent-deep: #c2410c;
   --c-blue: #1971c2; --c-red: #e03131; --c-green: #2b8a3e;
   --c-orange: #f08c00; --c-grape: #7048e8; --c-yellow: #f59f00;
   --shadow: 0 4px 20px rgba(11,14,20,.06);
@@ -13,6 +20,7 @@
 }
 [data-theme="dark"] {
   --paper: #0b0e14; --paper-2: #121722; --card: #161e2a;
+  --accent-text: #ff8a5c;
   --ink: #ffffff; --text: #e8ecf4; --muted: #9ba4b5; --line: #222b3d;
   --shadow: 0 4px 20px rgba(0,0,0,.4);
 }
@@ -23,8 +31,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 h1, h2, h3 { font-family: var(--head); line-height: 1.2; color: var(--ink); margin: 0 0 .5rem; }
-a { color: var(--accent); }
-code { font-family: var(--mono); font-size: .9em; background: var(--paper-2); padding: .1em .35em; border-radius: 4px; }
+a { color: var(--accent-text); }
+code { font-family: var(--mono); font-size: .95em; background: var(--paper-2); padding: .1em .35em; border-radius: 4px; }
 
 .wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
 
@@ -37,10 +45,10 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper-2); pa
 [data-theme="dark"] .topbar { background: #05070b; }
 .topbar__brand { font-family: var(--head); font-weight: 700; color: #fff; margin-right: auto; }
 .topbar__brand span { color: var(--accent); }
-.topbar a { color: #c7d2e4; font-size: .9rem; font-weight: 600; text-decoration: none; }
+.topbar a { color: #c7d2e4; font-size: .95rem; font-weight: 600; text-decoration: none; }
 .topbar a:hover { color: #fff; }
 .btn {
-  font-family: var(--head); font-weight: 700; font-size: .85rem;
+  font-family: var(--head); font-weight: 700; font-size: .95rem;
   background: #1c2738; color: #c7d2e4; border: 1px solid #2d3d57;
   border-radius: 999px; padding: .35rem .9rem; cursor: pointer;
 }
@@ -50,7 +58,7 @@ code { font-family: var(--mono); font-size: .9em; background: var(--paper-2); pa
 .hero h1 { font-size: clamp(1.9rem, 5vw, 3rem); letter-spacing: -.02em; }
 .hero p { font-size: 1.1rem; color: var(--muted); max-width: 62ch; }
 .eyebrow {
-  display: inline-block; font-family: var(--hand); color: var(--accent);
+  display: inline-block; font-family: var(--hand); color: var(--accent-text);
   border: 1.8px dashed var(--accent-2); border-radius: 999px;
   padding: .2rem .9rem; margin-bottom: 1rem; transform: rotate(-1deg);
 }
@@ -67,18 +75,18 @@ section > h2 { font-size: 1.5rem; margin-bottom: 1rem; }
 }
 a.card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(11,14,20,.12); }
 .card h3 { font-size: 1.05rem; margin-bottom: .3rem; }
-.card p { margin: 0; font-size: .92rem; color: var(--muted); }
-.card__meta { font-family: var(--mono); font-size: .75rem; color: var(--muted); margin-top: .6rem; }
+.card p { margin: 0; font-size: 1rem; color: var(--muted); }
+.card__meta { font-family: var(--mono); font-size: .875rem; color: var(--muted); margin-top: .6rem; }
 .card--ref { border-top-color: var(--c-blue); }
 .card--lab { border-top-color: var(--c-green); }
 .card--res { border-top-color: var(--c-grape); }
 
-table { width: 100%; border-collapse: collapse; font-size: .93rem; margin: 1rem 0; }
+table { width: 100%; border-collapse: collapse; font-size: 1rem; margin: 1rem 0; }
 th { background: #1e283b; color: #fff; text-align: left; padding: .6rem .8rem; font-weight: 700; }
 td { padding: .6rem .8rem; border: 1px solid var(--line); }
 tbody tr:nth-child(even) { background: var(--paper-2); }
 .tag {
-  display: inline-block; font-family: var(--mono); font-size: .72rem; font-weight: 700;
+  display: inline-block; font-family: var(--mono); font-size: .875rem; font-weight: 700;
   padding: .12rem .45rem; border-radius: 4px; border: 1px solid;
 }
 .tag-P { color: var(--c-green);  border-color: var(--c-green);  }
@@ -94,7 +102,7 @@ tbody tr:nth-child(even) { background: var(--paper-2); }
 
 footer {
   border-top: 1px solid var(--line); padding: 2rem 0; margin-top: 2rem;
-  color: var(--muted); font-size: .88rem;
+  color: var(--muted); font-size: .95rem;
 }
 .scroll-x { overflow-x: auto; }
 

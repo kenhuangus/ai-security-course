@@ -1,6 +1,6 @@
 # Lab 2 — Facilitator solution
 
-Timings assume 10 minutes: 6 working, 4 discussing. Do not walk all five excerpts in the debrief.
+Give the room roughly twice as long working as discussing. Do not walk all five excerpts in the debrief.
 Take A and C from the room, then go straight to the closing question, which is the real lesson.
 
 ## Excerpt A — initial RCE in the sandbox

@@ -3,6 +3,8 @@
    Locked viewport, zero scrollbars, no media queries.
    Everything scales off vh via clamp() so one stylesheet works on
    a 1920x1080 projector and a 13" laptop without breakpoints.
+   Minimum rendered text size is 14px (0.875rem). Never lower a clamp floor
+   below that: enlarge the slide budget or cut content instead.
    Retheme by editing :root only.
    ============================================================ */
 :root {
@@ -24,6 +26,10 @@
   /* Brand */
   --accent:      #ff6a2b;
   --accent-2:    #ffb454;
+  /* The bright accent fails AA as text on paper (2.56:1) and under white
+     text (2.86:1). Same hue, darkened until both directions clear 4.5:1.
+     Keep --accent for strokes, fills and anything on the dark chrome. */
+  --accent-deep: #c2410c;
   --accent-glow: rgba(255, 106, 43, 0.35);
 
   /* Categorical palette for diagrams, chips, card rails */
@@ -70,7 +76,8 @@ body {
 h1, h2, h3, h4 { font-family: var(--head); line-height: 1.15; margin: 0; }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
-.link { color: var(--accent); font-weight: 600; }
+.link { color: var(--accent-deep); font-weight: 600; }
+.slide--dark .link { color: var(--accent-2); }
 .link:hover { text-decoration: underline; }
 
 /* CJK falls back to a font that actually has the glyphs */
@@ -103,7 +110,7 @@ html[lang^='zh'] body, .is-zh { font-family: 'Noto Sans SC', var(--sans); }
 }
 .bar__actions { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
 .bar__btn {
-  font-family: var(--head); font-size: 0.88rem; font-weight: 600;
+  font-family: var(--head); font-size: 0.92rem; font-weight: 600;
   color: #eceef2; background: var(--ink-2);
   border: 1px solid #283347; border-radius: 999px;
   padding: 0.38rem 0.90rem; cursor: pointer;
@@ -113,7 +120,7 @@ html[lang^='zh'] body, .is-zh { font-family: 'Noto Sans SC', var(--sans); }
 .bar__btn:hover { background: #1e283b; border-color: var(--accent-2); color: #fff; }
 .bar__cta {
   font-family: var(--head); font-size: 0.90rem; font-weight: 700;
-  color: #fff; background: var(--accent);
+  color: #fff; background: var(--accent-deep);
   padding: 0.38rem 1.0rem; border-radius: 999px;
   box-shadow: 0 4px 14px var(--accent-glow);
   white-space: nowrap; display: inline-flex; align-items: center; gap: 0.30rem;
@@ -134,13 +141,13 @@ html[lang^='zh'] body, .is-zh { font-family: 'Noto Sans SC', var(--sans); }
 }
 .lang__btn {
   font-family: var(--head), 'Noto Sans SC', sans-serif;
-  font-size: 0.82rem; font-weight: 700; color: #9aa3b2;
+  font-size: 0.9rem; font-weight: 700; color: #9aa3b2;
   background: transparent; border: none; border-radius: 999px;
   padding: 0.26rem 0.72rem; cursor: pointer;
   transition: background .15s, color .15s;
 }
 .lang__btn:hover { color: #fff; }
-.lang__btn.is-on { background: var(--accent); color: #fff; }
+.lang__btn.is-on { background: var(--accent-deep); color: #fff; }
 
 /* ---------- Deck and slides ---------- */
 .deck {
@@ -182,29 +189,31 @@ html[lang^='zh'] body, .is-zh { font-family: 'Noto Sans SC', var(--sans); }
 
 /* ---------- Typography ---------- */
 .kicker {
-  font-family: var(--hand); color: var(--accent);
-  font-size: clamp(0.98rem, 2.25vh, 1.20rem);
+  font-family: var(--hand); color: var(--accent-deep);
+  font-size: clamp(1.0rem, 2.35vh, 1.28rem);
   letter-spacing: 0.02em; margin-bottom: 0.3vh;
 }
+.slide--dark .kicker { color: var(--accent); }
+.slide--dark .eyebrow { color: var(--accent-2); border-color: rgba(255, 180, 84, 0.55); }
 .h2 {
   font-size: clamp(1.48rem, 4.0vh, 2.32rem);
   font-weight: 700; letter-spacing: -0.02em;
   color: var(--ink); margin: 0.15vh 0 0.45vh;
 }
 .lead {
-  font-size: clamp(0.92rem, 2.06vh, 1.10rem);
+  font-size: clamp(0.98rem, 2.2vh, 1.22rem);
   color: var(--muted); max-width: 1180px;
   margin: 0 0 1.1vh; line-height: 1.40;
 }
 .card__title {
-  font-size: clamp(1.05rem, 2.25vh, 1.22rem);
+  font-size: clamp(1.06rem, 2.35vh, 1.30rem);
   font-weight: 700; color: var(--ink);
   text-transform: uppercase; letter-spacing: 0.04em; margin: 0;
 }
 .source {
   margin-top: auto; padding-top: 0.6vh;
   font-family: var(--mono);
-  font-size: clamp(0.72rem, 1.55vh, 0.86rem);
+  font-size: clamp(0.875rem, 1.75vh, 1.02rem);
   color: var(--muted);
 }
 .slide--dark .source { color: var(--muted-light); }
@@ -212,8 +221,10 @@ html[lang^='zh'] body, .is-zh { font-family: 'Noto Sans SC', var(--sans); }
 /* ---------- Hero / cover slide ---------- */
 .eyebrow {
   display: inline-block; font-family: var(--hand);
-  font-size: clamp(1.02rem, 2.38vh, 1.25rem); color: var(--accent-2);
-  border: 1.8px dashed rgba(255, 180, 84, 0.55);
+  font-size: clamp(1.02rem, 2.38vh, 1.25rem); color: var(--accent-deep);
+  border: 1.8px dashed rgba(194, 65, 12, 0.5);
+  /* The deep accent is the readable one on paper and the bright one is
+     readable on ink, so each background gets the variant that passes. */
   padding: 0.25rem 0.95rem; border-radius: 999px;
   margin-bottom: 1.4vh; transform: rotate(-1deg);
 }
@@ -280,14 +291,15 @@ html[lang^='zh'] body, .is-zh { font-family: 'Noto Sans SC', var(--sans); }
 /* ---------- Bullets ---------- */
 .bullets { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.50rem; }
 .bullets li {
-  font-size: clamp(0.98rem, 2.10vh, 1.14rem);
+  font-size: clamp(1.0rem, 2.25vh, 1.24rem);
   line-height: 1.44; color: #2c323f;
   position: relative; padding-left: 1.45rem;
 }
 .bullets li::before {
   content: "•"; position: absolute; left: 0;
-  color: var(--accent); font-weight: 800; font-size: 1.25rem; line-height: 1.2;
+  color: var(--accent-deep); font-weight: 800; font-size: 1.25rem; line-height: 1.2;
 }
+.slide--dark .bullets li::before { color: var(--accent-2); }
 .card--warn .bullets li::before { content: "▸"; color: var(--c-orange); }
 .card--good .bullets li::before { content: "✓"; color: var(--c-green); }
 .card--risk .bullets li::before { content: "!";  color: var(--c-red); }
@@ -301,7 +313,7 @@ html[lang^='zh'] body, .is-zh { font-family: 'Noto Sans SC', var(--sans); }
   padding: 0.70rem 1.05rem;
   background: #fff5f5; border: 1px solid #ffc9c9;
   border-left: 4.5px solid var(--c-red); border-radius: 8px;
-  font-size: clamp(0.98rem, 2.15vh, 1.15rem); line-height: 1.42;
+  font-size: clamp(1.0rem, 2.25vh, 1.24rem); line-height: 1.42;
   color: #961b1b; flex-shrink: 0;
 }
 .callout--info { background: #eef6ff; border-color: #c3ddfd; border-left-color: var(--c-blue); color: #14457c; }
@@ -310,13 +322,13 @@ html[lang^='zh'] body, .is-zh { font-family: 'Noto Sans SC', var(--sans); }
 /* ---------- Table ---------- */
 .tbl {
   width: 100%; border-collapse: collapse; margin-top: 1.0vh;
-  font-size: clamp(0.90rem, 1.94vh, 1.06rem);
+  font-size: clamp(0.95rem, 2.05vh, 1.16rem);
   background: #fff; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow);
 }
 .tbl th {
   background: #1e283b; color: #fff; text-align: left; font-weight: 700;
   padding: 0.8vh 1.0rem; border: 1px solid #2e3d55;
-  font-size: clamp(0.92rem, 2.0vh, 1.08rem);
+  font-size: clamp(0.95rem, 2.12vh, 1.18rem);
 }
 .tbl td { padding: 0.8vh 1.0rem; border: 1px solid var(--line); line-height: 1.42; }
 .tbl td.hi  { font-weight: 700; color: var(--ink); background: #f8fafc; }
@@ -337,7 +349,7 @@ html[lang^='zh'] body, .is-zh { font-family: 'Noto Sans SC', var(--sans); }
 .code__body {
   margin: 0; padding: 0.70rem 1.05rem; overflow-y: auto; flex: 1;
   font-family: var(--mono);
-  font-size: clamp(0.82rem, 1.72vh, 0.95rem);
+  font-size: clamp(0.9rem, 1.95vh, 1.06rem);
   line-height: 1.42; color: #d6deeb;
 }
 .hl-key  { color: #7fdbca; font-weight: 600; }
@@ -375,7 +387,7 @@ html[lang^='zh'] body, .is-zh { font-family: 'Noto Sans SC', var(--sans); }
 .ctrl__btn:hover:not(:disabled) { background: #1e283b; border-color: var(--accent-2); }
 .ctrl__btn:disabled { opacity: 0.25; cursor: not-allowed; }
 .ctrl__btn--accent {
-  background: var(--accent); color: #fff; border-color: var(--accent);
+  background: var(--accent-deep); color: #fff; border-color: var(--accent-deep);
   box-shadow: 0 4px 14px var(--accent-glow);
 }
 .ctrl__btn--accent:hover:not(:disabled) { background: #ff7a40; border-color: #ff7a40; }
@@ -404,6 +416,35 @@ html[lang^='zh'] body, .is-zh { font-family: 'Noto Sans SC', var(--sans); }
 /* ---------- Print / PDF export ----------
    Every slide becomes one landscape page. Chrome and controls drop out.
    Print from the browser with background graphics enabled.            */
+/* ---------- Narrow-window fallback ----------
+   Everything above sizes off viewport height alone, which is what keeps a
+   slide filling the screen at 1024x768, 1280x720 and 1920x1080 without ever
+   scrolling. That holds because a presentation viewport is landscape. Below
+   900px there is not enough width for two columns of prose, and holding the
+   14px floor in a column that narrow would push content off the slide. Stack
+   the columns and let the slide scroll instead: readable and reachable beats
+   laid out and clipped. Presentation sizes never reach this rule. */
+@media (max-width: 900px) {
+  .cols, .cols--even, .cols--wide, .cols--figure-left { grid-template-columns: 1fr; }
+  .cols--figure-left .pane--figure { order: -1; }
+  /* .cols is height-capped and clipped in the landscape layout, which is what
+     stops a long column pushing past the slide. Stacked, that cap silently
+     swallows the lower half of the slide and no ancestor can scroll to it,
+     because the clipped child never reports the extra height. Let it grow and
+     hand the scrolling to .slide__in. */
+  .cols { height: auto; overflow: visible; }
+  .pane { height: auto; overflow-y: visible; }
+  .slide__in { overflow-y: auto; }
+  /* The figure must keep its own aspect ratio here. Left to fill a stacked
+     row it gets whatever height is spare, preserveAspectRatio shrinks the
+     drawing to fit that, and the scale collapses far enough that holding the
+     14px floor piles every label on top of the next. Width-driven height
+     keeps the scale tied to the one dimension that is not scarce. */
+  .pane--figure { height: auto; align-items: stretch; }
+  .pane--figure .fig { max-height: none; display: block; }
+  .pane--figure .fig svg { max-height: none; width: 100%; height: auto; }
+}
+
 @media print {
   @page { size: 1122px 793px; margin: 0; }         /* A4 landscape at 96dpi */
   html, body { height: auto; overflow: visible; background: #fff; }

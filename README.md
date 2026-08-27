@@ -1,6 +1,6 @@
 # AI Security Engineering, Agent Risk Governance, and Vulnerability Standards
 
-A three-hour course published as a static GitHub Pages site. Slide decks plus companion
+A course published as a static GitHub Pages site. Slide decks plus companion
 reference pages, built from primary sources with confidence tags on every material claim.
 
 Owner: Ken Huang. Brief date 2026-08-27.

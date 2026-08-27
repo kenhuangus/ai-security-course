@@ -12,19 +12,19 @@
 <style>
   .controls { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: 1.2rem 0; }
   .chip {
-    font-family: var(--head); font-size: .82rem; font-weight: 700;
+    font-family: var(--head); font-size: .95rem; font-weight: 700;
     background: var(--card); color: var(--text);
     border: 1px solid var(--line); border-radius: 999px;
     padding: .35rem .9rem; cursor: pointer;
   }
   .chip:hover { border-color: var(--accent); }
-  .chip.is-on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .chip.is-on { background: var(--accent-deep); color: #fff; border-color: var(--accent-deep); }
   .search {
-    flex: 1; min-width: 200px; font-family: var(--sans); font-size: .9rem;
+    flex: 1; min-width: 200px; font-family: var(--sans); font-size: 1rem;
     padding: .45rem .8rem; border: 1px solid var(--line); border-radius: 8px;
     background: var(--card); color: var(--text);
   }
-  .cov { font-family: var(--mono); font-size: .74rem; font-weight: 700; padding: .12rem .45rem; border-radius: 4px; white-space: nowrap; }
+  .cov { font-family: var(--mono); font-size: .875rem; font-weight: 700; padding: .12rem .45rem; border-radius: 4px; white-space: nowrap; }
   .cov-yes { background: #e9f7ef; color: #1c5a2c; }
   .cov-part { background: #fff6e6; color: #7a4c00; }
   .cov-no { background: #fff5f5; color: #961b1b; }
@@ -33,7 +33,7 @@
   [data-theme="dark"] .cov-no { background: #3a1717; color: #ff9c9c; }
   tr.hidden { display: none; }
   .grouprow td { background: var(--paper-2); font-weight: 700; font-family: var(--head); }
-  .count { font-family: var(--mono); font-size: .8rem; color: var(--muted); }
+  .count { font-family: var(--mono); font-size: .95rem; color: var(--muted); }
   code { white-space: nowrap; }
 </style>
 </head>

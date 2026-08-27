@@ -1,6 +1,6 @@
 # Lab 2 — Telemetry gap analysis
 
-**10 minutes. Paper only. Work in pairs.**
+**Paper only. Work in pairs.**
 
 Below are five trace excerpts, simplified from the reconstructed July 2026 ExploitGym intrusion.
 Each is what an observability stack with good OpenTelemetry GenAI instrumentation would actually

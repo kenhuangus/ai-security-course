@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Security Engineering, Agent Risk Governance, and Vulnerability Standards</title>
-<meta name="description" content="A three-hour course on product security engineering in the AI era, agent risk governance, and AI vulnerability standards. Built on primary sources.">
+<meta name="description" content="A course on product security engineering in the AI era, agent risk governance, and AI vulnerability standards. Built on primary sources.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Kalam:wght@400;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
 <body>
 
 <nav class="topbar">
-  <div class="topbar__brand">AI Security <span>·</span> 3-Hour Course</div>
+  <div class="topbar__brand">AI Security <span>·</span> Engineering and Governance</div>
   <a href="#agenda">Agenda</a>
   <a href="#decks">Decks</a>
   <a href="#reference">Reference</a>
@@ -39,16 +39,16 @@
   <h2>Agenda</h2>
   <div class="scroll-x">
   <table>
-    <thead><tr><th>Block</th><th>Min</th><th>Content</th></tr></thead>
+    <thead><tr><th>Block</th><th>Content</th></tr></thead>
     <tbody>
-      <tr><td><strong>Opening: the 2026 inflection</strong></td><td>15</td><td>Capability curve, the unpatched backlog, discovery-to-weaponization compression, then ExploitGym as the concrete consequence.</td></tr>
-      <tr><td><strong>Module 1: SDL and proactive defense</strong></td><td>40</td><td>Gate-by-gate walkthrough. Offensive and defensive symmetry with honest calibration.</td></tr>
-      <tr><td>Lab 1: MAESTRO threat model</td><td>15</td><td>Paper-based worksheet against a supplied agentic reference architecture.</td></tr>
-      <tr><td>Break</td><td>10</td><td></td></tr>
-      <tr><td><strong>Module 2: Model and agent risk governance</strong></td><td>50</td><td>ExploitGym walked phase by phase. Telemetry field list derived backward from the reconstruction.</td></tr>
-      <tr><td>Lab 2: telemetry gap analysis</td><td>10</td><td>Given a trace excerpt, identify the risk signal and the missing field.</td></tr>
-      <tr><td><strong>Module 3: Standards and coordination</strong></td><td>30</td><td>AIVSS v0.8, SSVC track, AI CVE and CWE direction, Akrites and FLARE-AI, the disclosure routing tree.</td></tr>
-      <tr><td>Capstone and Q&amp;A</td><td>10</td><td>Score ExploitGym with AIVSS, run SSVC, route it.</td></tr>
+      <tr><td><strong>Opening: the 2026 inflection</strong></td><td>Capability curve, the unpatched backlog, discovery-to-weaponization compression, then ExploitGym as the concrete consequence.</td></tr>
+      <tr><td><strong>Module 1: SDL and proactive defense</strong></td><td>Gate-by-gate walkthrough. Offensive and defensive symmetry with honest calibration.</td></tr>
+      <tr><td>Lab 1: MAESTRO threat model</td><td>Paper-based worksheet against a supplied agentic reference architecture.</td></tr>
+      <tr><td>Break</td><td></td></tr>
+      <tr><td><strong>Module 2: Model and agent risk governance</strong></td><td>ExploitGym walked phase by phase. Telemetry field list derived backward from the reconstruction.</td></tr>
+      <tr><td>Lab 2: telemetry gap analysis</td><td>Given a trace excerpt, identify the risk signal and the missing field.</td></tr>
+      <tr><td><strong>Module 3: Standards and coordination</strong></td><td>AIVSS v0.8, SSVC track, AI CVE and CWE direction, Akrites and FLARE-AI, the disclosure routing tree.</td></tr>
+      <tr><td>Capstone and Q&amp;A</td><td>Score ExploitGym with AIVSS, run SSVC, route it.</td></tr>
     </tbody>
   </table>
   </div>
@@ -57,11 +57,11 @@
 <section id="decks">
   <h2>Slide decks</h2>
   <div class="cards">
-    <a class="card" href="slides/00-opening.html"><h3>Opening</h3><p>The 2026 inflection and the containment spine.</p><div class="card__meta">15 min</div></a>
-    <a class="card" href="slides/01-sdl.html"><h3>Module 1 · SDL and proactive defense</h3><p>Which classical gates survive, which need new evidence, which are new.</p><div class="card__meta">40 min</div></a>
-    <a class="card" href="slides/02-agent-risk.html"><h3>Module 2 · Agent risk governance</h3><p>ExploitGym phase by phase, and the telemetry that reconstructs it.</p><div class="card__meta">50 min</div></a>
-    <a class="card" href="slides/03-standards.html"><h3>Module 3 · Standards and coordination</h3><p>AIVSS v0.8, AI CVE and CWE, Akrites, FLARE-AI, disclosure routing.</p><div class="card__meta">30 min</div></a>
-    <a class="card" href="slides/04-capstone.html"><h3>Capstone</h3><p>Score, prioritize, and route one real incident end to end.</p><div class="card__meta">10 min</div></a>
+    <a class="card" href="slides/00-opening.html"><h3>Opening</h3><p>The 2026 inflection and the containment spine.</p></a>
+    <a class="card" href="slides/01-sdl.html"><h3>Module 1 · SDL and proactive defense</h3><p>Which classical gates survive, which need new evidence, which are new.</p></a>
+    <a class="card" href="slides/02-agent-risk.html"><h3>Module 2 · Agent risk governance</h3><p>ExploitGym phase by phase, and the telemetry that reconstructs it.</p></a>
+    <a class="card" href="slides/03-standards.html"><h3>Module 3 · Standards and coordination</h3><p>AIVSS v0.8, AI CVE and CWE, Akrites, FLARE-AI, disclosure routing.</p></a>
+    <a class="card" href="slides/04-capstone.html"><h3>Capstone</h3><p>Score, prioritize, and route one real incident end to end.</p></a>
   </div>
   <div class="note">Decks present in the browser. Arrow keys or space to advance, <code>F</code> for fullscreen,
     <code>#7</code> in the URL to deep-link a slide. Print from the browser with background graphics on to export a PDF.</div>
@@ -82,8 +82,8 @@
 <section id="labs">
   <h2>Labs</h2>
   <div class="cards">
-    <a class="card card--lab" href="labs/lab1-maestro-worksheet.md"><h3>Lab 1 · MAESTRO threat model</h3><p>Paper worksheet against an agentic reference architecture.</p><div class="card__meta">15 min</div></a>
-    <a class="card card--lab" href="labs/lab2-telemetry-worksheet.md"><h3>Lab 2 · Telemetry gap analysis</h3><p>Find the risk signal and the missing field in a real trace excerpt.</p><div class="card__meta">10 min</div></a>
+    <a class="card card--lab" href="labs/lab1-maestro-worksheet.md"><h3>Lab 1 · MAESTRO threat model</h3><p>Paper worksheet against an agentic reference architecture.</p></a>
+    <a class="card card--lab" href="labs/lab2-telemetry-worksheet.md"><h3>Lab 2 · Telemetry gap analysis</h3><p>Find the risk signal and the missing field in a real trace excerpt.</p></a>
   </div>
 </section>
 
