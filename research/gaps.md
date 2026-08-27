@@ -34,7 +34,7 @@ These were in the brief's ground truth and did not survive verification. They ar
 | NIST AI 600-1 Generative AI Profile PDF | HTTP 404 at the briefed path | Needs a replacement URL |
 | Berkeley CLTC profile v1.2 | HTTP 404 | Human oversight, containment, and delegated-action extensions unverified |
 | CISA CSAF resource page | HTTP 404 at the briefed path | Needs a replacement URL |
-| CSA MAESTRO publication | HTTP 404 at the briefed path | **Lab 1 depends on MAESTRO.** Canonical URL must be found |
+| CSA MAESTRO publication | Resolved 2026-08-27. Canonical URL supplied by the author and verified at HTTP 200 | Closed. Lab 1 written against it |
 | DARPA AIxCC site | Did not resolve on sweep | AIxCC final results unverified |
 
 ## C. Unverified claims held off slides

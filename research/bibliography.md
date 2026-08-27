@@ -13,6 +13,8 @@ Status column records the result of an automated sweep on 2026-08-27. `403` mean
 | AIVSS Scoring System for OWASP Agentic AI Core Security Risks v0.8 | OWASP AIVSS Project | 2026 | [P] | 200 | https://aivss.owasp.org/assets/publications/AIVSS%20Scoring%20System%20For%20OWASP%20Agentic%20AI%20Core%20Security%20Risks%20v0.8.pdf |
 | AIVSS Scoring System v0.5 | OWASP AIVSS Project | 2025 | [P] | 200 | https://aivss.owasp.org/assets/publications/AIVSS%20Scoring%20System%20For%20OWASP%20Agentic%20AI%20Core%20Security%20Risks%20v0.5.pdf |
 | AIVSS-SSVC Calculator | OWASP AIVSS Project | 2026 | [P] | 200 | https://aivss.owasp.org/ssvc.html |
+| Agentic AI Threat Modeling Framework: MAESTRO | Cloud Security Alliance (Ken Huang) | 2025-02-06 | [P] | 200 | https://cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro |
+| MAESTRO Sentinel threat modeling platform | DistributedApps.ai (Ken Huang) | 2026 | [P] | 200 | https://maestro-sentinel.com/ |
 | Agent intrusion technical timeline | Hugging Face | 2026-07-16 | [P] | 200 | https://huggingface.co/blog/agent-intrusion-technical-timeline |
 | Our evaluation of Claude Mythos Preview's cyber capabilities | UK AI Security Institute | 2026 | [P] | 200 | https://www.aisi.gov.uk/blog/our-evaluation-of-claude-mythos-previews-cyber-capabilities |
 | FreeBSD-SA-26:08.rpcsec_gss | FreeBSD Security Team | 2026-03-26 | [P] | 200 | https://www.freebsd.org/security/advisories/FreeBSD-SA-26:08.rpcsec_gss.asc |
@@ -104,7 +106,6 @@ These are listed so that nothing is silently dropped. Full consequences in `gaps
 | NIST AI 600-1 Generative AI Profile | NIST | **404** | Needs replacement URL |
 | AI Risk-Management Standards Profile v1.2 | Berkeley CLTC | **404** | Needs replacement URL |
 | CSAF resource page | CISA | **404** | Needs replacement URL |
-| MAESTRO threat modeling framework | Cloud Security Alliance | **404** | **Lab 1 depends on this.** Canonical URL required |
 | AIVSS calculator (third-party host) | parthsohaney.online | **DNS** | Cannot cross-check arithmetic |
 | AI Cyber Challenge | DARPA | **DNS** | AIxCC results unverified |
 
