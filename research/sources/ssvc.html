@@ -1,0 +1,873 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AIVSS-SSVC Calculator</title>
+  <style>
+    :root{
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface2: #f7f8fb;
+      --line: #e6e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+
+      --blue: #2563eb;
+      --violet: #7c3aed;
+      --cyan: #06b6d4;
+      --teal: #14b8a6;
+      --pink: #ec4899;
+      --amber: #f59e0b;
+      --green: #22c55e;
+      --red: #ef4444;
+
+      --shadow: 0 16px 45px rgba(15,23,42,0.10);
+      --shadow2: 0 10px 24px rgba(15,23,42,0.07);
+      --radius: 16px;
+    }
+
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(900px 460px at 8% 0%, rgba(37,99,235,0.16), transparent 58%),
+        radial-gradient(900px 460px at 92% 0%, rgba(124,58,237,0.16), transparent 58%),
+        radial-gradient(900px 520px at 50% 105%, rgba(6,182,212,0.12), transparent 55%),
+        linear-gradient(180deg, rgba(20,184,166,0.06), transparent 30%),
+        var(--bg);
+    }
+
+    .wrap{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 26px 16px 56px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(37,99,235,0.10), rgba(124,58,237,0.08), rgba(6,182,212,0.08)),
+        rgba(255,255,255,0.75);
+      border: 1px solid rgba(37,99,235,0.18);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 280px;
+    }
+
+    .logo{
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: conic-gradient(from 210deg, var(--blue), var(--violet), var(--pink), var(--amber), var(--cyan), var(--blue));
+      box-shadow: 0 14px 26px rgba(37,99,235,0.18);
+      position: relative;
+      overflow:hidden;
+    }
+    .logo::after{
+      content:"";
+      position:absolute;
+      inset:-35% -35%;
+      background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.75), transparent 55%);
+      transform: rotate(12deg);
+      opacity: 0.9;
+    }
+
+    .brand h1{
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: 0.2px;
+    }
+    .brand p{
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12.8px;
+      line-height: 1.35;
+      max-width: 700px;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    button{
+      appearance:none;
+      border: 1px solid rgba(15,23,42,0.10);
+      background: rgba(255,255,255,0.82);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 20px rgba(15,23,42,0.05);
+      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+    }
+    button:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 18px 30px rgba(15,23,42,0.08);
+      border-color: rgba(37,99,235,0.35);
+    }
+
+    button.primary{
+      border: 1px solid rgba(37,99,235,0.25);
+      background: linear-gradient(135deg, rgba(37,99,235,0.14), rgba(124,58,237,0.12), rgba(6,182,212,0.10));
+    }
+
+    button.secondary{
+      background: rgba(255,255,255,0.75);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+      margin-top: 16px;
+      align-items: start;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+      .brand{ min-width: unset; }
+    }
+
+    .card{
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(15,23,42,0.08);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+    }
+
+    .card.colorwash::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:
+        radial-gradient(900px 340px at 12% 0%, rgba(37,99,235,0.16), transparent 55%),
+        radial-gradient(900px 340px at 88% 0%, rgba(124,58,237,0.16), transparent 55%),
+        radial-gradient(900px 340px at 50% 110%, rgba(6,182,212,0.12), transparent 55%);
+      pointer-events:none;
+      opacity: 0.85;
+    }
+    .card.colorwash > *{ position: relative; }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    h2{
+      margin: 0;
+      font-size: 15.5px;
+      letter-spacing: 0.2px;
+    }
+
+    .hint{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: var(--text);
+      font-size: 12.6px;
+      font-weight: 800;
+      border: 1px solid rgba(37,99,235,0.20);
+      background:
+        linear-gradient(135deg, rgba(37,99,235,0.08), rgba(124,58,237,0.07), rgba(6,182,212,0.07));
+      white-space: nowrap;
+    }
+
+    .form{
+      margin-top: 12px;
+      display:grid;
+      gap: 10px;
+    }
+
+    .field{
+      display:grid;
+      grid-template-columns: 1fr 270px;
+      gap: 12px;
+      align-items:center;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(15,23,42,0.08);
+      background:
+        linear-gradient(135deg, rgba(37,99,235,0.05), rgba(124,58,237,0.04), rgba(6,182,212,0.04)),
+        rgba(247,248,251,0.55);
+      box-shadow: 0 10px 18px rgba(15,23,42,0.04);
+    }
+    @media (max-width: 720px){
+      .field{ grid-template-columns: 1fr; }
+    }
+
+    .label{
+      font-weight: 900;
+      font-size: 13.5px;
+      margin: 0;
+    }
+    .help{
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12.9px;
+      line-height: 1.5;
+    }
+
+    .selectwrap{
+      position: relative;
+      border-radius: 12px;
+    }
+    .selectwrap::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      border-radius: 12px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(37,99,235,0.55), rgba(124,58,237,0.45), rgba(6,182,212,0.45));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events:none;
+      opacity: 0.55;
+    }
+
+    select{
+      width: 100%;
+      border: 1px solid rgba(15,23,42,0.10);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.92);
+      padding: 10px 10px;
+      color: var(--text);
+      outline: none;
+      box-shadow: 0 12px 18px rgba(15,23,42,0.04);
+      transition: border-color 120ms ease, box-shadow 120ms ease;
+      appearance: none;
+    }
+    select:focus{
+      border-color: rgba(37,99,235,0.55);
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.12);
+    }
+
+    .cap-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .cap-head .meta{
+      margin: 0;
+      color: var(--muted);
+      font-size: 12.9px;
+      line-height: 1.5;
+    }
+
+    table{
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(15,23,42,0.08);
+      box-shadow: 0 12px 22px rgba(15,23,42,0.04);
+      margin-top: 10px;
+    }
+    th, td{
+      padding: 10px 10px;
+      border-bottom: 1px solid rgba(15,23,42,0.08);
+      vertical-align: top;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    th{
+      color: var(--text);
+      font-size: 12.8px;
+      font-weight: 950;
+      letter-spacing: 0.2px;
+      background:
+        linear-gradient(90deg, rgba(37,99,235,0.14), rgba(124,58,237,0.12), rgba(6,182,212,0.10));
+    }
+    tr:last-child td{ border-bottom: none; }
+
+    td .tlabel{
+      color: var(--text);
+      font-weight: 900;
+      margin-bottom: 3px;
+    }
+    td .tdesc{
+      color: var(--muted);
+      font-size: 12.7px;
+      line-height: 1.35;
+    }
+
+    .kpis{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .kpi{
+      border-radius: 14px;
+      padding: 12px;
+      border: 1px solid rgba(15,23,42,0.08);
+      background:
+        linear-gradient(135deg, rgba(37,99,235,0.06), rgba(124,58,237,0.05), rgba(6,182,212,0.05)),
+        rgba(247,248,251,0.55);
+      box-shadow: 0 12px 20px rgba(15,23,42,0.04);
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi::before{
+      content:"";
+      position:absolute;
+      inset: -50% -50%;
+      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.70), transparent 55%);
+      transform: rotate(10deg);
+      opacity: 0.7;
+      pointer-events:none;
+    }
+    .kpi > *{ position: relative; }
+
+    .kpi .name{
+      margin: 0;
+      color: var(--muted);
+      font-size: 12.6px;
+    }
+    .kpi .value{
+      margin: 6px 0 0;
+      font-size: 18px;
+      font-weight: 950;
+      letter-spacing: 0.2px;
+      color: var(--text);
+    }
+    .kpi .mini{
+      margin: 4px 0 0;
+      font-size: 12.6px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .outcome{
+      margin-top: 12px;
+      border-radius: 18px;
+      padding: 14px;
+      border: 1px solid rgba(15,23,42,0.08);
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 18px 38px rgba(15,23,42,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .outcome::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(760px 240px at 18% 0%, rgba(37,99,235,0.22), transparent 60%),
+        radial-gradient(760px 240px at 82% 0%, rgba(124,58,237,0.20), transparent 60%),
+        radial-gradient(760px 240px at 50% 120%, rgba(6,182,212,0.16), transparent 60%);
+      opacity: 0.7;
+      pointer-events:none;
+    }
+    .outcome > *{ position: relative; }
+
+    .outcome .big{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      margin: 0;
+    }
+
+    .outcome-title{
+      font-size: 15.5px;
+      font-weight: 1000;
+      letter-spacing: 0.2px;
+      margin: 0;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 12.6px;
+      font-weight: 1000;
+      border: 1px solid rgba(15,23,42,0.12);
+      background: rgba(255,255,255,0.70);
+      white-space: nowrap;
+      box-shadow: 0 10px 18px rgba(15,23,42,0.05);
+    }
+
+    .b-defer{ color: var(--green); border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.10); }
+    .b-sched{ color: var(--blue);  border-color: rgba(37,99,235,0.35);  background: rgba(37,99,235,0.10); }
+    .b-ooc{   color: var(--amber); border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.12); }
+    .b-imm{   color: var(--red);   border-color: rgba(239,68,68,0.35);   background: rgba(239,68,68,0.10); }
+
+    .subtle{
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12.95px;
+      line-height: 1.55;
+    }
+
+    .mono{
+      margin-top: 12px;
+      border-radius: 14px;
+      padding: 12px;
+      background: #0b1220;
+      color: #d1d5db;
+      border: 1px solid rgba(255,255,255,0.10);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-size: 12.2px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+      display:none;
+      box-shadow: 0 20px 50px rgba(11,18,32,0.22);
+    }
+
+    .note{
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 12.8px;
+      line-height: 1.55;
+    }
+
+    .statusbar{
+      margin-top: 10px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(15,23,42,0.10);
+      background: rgba(255,255,255,0.72);
+      box-shadow: 0 10px 18px rgba(15,23,42,0.04);
+      font-size: 12.6px;
+      font-weight: 900;
+    }
+    .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 0 4px rgba(6,182,212,0.12);
+    }
+    .dot.blue{ background: var(--blue); box-shadow: 0 0 0 4px rgba(37,99,235,0.12); }
+    .dot.violet{ background: var(--violet); box-shadow: 0 0 0 4px rgba(124,58,237,0.12); }
+    .dot.teal{ background: var(--teal); box-shadow: 0 0 0 4px rgba(20,184,166,0.12); }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>AIVSS-SSVC Calculator</h1>
+          <p>Computes the numeric risk score and selects Defer, Scheduled, Out-of-Cycle, or Immediate from the SSVC decision matrix using threat level, agent level, and systemic impact.</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="primary" id="calcBtn" type="button">Recalculate</button>
+        <button class="secondary" id="resetBtn" type="button">Reset to Example</button>
+        <button class="secondary" id="toggleJsonBtn" type="button">Show/Hide JSON</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card colorwash">
+        <div class="section-title">
+          <h2>Inputs</h2>
+          <span class="pill">Outcome is matrix-based</span>
+        </div>
+        <p class="hint">Set exploitation state, vulnerability posture, and systemic impact, then score the ten capability factors. The page computes category averages, classifies the agent level, calculates the numeric score, and maps the qualitative triple to the SSVC outcome.</p>
+
+        <div class="form">
+          <div class="field">
+            <div>
+              <p class="label">P(Threat) — exploitation state</p>
+              <p class="help">None: no evidence and no public PoC. Public PoC: known method exists. Active: reliable in-the-wild exploitation.</p>
+            </div>
+            <div class="selectwrap">
+              <select id="pThreat">
+                <option value="none" data-prob="0.2">None (0.2)</option>
+                <option value="poc" data-prob="0.5" selected>Public PoC (0.5)</option>
+                <option value="active" data-prob="0.9">Active (0.9)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <div>
+              <p class="label">P(Vulnerability) — exploit success probability</p>
+              <p class="help">Maps your control posture across the ten agent weakness categories to a probability for exploit success.</p>
+            </div>
+            <div class="selectwrap">
+              <select id="pVuln">
+                <option value="hardened" data-prob="0.3">Hardened (0.3)</option>
+                <option value="moderate" data-prob="0.5" selected>Moderate (0.5)</option>
+                <option value="exposed" data-prob="0.8">Exposed (0.8)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <div>
+              <p class="label">Impact — systemic consequence</p>
+              <p class="help">Contained: limited blast radius. Significant: major business function disruption. Critical: existential or safety-critical.</p>
+            </div>
+            <div class="selectwrap">
+              <select id="impact">
+                <option value="contained" data-val="2">Contained (2)</option>
+                <option value="significant" data-val="5" selected>Significant (5)</option>
+                <option value="critical" data-val="10">Critical (10)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="statusbar" aria-hidden="true">
+          <span class="chip"><span class="dot blue"></span>Threat</span>
+          <span class="chip"><span class="dot violet"></span>Capability</span>
+          <span class="chip"><span class="dot teal"></span>Impact</span>
+          <span class="chip"><span class="dot"></span>Outcome</span>
+        </div>
+
+        <div class="cap-head">
+          <div>
+            <h2>Exposure: 10 Capability Factors (1–5)</h2>
+            <p class="meta">Category A averages factors 1–4, Category B averages factors 5–7, and Category C averages factors 8–10. Mixed-score rules classify Copilot (2×), Specialist (4×), or Prime Mover (8×).</p>
+          </div>
+          <span class="pill">Live update</span>
+        </div>
+
+        <table aria-label="Capability Factors">
+          <thead>
+            <tr>
+              <th style="width: 56%;">Factor</th>
+              <th style="width: 24%;">Category</th>
+              <th style="width: 20%;">Score</th>
+            </tr>
+          </thead>
+          <tbody id="factorBody"></tbody>
+        </table>
+
+        <div id="jsonBox" class="mono"></div>
+        <p class="note">The JSON includes inputs and computed values for integration into internal tooling without changing decision semantics.</p>
+      </div>
+
+      <div class="card colorwash">
+        <div class="section-title">
+          <h2>Results</h2>
+          <span class="pill">Likelihood × Exposure × Impact</span>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi">
+            <p class="name">Likelihood</p>
+            <p class="value" id="likelihoodVal">—</p>
+            <p class="mini" id="likelihoodMini">P(Threat) × P(Vulnerability)</p>
+          </div>
+
+          <div class="kpi">
+            <p class="name">Risk Score</p>
+            <p class="value" id="riskScoreVal">—</p>
+            <p class="mini" id="riskMini">Likelihood × Exposure × Impact</p>
+          </div>
+
+          <div class="kpi">
+            <p class="name">Agent Level</p>
+            <p class="value" id="agentLevelVal">—</p>
+            <p class="mini" id="agentMini">Exposure multiplier</p>
+          </div>
+
+          <div class="kpi">
+            <p class="name">Category A / B / C Averages</p>
+            <p class="value" id="abcVal">—</p>
+            <p class="mini">Execution / Environment / Predictability</p>
+          </div>
+        </div>
+
+        <div class="outcome" aria-live="polite">
+          <div class="big">
+            <p class="outcome-title">Remediation Outcome</p>
+            <span id="outcomeBadge" class="badge">—</span>
+          </div>
+          <p class="subtle" id="outcomeRationale">—</p>
+          <p class="subtle" id="timelineVal">—</p>
+        </div>
+
+        <p class="note">The score supports prioritization and tracking. The outcome is selected by the decision matrix using threat level, agent level, and systemic impact.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const factors = [
+      { id: "f1",  name: "Execution Autonomy",              cat: "A", desc: "Degree of independent operation without human approval." },
+      { id: "f2",  name: "Tool Authority Level",            cat: "A", desc: "Power and scope of tools the agent can invoke." },
+      { id: "f3",  name: "Code Execution Rights",           cat: "A", desc: "Ability to execute, generate, or modify code." },
+      { id: "f4",  name: "Critical System Access",          cat: "A", desc: "Direct access to production, financial, or safety-critical systems." },
+      { id: "f5",  name: "Persistent Memory",               cat: "B", desc: "Ability to store and recall information across sessions." },
+      { id: "f6",  name: "Dynamic Identity & Permissions",  cat: "B", desc: "Ability to assume roles or elevate privileges." },
+      { id: "f7",  name: "Multi-Agent Coordination",        cat: "B", desc: "Ability to orchestrate or interact with other agents." },
+      { id: "f8",  name: "Self-Modification Capability",    cat: "C", desc: "Ability to alter logic, goals, or behavior." },
+      { id: "f9",  name: "Non-Determinism Level",           cat: "C", desc: "Variability and unpredictability in decision-making." },
+      { id: "f10", name: "Deceptiveness Potential",         cat: "C", desc: "Capacity to mislead or obfuscate intentions/actions." }
+    ];
+
+    const defaultExample = {
+      pThreat: "poc",
+      pVuln: "moderate",
+      impact: "critical",
+      scores: { f1:4, f2:4, f3:4, f4:4, f5:3, f6:3, f7:3, f8:2, f9:3, f10:2 }
+    };
+
+    const outcomeMatrix = {
+      none: {
+        copilot:    { contained: "Defer",        significant: "Scheduled",    critical: "Out-of-Cycle" },
+        specialist: { contained: "Scheduled",    significant: "Scheduled",    critical: "Out-of-Cycle" },
+        primemover: { contained: "Scheduled",    significant: "Out-of-Cycle", critical: "Immediate" }
+      },
+      poc: {
+        copilot:    { contained: "Scheduled",    significant: "Scheduled",    critical: "Out-of-Cycle" },
+        specialist: { contained: "Scheduled",    significant: "Out-of-Cycle", critical: "Out-of-Cycle" },
+        primemover: { contained: "Out-of-Cycle", significant: "Out-of-Cycle", critical: "Immediate" }
+      },
+      active: {
+        copilot:    { contained: "Out-of-Cycle", significant: "Out-of-Cycle", critical: "Immediate" },
+        specialist: { contained: "Out-of-Cycle", significant: "Immediate",    critical: "Immediate" },
+        primemover: { contained: "Immediate",    significant: "Immediate",    critical: "Immediate" }
+      }
+    };
+
+    const timelineByOutcome = {
+      "Defer":        "Timeline: no deadline; monitor for changes.",
+      "Scheduled":    "Timeline: 30–90 days (standard remediation cycle).",
+      "Out-of-Cycle": "Timeline: 7–30 days (accelerated remediation).",
+      "Immediate":    "Timeline: 0–7 days (highest urgency)."
+    };
+
+    const badgeClass = {
+      "Defer": "b-defer",
+      "Scheduled": "b-sched",
+      "Out-of-Cycle": "b-ooc",
+      "Immediate": "b-imm"
+    };
+
+    function el(id){ return document.getElementById(id); }
+
+    function buildFactorRows(){
+      const tbody = el("factorBody");
+      tbody.innerHTML = "";
+      for (const f of factors){
+        const tr = document.createElement("tr");
+
+        const td1 = document.createElement("td");
+        td1.innerHTML = `<div class="tlabel">${f.name}</div><div class="tdesc">${f.desc}</div>`;
+
+        const td2 = document.createElement("td");
+        td2.textContent = f.cat === "A"
+          ? "A — Execution Power"
+          : (f.cat === "B" ? "B — Environment & Adaptation" : "C — Predictability & Influence");
+
+        const td3 = document.createElement("td");
+        const sel = document.createElement("select");
+        sel.id = f.id;
+        for (let i=1;i<=5;i++){
+          const opt = document.createElement("option");
+          opt.value = String(i);
+          opt.textContent = String(i);
+          sel.appendChild(opt);
+        }
+        sel.addEventListener("change", recalc);
+        td3.appendChild(sel);
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tbody.appendChild(tr);
+      }
+    }
+
+    function getSelectedDataValue(selectEl, attrName){
+      const opt = selectEl.options[selectEl.selectedIndex];
+      const v = opt.getAttribute(attrName);
+      return v == null ? null : Number(v);
+    }
+
+    function avg(nums){
+      return nums.length ? nums.reduce((a,b)=>a+b,0)/nums.length : 0;
+    }
+
+    function round2(x){
+      return Math.round(x * 100) / 100;
+    }
+
+    function classifyAgent(aAvg,bAvg,cAvg){
+      const anyGE4 = (aAvg >= 4.0) || (bAvg >= 4.0) || (cAvg >= 4.0);
+      const countGE3 = (aAvg >= 3.0) + (bAvg >= 3.0) + (cAvg >= 3.0);
+      const allLT25 = (aAvg < 2.5) && (bAvg < 2.5) && (cAvg < 2.5);
+
+      if (anyGE4){
+        return { key:"primemover", label:"Prime Mover", exposure:8, rationale:"At least one category average is ≥ 4.0, indicating high capability on a harm-driving dimension." };
+      }
+      if (countGE3 >= 2){
+        return { key:"specialist", label:"Specialist", exposure:4, rationale:"At least two category averages are ≥ 3.0, indicating broad moderate capability across multiple dimensions." };
+      }
+      if (allLT25){
+        return { key:"copilot", label:"Copilot", exposure:2, rationale:"All category averages are < 2.5, indicating constrained capability across execution, adaptation, and influence." };
+      }
+
+      const strongest = Math.max(aAvg,bAvg,cAvg);
+      if (strongest >= 3.0){
+        return { key:"specialist", label:"Specialist", exposure:4, rationale:"Mixed profile with a strongest category average ≥ 3.0; selecting the higher classification." };
+      }
+      return { key:"copilot", label:"Copilot", exposure:2, rationale:"Mixed profile but strongest category average < 3.0; defaulting to Copilot." };
+    }
+
+    function computeOutcome(threatKey, agentKey, impactKey){
+      return outcomeMatrix?.[threatKey]?.[agentKey]?.[impactKey] || "Scheduled";
+    }
+
+    function recalc(){
+      const pThreatSel = el("pThreat");
+      const pVulnSel = el("pVuln");
+      const impactSel = el("impact");
+
+      const pThreat = getSelectedDataValue(pThreatSel,"data-prob");
+      const pVuln = getSelectedDataValue(pVulnSel,"data-prob");
+      const impactV = getSelectedDataValue(impactSel,"data-val");
+
+      const threatKey = pThreatSel.value;
+      const impactKey = impactSel.value;
+
+      const scores = {};
+      for (const f of factors){
+        const v = Number(el(f.id).value);
+        scores[f.id] = Number.isFinite(v) ? v : 1;
+      }
+
+      const aAvg = avg([scores.f1,scores.f2,scores.f3,scores.f4]);
+      const bAvg = avg([scores.f5,scores.f6,scores.f7]);
+      const cAvg = avg([scores.f8,scores.f9,scores.f10]);
+
+      const agent = classifyAgent(aAvg,bAvg,cAvg);
+
+      const likelihood = pThreat * pVuln;
+      const riskScore = likelihood * agent.exposure * impactV;
+
+      el("likelihoodVal").textContent = String(round2(likelihood));
+      el("likelihoodMini").textContent = `P(Threat) ${pThreat} × P(Vulnerability) ${pVuln}`;
+
+      el("riskScoreVal").textContent = String(round2(riskScore));
+      el("riskMini").textContent = `${round2(likelihood)} × ${agent.exposure} × ${impactV}`;
+
+      el("agentLevelVal").textContent = agent.label;
+      el("agentMini").textContent = `Exposure multiplier: ${agent.exposure}×`;
+
+      el("abcVal").textContent = `${round2(aAvg)} / ${round2(bAvg)} / ${round2(cAvg)}`;
+
+      const outcome = computeOutcome(threatKey, agent.key, impactKey);
+
+      const badge = el("outcomeBadge");
+      badge.className = `badge ${badgeClass[outcome] || ""}`;
+      badge.textContent = outcome;
+
+      el("outcomeRationale").textContent =
+        `Decision inputs: Threat=${pThreatSel.options[pThreatSel.selectedIndex].text}, Agent=${agent.label} (${agent.exposure}×), Impact=${impactSel.options[impactSel.selectedIndex].text}. Classification rationale: ${agent.rationale}`;
+
+      el("timelineVal").textContent = timelineByOutcome[outcome] || "";
+
+      const payload = {
+        model: "AIVSS-SSVC",
+        inputs: {
+          pThreat: { level: threatKey, value: pThreat },
+          pVulnerability: { posture: pVulnSel.value, value: pVuln },
+          impact: { level: impactKey, value: impactV },
+          capabilityScores: scores
+        },
+        computed: {
+          categoryA_avg: round2(aAvg),
+          categoryB_avg: round2(bAvg),
+          categoryC_avg: round2(cAvg),
+          agentLevel: { key: agent.key, label: agent.label, exposureMultiplier: agent.exposure },
+          likelihood: round2(likelihood),
+          riskScore: round2(riskScore),
+          outcome,
+          timeline: timelineByOutcome[outcome] || null
+        }
+      };
+
+      const jsonBox = el("jsonBox");
+      jsonBox.textContent = JSON.stringify(payload, null, 2);
+    }
+
+    function resetToExample(){
+      el("pThreat").value = defaultExample.pThreat;
+      el("pVuln").value = defaultExample.pVuln;
+      el("impact").value = defaultExample.impact;
+      for (const f of factors){
+        el(f.id).value = String(defaultExample.scores[f.id] ?? 1);
+      }
+      recalc();
+    }
+
+    function bindControls(){
+      el("pThreat").addEventListener("change", recalc);
+      el("pVuln").addEventListener("change", recalc);
+      el("impact").addEventListener("change", recalc);
+
+      el("calcBtn").addEventListener("click", recalc);
+      el("resetBtn").addEventListener("click", resetToExample);
+
+      el("toggleJsonBtn").addEventListener("click", () => {
+        const box = el("jsonBox");
+        box.style.display = (box.style.display === "block") ? "none" : "block";
+      });
+    }
+
+    buildFactorRows();
+    bindControls();
+    resetToExample();
+  </script>
+</body>
+</html>
