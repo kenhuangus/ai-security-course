@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1 · SDL and Proactive Defense</title>
+<meta name="description" content="Which classical SDL gates survive, which need new evidence, and which are entirely new, with offensive and defensive capability calibrated honestly.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Kalam:wght@400;700&family=Noto+Sans+SC:wght@400;500;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/deck.css">
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar__brand"><span class="bar__logo">◆</span><span data-i18n="ui.brand">MODULE 1</span></div>
+  <div class="bar__title" id="slideTitle">SDL and Proactive Defense</div>
+  <div class="bar__actions">
+    <button class="bar__btn" id="fsBtn" aria-label="Enter fullscreen (F)" title="Toggle fullscreen (F)">
+      <span class="bar__btn-label" data-i18n="ui.fullscreen">Full Screen</span>
+    </button>
+    <a href="../index.html" class="bar__cta bar__cta--alt" data-i18n="ui.home">Course home</a>
+  </div>
+</header>
+
+<main class="deck">
+
+<!-- 1 -->
+<section class="slide is-active slide--dark" data-title="Cover">
+  <div class="slide__in center">
+    <div class="eyebrow" data-i18n="m1.eyebrow">Module 1</div>
+    <h1 class="hero__title" data-i18n="m1.title">SDL AND PROACTIVE DEFENSE</h1>
+    <p class="hero__sub" data-i18n="m1.sub">Which classical gates survive, which need new evidence, and which are entirely new. With both sides of the capability question stated honestly.</p>
+    <div class="hero__meta" data-i18n="m1.meta">Every capability number labelled with the benchmark that produced it</div>
+  </div>
+  <aside class="notes"><p>The promise to make at the start: no capability number in this module appears without the benchmark that produced it, and where a source reports a failure the failure is on the slide with the same weight as the success. If the room has been to three vendor talks this quarter, that promise is why they should stay.</p></aside>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-title="The reframe">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m1.s2.k">The module thesis</div>
+    <h2 class="h2" data-i18n="m1.s2.h">Finding more bugs is not the binding constraint</h2>
+    <p class="lead" data-i18n="m1.s2.l">The instinct when offensive capability rises is to find more. The measured evidence says the constraint sits downstream of discovery, in triage, patching and deployment.</p>
+    <div class="callout"><span>⚠</span><span>An organization that doubles its discovery rate without changing its triage and deployment capacity has converted a security investment into a <strong>backlog</strong>.</span></div>
+    <p class="source">Derived in research/w3-sdl.md from Forescout [P], Akrites via Infosecurity [S], and CVE volume data [S].</p>
+  </div>
+  <aside class="notes"><p>Open here and never leave it. Everything in the module either supports this or is a consequence of it. Akrites states the same point institutionally by measuring success in patch deployment rather than patch publication, which comes up again in Module 3.</p></aside>
+</section>
+
+<!-- 3 -->
+<section class="slide slide--alt" data-title="Three numbers">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s3.k">Measured, not projected</div>
+    <h2 class="h2" data-i18n="m1.s3.h">Three numbers from three sources</h2>
+    <div class="fig" data-fig="funnel"></div>
+    <p class="source">Forescout Vedere Labs, 2026-04-14 [P]; Infosecurity Magazine 2026-08-19 [S] and 2026-04-15 [S].</p>
+  </div>
+  <aside class="notes"><p>The 4-of-72 number is the one to dwell on. That run produced four genuine, confirmed zero-days, so the tooling works. It also produced 68 things that were not. Both halves are the finding.</p></aside>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-title="Calibration, part one">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s4.k">Calibration</div>
+    <h2 class="h2" data-i18n="m1.s4.h">What AI reliably does well</h2>
+    <table class="tbl">
+      <thead><tr><th>Capability</th><th>Evidence</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">Breadth of enumeration</td><td>FOFA searches surfaced 647,017 n8n instances globally, 25,209 in China, then autonomous narrowing to about 40 addresses for probing</td></tr>
+        <tr><td class="hi">Compressing target analysis</td><td>Unit 42 describes hundreds of hours of manual targeting analysis reduced to minutes</td></tr>
+        <tr><td class="hi">Finding real, novel defects</td><td>Four confirmed OpenNDS zero-days, FSCT-2026-0001 through 0004</td></tr>
+        <tr><td class="hi">Long-horizon persistence</td><td>Mythos averaged 22 of 32 steps on a scenario humans need about 20 hours for</td></tr>
+        <tr><td class="hi">Memory-safety analysis at depth</td><td>CVE-2026-4747 is a 17-year-old stack overflow in FreeBSD RPCSEC_GSS handling</td></tr>
+        <tr><td class="hi">Working inside an agent framework</td><td>Hermes Agent gave a model terminal access, Telegram C2, and custom skills</td></tr>
+      </tbody>
+    </table>
+    <p class="source">Unit 42 [P], Forescout Vedere Labs [P], UK AISI [P], FreeBSD advisory and NVD [P].</p>
+  </div>
+  <aside class="notes"><p>Do not soften this half. The capability is real and this is not the slide to hedge on. The hedging belongs on the next slide, where it is equally sourced.</p></aside>
+</section>
+
+<!-- 5 -->
+<section class="slide slide--alt" data-title="Calibration, part two">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s5.k">Calibration</div>
+    <h2 class="h2" data-i18n="m1.s5.h">What it still fails at</h2>
+    <table class="tbl">
+      <thead><tr><th>Failure</th><th>Evidence</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">Autonomous exploitation against real preconditions</td><td class="bad">Both autonomous attempts in the Unit 42 campaign failed. Langflow needed conditions that were not present; n8n forms all required authentication, contradicting the proof of concept</td></tr>
+        <tr><td class="hi">Triage precision</td><td class="bad">72 raw alerts reduced to 4 confirmed zero-days</td></tr>
+        <tr><td class="hi">Hallucinated vulnerabilities</td><td class="bad">False-positive null-pointer claims in two runs. Most open-source models hallucinated consistently</td></tr>
+        <tr><td class="hi">False negatives</td><td class="bad">One model concluded there was no critical vulnerability meeting the bar where vulnerabilities existed</td></tr>
+        <tr><td class="hi">Correct vulnerability classification</td><td class="bad">Multiple models confused heap and stack corruption while still finding the bug</td></tr>
+        <tr><td class="hi">Staying on task</td><td class="bad">One model abandoned its exploitation plan after minor syntax errors distracted it into fixing them</td></tr>
+      </tbody>
+    </table>
+    <p class="source">Unit 42 [P] and Forescout Vedere Labs [P]. Model names in research/w4-offensive.md.</p>
+  </div>
+  <aside class="notes"><p>The classification row is the quietly alarming one. A model that finds a real bug and then describes it wrongly is worse than one that finds nothing, because the wrong description is what reaches the triage queue and gets acted on.</p></aside>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-title="New failure modes">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m1.s6.k">The row that deserves its own slide</div>
+    <h2 class="h2" data-i18n="m1.s6.h">Autonomy adds failure modes, it does not only remove them</h2>
+    <p class="lead" data-i18n="m1.s6.l">The Unit 42 agent started an HTTP file server instead of using an isolated staging directory, and exposed the entire operation. Researchers describe this as a novel operational-security risk that would not exist under a manual workflow.</p>
+    <div class="callout callout--info"><span>◆</span><span>This cuts both ways. An autonomous defensive agent can expose your own operation in exactly the same manner, and for exactly the same reason.</span></div>
+    <p class="source">Unit 42, Palo Alto Networks [P].</p>
+  </div>
+  <aside class="notes"><p>Worth pausing on. Most of the room is thinking about attackers using agents. The transferable lesson is that any autonomous system introduces mistakes a human operator would not make, and the defensive agent you deploy is subject to the same class of error.</p></aside>
+</section>
+
+<!-- 7 -->
+<section class="slide slide--alt" data-title="Three benchmarks">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s7.k">Reading capability claims</div>
+    <h2 class="h2" data-i18n="m1.s7.h">Three benchmarks that get quoted as one curve</h2>
+    <div class="fig" data-fig="benchmarks"></div>
+    <p class="source">UK AI Security Institute [P] for both AISI series; Forescout Vedere Labs [P]. Each measures a different thing.</p>
+  </div>
+  <aside class="notes"><p>The single most useful habit this module can install: when someone shows a rising capability line, ask which benchmark each point came from. These three get blended into one narrative constantly, and they are not commensurable.</p></aside>
+</section>
+
+<!-- 8 -->
+<section class="slide slide--dark" data-title="What evaluators refuse to claim">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m1.s8.k">The most important caveat in the module</div>
+    <h2 class="h2" data-i18n="m1.s8.h">The evaluators will not say it works against defended systems</h2>
+    <p class="lead" data-i18n="m1.s8.l">AISI states plainly that it cannot say whether Mythos Preview could attack well-defended systems, because the evaluation environments contain <strong>no active defenders, no defensive tooling, and no penalty for triggering security alerts</strong>.</p>
+    <div class="callout"><span>⚠</span><span>Demonstrated capability is described as autonomously attacking small, weakly defended and vulnerable enterprise systems where network access has already been gained.</span></div>
+    <p class="source">UK AI Security Institute evaluation of Claude Mythos Preview [P].</p>
+  </div>
+  <aside class="notes"><p>This is the slide that separates this course from vendor content. The organization that ran the evaluation is telling you what its own numbers do not establish. Every capability figure in this module sits inside this caveat, and the caveat is theirs, not ours.</p></aside>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-title="CVE-2026-4747 attribution">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s9.k">A correction worth making</div>
+    <h2 class="h2" data-i18n="m1.s9.h">Read the credit line, not the headline</h2>
+    <div class="grid grid--2">
+      <div class="card card--warn">
+        <h3 class="card__title">The common framing</h3>
+        <ul class="bullets">
+          <li>"A model discovered and exploited a 17-year-old kernel bug autonomously"</li>
+        </ul>
+      </div>
+      <div class="card card--good">
+        <h3 class="card__title">What the advisory says</h3>
+        <ul class="bullets">
+          <li>FreeBSD credits <strong>"Nicholas Carlini using Claude, Anthropic"</strong></li>
+          <li>That is a joint credit describing a researcher working with a model</li>
+          <li>Announced 2026-03-26, before the public Mythos announcement</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m1.s9.l">The finding is still remarkable. It is a human-plus-model result, and describing it as autonomous discovery misstates what was demonstrated.</p>
+    <p class="source">FreeBSD-SA-26:08.rpcsec_gss [P].</p>
+  </div>
+  <aside class="notes"><p>Small correction, large habit. The credit line on an advisory is primary evidence about how a finding was produced, and it is nearly always available and nearly never read.</p></aside>
+</section>
+
+<!-- 10 -->
+<section class="slide slide--alt" data-title="The technical detail">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s10.k">Precision matters here too</div>
+    <h2 class="h2" data-i18n="m1.s10.h">Reachable pre-auth. RCE described as authenticated.</h2>
+    <table class="tbl">
+      <thead><tr><th>Claim</th><th>What the record says</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">Triggering the overflow</td><td>Does not require the client to authenticate first</td></tr>
+        <tr><td class="hi">Kernel RCE through the NFS server</td><td>Described as achievable by an <strong>authenticated</strong> user</td></tr>
+        <tr><td class="hi">CVSS v3.1</td><td><code>AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H</code> at <strong>8.8 High</strong></td></tr>
+        <tr><td class="hi">Weakness</td><td>CWE-121, stack-based buffer overflow</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><span>⚠</span><span>Calling this a 9.8 unauthenticated RCE would be wrong. <code>PR:L</code> in the vector confirms a privilege requirement.</span></div>
+    <p class="source">FreeBSD-SA-26:08.rpcsec_gss [P]; NVD record for CVE-2026-4747 [P]. No reproduction detail appears anywhere in this course.</p>
+  </div>
+  <aside class="notes"><p>NVD lists a public exploit reference for this CVE. Consistent with the course scope rule, no reproduction detail appears in any module. Say that out loud once, here, so the room knows it is a decision rather than an omission.</p></aside>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-title="Adversary adoption">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s11.k">Documented, May 2026</div>
+    <h2 class="h2" data-i18n="m1.s11.h">Adversary adoption is real and narrower than headlines</h2>
+    <div class="cols">
+      <div class="pane">
+        <div class="card card--info">
+          <h3 class="card__title">What was observed</h3>
+          <ul class="bullets">
+            <li>A Chinese-speaking actor running an open-weights model inside the Hermes Agent framework</li>
+            <li>An MCP server translating natural language into internet-scan queries</li>
+            <li>An automated vulnerability-intelligence pipeline aggregating disclosures from 17 sources over Telegram</li>
+            <li>Trial use of six other commercial models, reading as market evaluation</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pane">
+        <div class="card card--risk">
+          <h3 class="card__title">Seven CVEs targeted. The split matters more than the count.</h3>
+          <ul class="bullets">
+            <li><strong>Autonomous, failed:</strong> 3 CVEs</li>
+            <li><strong>Manual, successful:</strong> 2 CVEs</li>
+            <li><strong>Manual, attempted or non-functional:</strong> 3 CVEs</li>
+          </ul>
+        </div>
+        <div class="callout"><span>⚠</span><span><strong>Every success in the campaign was manual.</strong></span></div>
+      </div>
+    </div>
+    <p class="source">Unit 42, Palo Alto Networks [P]. Session documented 2026-05-07. CVE identifiers in research/w4-offensive.md.</p>
+  </div>
+  <aside class="notes"><p>The campaign is genuinely alarming for reconnaissance and genuinely unimpressive for exploitation. Researchers note that targets with weaker default configurations would have been susceptible, which is a statement about the target population rather than about model capability.</p></aside>
+</section>
+
+<!-- 12 -->
+<section class="slide slide--alt" data-title="Symmetry">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m1.s12.k">Both directions, stated honestly</div>
+    <h2 class="h2" data-i18n="m1.s12.h">Both sides got better at finding. Neither got reliable at exploiting.</h2>
+    <div class="grid grid--2">
+      <div class="card card--good">
+        <h3 class="card__title">Defenders gained real capability</h3>
+        <ul class="bullets">
+          <li>Four confirmed zero-days from an agentic framework</li>
+          <li>And 72 raw alerts, false positives, and misclassifications in the same run</li>
+        </ul>
+      </div>
+      <div class="card card--warn">
+        <h3 class="card__title">Attackers gained real capability</h3>
+        <ul class="bullets">
+          <li>Reconnaissance compressing hundreds of hours into minutes</li>
+          <li>Autonomous exploitation failed in both attempts</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m1.s12.l">The engineering consequence lands on triage capacity, which is where this module started.</p>
+    <p class="source">Forescout Vedere Labs [P]; Unit 42 [P]. Analysis in research/w3-sdl.md.</p>
+  </div>
+  <aside class="notes"><p>Close the capability section here and pivot to the SDL. If the room only remembers one line, make it that the symmetry holds at the finding stage and breaks at the exploiting stage, and that the pressure therefore lands on triage.</p></aside>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-title="Gate verdicts">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s13.k">The SDL, gate by gate</div>
+    <h2 class="h2" data-i18n="m1.s13.h">One gate survives untouched</h2>
+    <div class="fig" data-fig="gates"></div>
+    <p class="source">Classification derived in research/w3-sdl.md from the incident and capability evidence. The verdicts are ours.</p>
+  </div>
+  <aside class="notes"><p>Say clearly that this classification is our analysis rather than a citation. We checked whether any published framework already names these gates so we could cite instead of propose, and did not find one; that open question is recorded in gaps.md.</p></aside>
+</section>
+
+<!-- 14 -->
+<section class="slide slide--alt" data-title="Requirements">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s14.k">Gate 1 · needs new evidence</div>
+    <h2 class="h2" data-i18n="m1.s14.h">Requirements: add an autonomy declaration</h2>
+    <div class="grid grid--2">
+      <div class="card card--info">
+        <h3 class="card__title">What to add</h3>
+        <ul class="bullets">
+          <li>What the system may do <strong>without human approval</strong></li>
+          <li>The blast radius of each such action</li>
+        </ul>
+      </div>
+      <div class="card card--risk">
+        <h3 class="card__title">Why it belongs here</h3>
+        <ul class="bullets">
+          <li>The Meta Sev-1 was an unreviewed agent action in an ordinary workflow</li>
+          <li>That is a <strong>requirements failure before it is a runtime failure</strong></li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m1.s14.l">An autonomy declaration is a requirement, not a runtime setting. If it is discovered in configuration, it was never reviewed.</p>
+    <p class="source">Meta incident [S]; analysis in research/w3-sdl.md.</p>
+  </div>
+  <aside class="notes"><p>This is the gate most likely to be actionable for the room next week, because writing an autonomy declaration costs nothing and immediately exposes disagreement between teams about what the agent is allowed to do.</p></aside>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-title="Threat modeling">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s15.k">Gate 2 · needs new evidence</div>
+    <h2 class="h2" data-i18n="m1.s15.h">Threat modeling: STRIDE does not reach these</h2>
+    <div class="cols">
+      <div class="pane">
+        <div class="card card--warn">
+          <h3 class="card__title">What classical STRIDE does not model</h3>
+          <ul class="bullets">
+            <li>Goal drift</li>
+            <li>Memory poisoning</li>
+            <li>Delegated authority</li>
+          </ul>
+        </div>
+        <div class="card card--good">
+          <h3 class="card__title">What MAESTRO adds</h3>
+          <ul class="bullets">
+            <li>Seven layers, decomposed individually</li>
+            <li>An explicit <strong>cross-layer</strong> step, which is where agent failures actually live</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pane">
+        <div class="card card--info">
+          <h3 class="card__title">Evidence artifact</h3>
+          <ul class="bullets">
+            <li>A threat model naming <strong>every tool</strong></li>
+            <li><strong>Every trust boundary</strong></li>
+            <li><strong>Every principal</strong> the agent can act as</li>
+          </ul>
+        </div>
+        <div class="callout callout--info"><span>◆</span><span>Lab 1 runs this gate against a reference architecture two weeks from launch.</span></div>
+      </div>
+    </div>
+    <p class="source">MAESTRO: <span class="link">cloudsecurityalliance.org/blog/2025/02/06/agentic-ai-threat-modeling-framework-maestro</span> (Huang, 2025) [P].</p>
+  </div>
+  <aside class="notes"><p>MAESTRO is Ken's framework, published through CSA. Say so and then hand straight to Lab 1, which is built on it. The cross-layer step is the part with no STRIDE equivalent and it is where Lab 1 spends its time.</p></aside>
+</section>
+
+<!-- 16 -->
+<section class="slide slide--alt" data-title="Design review">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m1.s16.k">Gate 3 · needs new evidence</div>
+    <h2 class="h2" data-i18n="m1.s16.h">Design review: an instruction in a system prompt is not a control</h2>
+    <p class="lead" data-i18n="m1.s16.l">Reviewers must sign off on <strong>where controls live</strong>. A constraint written into the context window competes for attention with everything else in the context window, and it fails open.</p>
+    <div class="callout"><span>⚠</span><span>Evidence artifact: a <strong>control-placement table</strong> showing which constraints are enforced outside the model.</span></div>
+    <p class="source">Derived in research/w3-sdl.md; the failure mode is walked in detail in Module 2.</p>
+  </div>
+  <aside class="notes"><p>This is the sentence the whole course is organized around. Module 2 shows a real agent walking past an instructional control across five trust boundaries, and Lab 1 Task 4 makes the room rewrite one.</p></aside>
+</section>
+
+<!-- 17 -->
+<section class="slide" data-title="Static analysis">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m1.s17.k">Gate 4 · survives unchanged</div>
+    <h2 class="h2" data-i18n="m1.s17.h">Static analysis is fine</h2>
+    <p class="lead" data-i18n="m1.s17.l">It still finds what it always found. Unchanged in kind, larger in volume.</p>
+    <div class="callout callout--good"><span>✓</span><span>The only green gate in the diagram. Do not spend budget re-examining it.</span></div>
+    <p class="source">research/w3-sdl.md.</p>
+  </div>
+  <aside class="notes"><p>Deliberately short. A module that says everything must change is not credible, and being specific about what does not change is what makes the other eight verdicts believable.</p></aside>
+</section>
+
+<!-- 18 -->
+<section class="slide slide--alt" data-title="Dependency and supply chain">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s18.k">Gate 5 · needs new evidence</div>
+    <h2 class="h2" data-i18n="m1.s18.h">Supply chain: the scope widens past packages</h2>
+    <div class="grid grid--2">
+      <div class="card card--info">
+        <h3 class="card__title">What is now in scope</h3>
+        <ul class="bullets">
+          <li>Packages, as before</li>
+          <li>Models</li>
+          <li>Datasets</li>
+          <li>Prompts</li>
+          <li>Tools and skills</li>
+        </ul>
+      </div>
+      <div class="card card--risk">
+        <h3 class="card__title">Why, concretely</h3>
+        <ul class="bullets">
+          <li>The ExploitGym escape ran through a <strong>package registry cache proxy the agent was permitted to use</strong></li>
+          <li>The route out was a sanctioned dependency path</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" data-i18n="m1.s18.l">A dependency review that stops at packages misses the paths an agent is most likely to take, because those are the ones you approved.</p>
+    <p class="source">Hugging Face postmortem [P]; analysis in research/w3-sdl.md.</p>
+  </div>
+  <aside class="notes"><p>Connect back to Lab 1 Chain A, which is this exact route found by threat modelling before it ran. Anyone who did the lab has already written this finding down.</p></aside>
+</section>
+
+<!-- 19 -->
+<section class="slide" data-title="Dynamic testing">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m1.s19.k">Gate 6 · needs new evidence</div>
+    <h2 class="h2" data-i18n="m1.s19.h">Dynamic testing: one passing run proves nothing</h2>
+    <p class="lead" data-i18n="m1.s19.l">A system that samples does not have a single behaviour to test. Add non-deterministic repetition.</p>
+    <div class="callout"><span>⚠</span><span>Evidence artifact: a <strong>pass rate over N runs</strong> with a stated threshold, rather than a pass or fail on one.</span></div>
+    <p class="source">research/w3-sdl.md.</p>
+  </div>
+  <aside class="notes"><p>Ask how many people have a CI job that runs an LLM-backed test exactly once and gates the build on it. The hands are the slide.</p></aside>
+</section>
+
+<!-- 20 -->
+<section class="slide slide--alt" data-title="Penetration testing">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s20.k">Gate 7 · needs new evidence</div>
+    <h2 class="h2" data-i18n="m1.s20.h">Penetration testing: the tool surface is the attack surface</h2>
+    <div class="grid grid--2">
+      <div class="card card--info">
+        <h3 class="card__title">What goes in scope</h3>
+        <ul class="bullets">
+          <li>The agent's <strong>tool surface</strong>, not only its endpoints</li>
+          <li>The credentials it holds</li>
+          <li>The principals it can act as</li>
+        </ul>
+      </div>
+      <div class="card card--warn">
+        <h3 class="card__title">The AISI caveat, in reverse</h3>
+        <ul class="bullets">
+          <li>Results from an environment with no active defenders do not transfer</li>
+          <li>That cuts against your own test results too, not only against capability claims</li>
+        </ul>
+      </div>
+    </div>
+    <p class="source">UK AISI [P] for the caveat; scoping analysis in research/w3-sdl.md.</p>
+  </div>
+  <aside class="notes"><p>Nice symmetry to point out: we used the AISI caveat earlier to discount attacker capability claims. The same logic discounts our own optimistic pentest results, and intellectual honesty means applying it in both directions.</p></aside>
+</section>
+
+<!-- 21 -->
+<section class="slide" data-title="Release approval">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m1.s21.k">Gate 8 · needs new evidence</div>
+    <h2 class="h2" data-i18n="m1.s21.h">Release approval: two gates feed it directly</h2>
+    <p class="lead" data-i18n="m1.s21.l">Approval must reference evaluation results and containment posture, not only test pass or fail.</p>
+    <div class="callout"><span>⚠</span><span>A release that has not passed <strong>containment review</strong> and <strong>guardrail regression</strong> has not established that its controls hold when the agent stops cooperating.</span></div>
+    <p class="source">research/synthesis-sdl-vnext.md.</p>
+  </div>
+  <aside class="notes"><p>Those two are the only new gates that feed release approval directly in the diagram. Everything else feeds an earlier stage. That is deliberate: they are the two that answer "what happens when this goes wrong in production".</p></aside>
+</section>
+
+<!-- 22 -->
+<section class="slide slide--dark" data-title="Incident response">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m1.s22.k">Gate 9 · needs the most change</div>
+    <h2 class="h2" data-i18n="m1.s22.h">Your analysis tooling may refuse to help you</h2>
+    <p class="lead" data-i18n="m1.s22.l">When Hugging Face analysts tried to reverse-engineer recovered payloads and C2 artifacts, the commercial frontier models they reached for first <strong>refused the work</strong>. Provider guardrails treated analysing an exploit the same as launching one.</p>
+    <div class="callout"><span>⚠</span><span>The team fell back to running an open-weights model on their own infrastructure to finish the investigation.</span></div>
+    <p class="source">Hugging Face postmortem [P], which names the models and the fallback.</p>
+  </div>
+  <aside class="notes"><p>This is the least anticipated finding in the whole course. Almost nobody's incident response plan records a dependency on a third party's content policy, and this is a documented case of that dependency failing at the worst moment.</p></aside>
+</section>
+
+<!-- 23 -->
+<section class="slide" data-title="IR consequences">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s23.k">Three consequences for the plan</div>
+    <h2 class="h2" data-i18n="m1.s23.h">What to write into incident response this quarter</h2>
+    <ul class="bullets">
+      <li>Analysis capability that depends on a third party's content policy is an <strong>availability dependency</strong>. Put it in the plan's dependency list beside your other vendors.</li>
+      <li>A guardrail evaluating a submission without context cannot separate an analyst from an attacker, because the two submissions are <strong>textually identical</strong>. This is not a bug someone will fix for you.</li>
+      <li>On-premises open-weights capability is an <strong>incident response control</strong>, not only a cost decision. It also keeps attacker data in-house.</li>
+    </ul>
+    <div class="callout"><span>⚠</span><span>Exit criterion: the plan names an analysis capability available when provider guardrails refuse, and that capability <strong>has been exercised</strong>.</span></div>
+    <p class="source">Consequences derived in research/w3-sdl.md from the Hugging Face postmortem [P].</p>
+  </div>
+  <aside class="notes"><p>The last three words of the callout matter most. Naming a fallback model in a document is not the control. Having run it against a real artifact is.</p></aside>
+</section>
+
+<!-- 24 -->
+<section class="slide slide--alt" data-title="Eight new gates">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s24.k">The genuinely new work</div>
+    <h2 class="h2" data-i18n="m1.s24.h">Eight new gates, and what a reviewer signs</h2>
+    <table class="tbl">
+      <thead><tr><th>New gate</th><th>Signed artifact</th></tr></thead>
+      <tbody>
+        <tr><td class="hi">Data provenance</td><td>Corpus manifest with origin, licence, integrity hash. No corpus of unattested origin</td></tr>
+        <tr><td class="hi">Model registry and lineage</td><td>Deployed artifact traceable to weights, version and evaluation run, and matching the evaluated one</td></tr>
+        <tr><td class="hi">Evaluation-as-test</td><td>Stored baseline plus current run, with a stated allowable regression. Sign the delta, not the absolute score</td></tr>
+        <tr><td class="hi">Red-team gate</td><td>Report whose attempted vectors match the <strong>deployed</strong> tool surface</td></tr>
+        <tr><td class="hi">Guardrail regression</td><td>Suite proving each guardrail holds <strong>after context compaction</strong>, not only at turn one</td></tr>
+        <tr><td class="hi">Agent permission review</td><td>Enumerated permissions with per-grant justification, plus the constructible delegation chain</td></tr>
+        <tr><td class="hi">Tool and skill supply chain</td><td>Every tool and skill with publisher identity, integrity pin, scope declaration</td></tr>
+        <tr><td class="hi">Containment and blast radius</td><td>Written statement of reachability under full compromise, with egress enforced outside the agent</td></tr>
+      </tbody>
+    </table>
+    <p class="source">research/synthesis-sdl-vnext.md. These are proposed, not cited from a published framework.</p>
+  </div>
+  <aside class="notes"><p>Every row names an artifact rather than an activity, deliberately. "Do threat modelling" is not a gate. "A reviewer signed this specific document" is. If the room adopts one row, push them toward containment and blast radius.</p></aside>
+</section>
+
+<!-- 25 -->
+<section class="slide" data-title="Guardrail regression">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m1.s25.k">The clause that earns its place</div>
+    <h2 class="h2" data-i18n="m1.s25.h">Test the guardrail after compaction, not at turn one</h2>
+    <p class="lead" data-i18n="m1.s25.l">If safety instructions live in the context window, they are subject to the context window's behaviour. A suite that only probes the first turn measures the wrong thing.</p>
+    <div class="callout"><span>⚠</span><span>Whether context compaction actually caused the ExploitGym behaviour is a <strong>hypothesis and is not established [H]</strong>. The gate is worth having either way, because the control is in the wrong place regardless of why it failed.</span></div>
+    <p class="source">research/w5-telemetry.md and w3-sdl.md. The compaction explanation is tagged [H] throughout this course.</p>
+  </div>
+  <aside class="notes"><p>Note the shape of the argument, because it is a good one to reuse. We do not need to resolve why the guardrail failed to know that a guardrail living inside the context window is badly placed. The governance consequence survives the uncertainty.</p></aside>
+</section>
+
+<!-- 26 -->
+<section class="slide slide--alt" data-title="Containment is the spine">
+  <div class="slide__in center">
+    <div class="kicker" data-i18n="m1.s26.k">If you adopt one gate</div>
+    <h2 class="h2" data-i18n="m1.s26.h">Containment review is the spine of the course</h2>
+    <p class="lead" data-i18n="m1.s26.l">All three incidents in this course are the same failure: a boundary that was expected to hold, and that held only as long as the agent kept cooperating.</p>
+    <div class="callout"><span>⚠</span><span>Exit criterion: a written statement of what the agent can reach if fully compromised, with egress rules <strong>enforced outside the agent</strong>. The reviewer signs that containment does not depend on the agent's cooperation.</span></div>
+    <p class="source">research/w3-sdl.md and w6-incidents.md.</p>
+  </div>
+  <aside class="notes"><p>This slide is the hinge into Module 2, which spends its whole length on one incident where exactly this was missing. If the schedule is tight, cut earlier gate slides rather than this one.</p></aside>
+</section>
+
+<!-- 27 -->
+<section class="slide" data-title="What to take back">
+  <div class="slide__in">
+    <div class="kicker" data-i18n="m1.s27.k">Module 1 in five lines</div>
+    <h2 class="h2" data-i18n="m1.s27.h">What to take back to work</h2>
+    <ul class="bullets">
+      <li>Budget for <strong>triage and deployment</strong> before you budget for discovery. Doubling findings without changing throughput buys a backlog.</li>
+      <li>When someone shows you a capability curve, ask which benchmark each point came from.</li>
+      <li>Write an <strong>autonomy declaration</strong> into requirements. It costs nothing and surfaces disagreement immediately.</li>
+      <li>Put your analysis-tooling dependency in the incident response plan, and exercise the fallback.</li>
+      <li>Move one control this quarter from the system prompt to somewhere the agent cannot argue with.</li>
+    </ul>
+    <p class="source">Drawn from research/w3-sdl.md, w4-offensive.md, and synthesis-sdl-vnext.md.</p>
+  </div>
+  <aside class="notes"><p>Five lines, no new material. If you are running short, land here and shorten the gate walkthrough rather than skipping the takeaways.</p></aside>
+</section>
+
+<!-- 28 -->
+<section class="slide slide--dark" data-title="Hand off to Lab 1">
+  <div class="slide__in center">
+    <div class="eyebrow" data-i18n="m1.s28.e">Lab 1</div>
+    <h2 class="h2" data-i18n="m1.s28.h">MAESTRO threat model</h2>
+    <p class="lead" data-i18n="m1.s28.l">A reference architecture two weeks from launch. Decompose it across the seven layers, find the cross-layer chains, then decide whether the proposed control would actually hold. Paper only.</p>
+    <div class="hero__actions">
+      <a href="../labs/lab1-maestro-worksheet.md" class="bar__cta" data-i18n="m1.s28.cta">Open the worksheet →</a>
+      <a href="https://maestro-sentinel.com/" class="bar__cta bar__cta--alt" data-i18n="m1.s28.tool">MAESTRO Sentinel ↗</a>
+    </div>
+    <p class="source">MAESTRO (Huang, 2025), Cloud Security Alliance [P]. MAESTRO Sentinel automates the method and maps to AIVSS, OWASP Top 10, MITRE ATLAS and the EU AI Act [P].</p>
+  </div>
+  <aside class="notes"><p>Do the lab on paper first. The tool is genuinely useful and it is also Ken's, so the honest framing is that you should be able to tell when it is wrong before you let it do the work for you. That is what the paper pass buys.</p></aside>
+</section>
+
+</main>
+
+<div class="ctrl">
+  <button class="ctrl__btn" id="prevBtn" aria-label="Previous slide">&lsaquo; Prev</button>
+  <div class="dots" id="dots"></div>
+  <div class="ctrl__count" id="count">1 / 28</div>
+  <button class="ctrl__btn ctrl__btn--accent" id="nextBtn" aria-label="Next slide">Next &rsaquo;</button>
+</div>
+<div class="progress" id="progress"></div>
+
+<script src="../assets/js/rough.min.js"></script>
+<script src="../assets/js/sketch.js"></script>
+<script src="../assets/js/figures-01.js"></script>
+<script src="../assets/js/notes.js"></script>
+<script src="../assets/js/deck.js"></script>
+</body>
+</html>
