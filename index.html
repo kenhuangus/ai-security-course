@@ -110,7 +110,8 @@
 </div></footer>
 
 <script>
-// Theme toggle. Session-lifetime only, held in a variable. No localStorage, no sessionStorage.
+// Theme toggle. Session-lifetime only, held in a closure variable.
+// Deliberately does not persist: no browser storage API is called anywhere on this site.
 (function () {
   var btn = document.getElementById('themeBtn');
   var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;

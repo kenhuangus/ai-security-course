@@ -72,6 +72,10 @@ fullscreen, `#7` deep-links slide 7, and browser print with background graphics 
 
 ## Rules this repository follows
 
-No "§" symbol anywhere. No horizontal rules used as prose separators. No `localStorage` or
-`sessionStorage` in any page. No exploit code or reproduction steps. Every factual claim on a
-slide carries a source, and anonymous-sourced claims name their outlet on the slide face.
+The section-sign symbol never appears; cross-references are written with the word "Section".
+No horizontal rules are used as prose separators. No browser storage APIs are called in any
+page. No exploit code or reproduction steps. Every factual claim on a slide carries a source,
+and anonymous-sourced claims name their outlet on the slide face.
+
+These are greppable rules, so the repository keeps them literally true: the prohibited symbol
+and the prohibited API names do not appear even inside comments describing the prohibition.
