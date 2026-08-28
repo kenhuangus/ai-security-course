@@ -244,7 +244,7 @@
             <tr><td class="hi">Outcome</td><td class="bad">Immediate</td></tr>
           </tbody>
         </table>
-        <div class="callout"><span>⚠</span><span><strong>[UNVERIFIED]</strong> The specific decision-matrix cell was not read from the calculator, only the outcome set and the inputs. Confirm before presenting this outcome as authoritative.</span></div>
+        <div class="callout"><span>✓</span><span><strong>Matrix cell confirmed 2026-08-28.</strong> Threat <strong>Active</strong>, agent <strong>Prime Mover</strong>, impact <strong>Significant</strong> selects <strong>Immediate</strong>, which the calculator gives a remediation window of <strong>0 to 7 days</strong>.</span></div>
       </div>
       <div class="pane">
         <table class="tbl">
@@ -264,9 +264,10 @@
         </div>
       </div>
     </div>
-    <p class="source">AIVSS-SSVC calculator [P]; matrix cell [UNVERIFIED], see research/gaps.md. Teaching exercise.</p>
+    <p class="source">AIVSS-SSVC calculator [P], matrix and factor definitions read from the page 2026-08-28. Teaching exercise.</p>
   </div>
-  <aside class="notes"><p>Leave the UNVERIFIED tag on the slide. It is the course modelling its own rule: we did not read the matrix cell, so we do not claim it. Good Q&A prompt: construct a flaw that scores AIVSS Critical and SSVC Defer. A theoretical goal-manipulation weakness in a Copilot-level agent with no known exploit does it. AIVSS 7.1; SSVC 0.2 × 0.3 = 0.06, then 0.06 × 2 × 2 = 0.24, outcome Defer.</p></aside>
+  <aside class="notes"><p>This cell carried an UNVERIFIED tag until the calculator page, which had been returning HTTP 503, was re-fetched on 2026-08-28. The inference turned out to be right, and the tag came off only once the matrix itself had been read. That sequence is worth saying out loud: the rule is that you do not claim what you have not read, and being eventually correct is not what earns the claim.</p>
+    <p>Good Q&amp;A prompt: construct a flaw that scores AIVSS Critical and SSVC Defer. A theoretical goal-manipulation weakness in a Copilot-level agent with no known exploit does it. AIVSS 7.1; SSVC 0.2 × 0.3 = 0.06, then 0.06 × 2 × 2 = 0.24, and the matrix cell for threat None, Copilot, Contained is Defer.</p></aside>
 </section>
 
 <!-- 10 -->

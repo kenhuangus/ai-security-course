@@ -197,9 +197,84 @@ v0.8&nbsp;&nbsp;AIVSS = (CVSS_Base + Risk_Gap &times; (Factor_Sum / 10) &times; 
   </div>
 </section>
 
+<section>
+  <h2>The AIVSS-SSVC track</h2>
+  <p>The same project publishes a second model that answers a different question. AIVSS asks how bad
+     a flaw is. The SSVC track asks how urgently to act on it. The capstone runs both against the
+     same incident, so the two are set out here together.</p>
+  <div class="note note--warn">
+    <strong>Two different sets of ten factors.</strong> AIVSS scores its ten Risk Amplification
+    Factors at 0.0, 0.5 or 1.0 and sums them. The SSVC track scores a different ten capability
+    factors from 1 to 5 and averages them in three groups. The lists overlap in wording and not in
+    membership, and the numbers are not interchangeable. Conflating them is the most likely way to
+    get a wrong answer out of either model.
+  </div>
+  <div class="formula scroll-x">Likelihood = P(Threat) &times; P(Vulnerability)
+Risk Score = Likelihood &times; Exposure &times; Impact
+Outcome&nbsp;&nbsp;&nbsp;= DecisionMatrix(threat state, agent level, impact)</div>
+  <p>The numeric score and the outcome are produced separately. The score supports prioritization
+     and tracking. The outcome is a matrix lookup that does not read the score at all, so a reader
+     who assumes the outcome is a threshold on the risk score will mispredict cells.</p>
+  <div class="scroll-x"><table>
+    <thead><tr><th>Input</th><th>Levels and values</th></tr></thead>
+    <tbody>
+      <tr><td><code>P(Threat)</code><br>exploitation state</td><td>None <strong>0.2</strong>, no evidence and no public PoC &middot; Public PoC <strong>0.5</strong> &middot; Active <strong>0.9</strong>, reliable in-the-wild exploitation</td></tr>
+      <tr><td><code>P(Vulnerability)</code><br>exploit success probability</td><td>Hardened <strong>0.3</strong> &middot; Moderate <strong>0.5</strong> &middot; Exposed <strong>0.8</strong></td></tr>
+      <tr><td><code>Impact</code><br>systemic consequence</td><td>Contained <strong>2</strong> &middot; Significant <strong>5</strong> &middot; Critical <strong>10</strong></td></tr>
+      <tr><td><code>Exposure</code><br>agent level multiplier</td><td>Copilot <strong>2&times;</strong> &middot; Specialist <strong>4&times;</strong> &middot; Prime Mover <strong>8&times;</strong></td></tr>
+    </tbody>
+  </table></div>
+  <h3>The ten capability factors</h3>
+  <p>Each is scored 1 to 5. The three category averages, not the ten raw scores, decide the agent
+     level.</p>
+  <div class="scroll-x"><table>
+    <thead><tr><th>Category</th><th>Factors</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A</strong><br>Execution Power</td><td>Execution Autonomy &middot; Tool Authority Level &middot; Code Execution Rights &middot; Critical System Access</td></tr>
+      <tr><td><strong>B</strong><br>Environment and Adaptation</td><td>Persistent Memory &middot; Dynamic Identity and Permissions &middot; Multi-Agent Coordination</td></tr>
+      <tr><td><strong>C</strong><br>Predictability and Influence</td><td>Self-Modification Capability &middot; Non-Determinism Level &middot; Deceptiveness Potential</td></tr>
+    </tbody>
+  </table></div>
+  <p>Category A averages factors 1 to 4, B averages 5 to 7, and C averages 8 to 10. The rules are
+     applied in order: any category average at or above <strong>4.0</strong> gives Prime Mover; two
+     or more at or above <strong>3.0</strong> give Specialist; all three below <strong>2.5</strong>
+     give Copilot; anything left over is settled by its strongest category, which selects the higher
+     classification rather than the lower one.</p>
+  <h3>The decision matrix</h3>
+  <p>Twenty-seven cells, four outcomes. Reading down a column shows how much of the urgency decision
+     rests on agent level rather than on the vulnerability itself.</p>
+  <div class="scroll-x"><table>
+    <thead><tr><th>Threat state</th><th>Agent level</th><th>Contained</th><th>Significant</th><th>Critical</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="3">None</td><td>Copilot</td><td>Defer</td><td>Scheduled</td><td>Out-of-Cycle</td></tr>
+      <tr><td>Specialist</td><td>Scheduled</td><td>Scheduled</td><td>Out-of-Cycle</td></tr>
+      <tr><td>Prime Mover</td><td>Scheduled</td><td>Out-of-Cycle</td><td>Immediate</td></tr>
+      <tr><td rowspan="3">Public PoC</td><td>Copilot</td><td>Scheduled</td><td>Scheduled</td><td>Out-of-Cycle</td></tr>
+      <tr><td>Specialist</td><td>Scheduled</td><td>Out-of-Cycle</td><td>Out-of-Cycle</td></tr>
+      <tr><td>Prime Mover</td><td>Out-of-Cycle</td><td>Out-of-Cycle</td><td>Immediate</td></tr>
+      <tr><td rowspan="3">Active</td><td>Copilot</td><td>Out-of-Cycle</td><td>Out-of-Cycle</td><td>Immediate</td></tr>
+      <tr><td>Specialist</td><td>Out-of-Cycle</td><td>Immediate</td><td>Immediate</td></tr>
+      <tr><td>Prime Mover</td><td>Immediate</td><td>Immediate</td><td>Immediate</td></tr>
+    </tbody>
+  </table></div>
+  <div class="scroll-x"><table>
+    <thead><tr><th>Outcome</th><th>Stated remediation window</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Defer</strong></td><td>No deadline. Monitor for changes</td></tr>
+      <tr><td><strong>Scheduled</strong></td><td>30 to 90 days, standard remediation cycle</td></tr>
+      <tr><td><strong>Out-of-Cycle</strong></td><td>7 to 30 days, accelerated remediation</td></tr>
+      <tr><td><strong>Immediate</strong></td><td>0 to 7 days, highest urgency</td></tr>
+    </tbody>
+  </table></div>
+  <p>The capstone case sits at Active, Prime Mover, Significant, which the matrix resolves to
+     <strong>Immediate</strong>. The counter-example used to show the two models diverging sits at
+     None, Copilot, Contained, which resolves to <strong>Defer</strong> while AIVSS still scores the
+     same weakness 7.1.</p>
+</section>
+
 </div>
 
-<footer><div class="wrap">Formula, variables, and worked examples from the AIVSS v0.8 document, Sections 3.3, 3.4 and 3.6 [P]. Extracted in research/w1-aivss.md.</div></footer>
+<footer><div class="wrap">Formula, variables, and worked examples from the AIVSS v0.8 document, Sections 3.3, 3.4 and 3.6 [P]. Extracted in research/w1-aivss.md. SSVC inputs, capability factors, classification rules, decision matrix and remediation windows read from the AIVSS-SSVC calculator page [P] on 2026-08-28.</div></footer>
 
 <script>
 (function () {

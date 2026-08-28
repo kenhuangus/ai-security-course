@@ -96,18 +96,18 @@ Listed for completeness. Anything cited from these on a slide must be read first
 
 ## Sources that could not be retrieved
 
-These are listed so that nothing is silently dropped. Full consequences in `gaps.md`.
+These are listed so that nothing is silently dropped. Status re-checked 2026-08-28 with a browser User-Agent. A 200 here means the page was fetched, not that its contents were read. Full consequences in `gaps.md`.
 
 | Title | Publisher | Status | Consequence |
 |---|---|---|---|
 | Hugging Face model evaluation security incident | OpenAI | **403** | All OpenAI-side claims held at [S] |
-| Introducing Aardvark | OpenAI | **403** | 92% recall figure unverified |
+| Introducing Aardvark | OpenAI | **200**, was 403 | Fetchable, unread. 92% recall figure still unverified |
 | Strengthening cyber resilience | OpenAI | **403** | Frontier Risk Council unverified |
-| NIST AI 600-1 Generative AI Profile | NIST | **404** | Needs replacement URL |
-| AI Risk-Management Standards Profile v1.2 | Berkeley CLTC | **404** | Needs replacement URL |
-| CSAF resource page | CISA | **404** | Needs replacement URL |
-| AIVSS calculator (third-party host) | parthsohaney.online | **DNS** | Cannot cross-check arithmetic |
-| AI Cyber Challenge | DARPA | **DNS** | AIxCC results unverified |
+| NIST AI 600-1 Generative AI Profile | NIST | **200**, was 404 | Fetchable, not deep-read |
+| AI Risk-Management Standards Profile v1.2 | Berkeley CLTC | **200**, was 404 | Replacement URL found, unread |
+| CSAF resource page | CISA | **403**, was 404 | Still needs a replacement URL |
+| AIVSS calculator (third-party host) | parthsohaney.online | **DNS** | Project calculator at aivss.owasp.org used instead |
+| AI Cyber Challenge | DARPA | **200**, was DNS | Fetchable, unread. AIxCC results still unverified |
 
 ## Citation discipline
 

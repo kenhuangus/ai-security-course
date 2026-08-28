@@ -24,18 +24,22 @@ These were in the brief's ground truth and did not survive verification. They ar
 
 ## B. Sources that could not be retrieved
 
+Re-fetched on 2026-08-28 with a browser User-Agent. Most of the original failures were transient or were caused by the fetch rather than by the source.
+
+Retrieval is not verification. A row saying 200 means the page was fetched; unless the row says the contents were read, they were not, and the claims resting on them stay in Section C and stay off the slides.
+
 | Source | Status | Consequence |
 |---|---|---|
-| OpenAI incident statement | HTTP 403 to automated fetch | Every OpenAI-side claim carried at `[S]` from secondary reporting. Needs a manual read before delivery |
-| OpenAI Aardvark announcement | HTTP 403 | 92% recall figure and ten CVE-assigned disclosures unverified |
-| OpenAI strengthening cyber resilience | HTTP 403 | Frontier Risk Council claim unverified |
-| AIVSS SSVC page | HTTP 503 on 2026-08-27 | SSVC decision tree nodes, branches, outcomes not extracted. **Blocks a required capstone step.** Retry needed |
-| AIVSS calculator (third-party host) | DNS did not resolve | Cannot exercise the calculator to cross-check arithmetic |
-| NIST AI 600-1 Generative AI Profile PDF | HTTP 404 at the briefed path | Needs a replacement URL |
-| Berkeley CLTC profile v1.2 | HTTP 404 | Human oversight, containment, and delegated-action extensions unverified |
-| CISA CSAF resource page | HTTP 404 at the briefed path | Needs a replacement URL |
+| AIVSS SSVC page | **Resolved 2026-08-28.** The 503 was transient | **Closed.** Decision matrix, ten capability factors, classification thresholds and remediation windows extracted and published in `reference/aivss-primer.html`. The capstone step is unblocked, and the matrix cell the capstone had inferred is now confirmed against the page |
+| OpenAI incident statement | HTTP 403, unchanged | Every OpenAI-side claim carried at `[S]` from secondary reporting. Needs a manual read before delivery |
+| OpenAI Aardvark announcement | **HTTP 200 on 2026-08-28** with a browser User-Agent. The 403 was User-Agent based | Retrievable now. Contents not read, so the 92% recall figure and the ten CVE-assigned disclosures remain unverified and stay off the slides |
+| OpenAI strengthening cyber resilience | HTTP 403, unchanged | Frontier Risk Council claim unverified |
+| AIVSS calculator (third-party host) | DNS still does not resolve | That host cannot be exercised. The project's own calculator at `aivss.owasp.org` resolves and was used instead |
+| NIST AI 600-1 Generative AI Profile PDF | **HTTP 200 on 2026-08-28** at the briefed path. The 404 did not reproduce | Retrievable now. Not deep-read, so it stays `[UNVERIFIED-DEPTH]` in Section D |
+| Berkeley CLTC profile v1.2 | **HTTP 200 on 2026-08-28** at `cltc.berkeley.edu/publication/ai-risk-management-standards-profile/`. The briefed path redirects there | Replacement URL found. Contents not read, so the human oversight, containment and delegated-action extensions remain unverified |
+| CISA CSAF resource page | **HTTP 403 on 2026-08-28**, previously recorded as 404 | Still not retrievable. Needs a replacement URL |
 | CSA MAESTRO publication | Resolved 2026-08-27. Canonical URL supplied by the author and verified at HTTP 200 | Closed. Lab 1 written against it |
-| DARPA AIxCC site | Did not resolve on sweep | AIxCC final results unverified |
+| DARPA AIxCC site | **HTTP 200 on 2026-08-28.** The earlier DNS failure did not reproduce | Retrievable now. Contents not read, so AIxCC final results remain unverified and stay off the slides |
 
 ## C. Unverified claims held off slides
 

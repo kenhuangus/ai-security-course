@@ -15,7 +15,7 @@ Research date: 2026-08-27. Confidence tags: `[P]` primary, `[S]` secondary, `[A]
 | 7 | OWASP GenAI Security Project | OWASP | 2026 | [P] | 200 | https://genai.owasp.org/ |
 | 8 | OWASP Agentic Skills Top 10 project page | OWASP | 2026 | [P] | 200 | https://owasp.org/www-project-agentic-skills-top-10/ |
 
-Two brief-supplied URLs failed and are recorded in `gaps.md`: the SSVC page returned HTTP 503, and the third-party calculator host did not resolve.
+Two brief-supplied URLs failed on the first sweep and are recorded in `gaps.md`: the SSVC page returned HTTP 503, and the third-party calculator host did not resolve. The SSVC page was re-fetched successfully on 2026-08-28 and is now extracted below. The third-party host still does not resolve.
 
 ## Finding 1: the brief's formula was stale, and the correction matters
 
@@ -119,6 +119,6 @@ Carried to `gaps.md`:
 1. Appendix D contributor survey and relative risk rankings, not yet extracted from the PDF.
 2. The AIUC-1 crosswalk mapping structure, fetched but not yet tabulated.
 3. Framework mappings to Agentic AI Top 10 for 2026, MAESTRO, and NIST AI RMF, not yet tabulated.
-4. SSVC decision tree nodes, branches, and outcomes. The `ssvc.html` page returned HTTP 503 on 2026-08-27 and needs a retry.
+4. ~~SSVC decision tree nodes, branches, and outcomes.~~ Closed 2026-08-28. The page was re-fetched and the full model extracted: three inputs with their values, ten capability factors in three categories, the agent-level classification thresholds, the 27-cell outcome matrix and the four remediation windows. Published in `reference/aivss-primer.html`.
 5. Certification roadmap language. The brief places certification at Year 3 and industry application at Year 2, not yet confirmed against the project site.
 6. The MAESTRO canonical CSA publication URL. The brief-supplied URL returned HTTP 404.
