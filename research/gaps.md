@@ -45,7 +45,7 @@ Each carried from the brief and not yet confirmed. Any that remain unverified at
 
 **ExploitGym follow-on.** CrowdStrike engagement. METR and Redwood Research third-party assessments, both apparently pending. OpenAI's disclosure of other, more limited sandbox escapes. OpenAI's promised fuller account.
 
-**Reuters-sourced items, `[A]`.** The one-week detection delay and the FBI notification. OpenAI said the report contained inaccuracies without specifying them. **Blocked on README open decision 3.** If included, the slide must name Reuters on its face.
+**Reuters-sourced items, `[A]`.** The one-week detection delay and the FBI notification. OpenAI said the report contained inaccuracies without specifying them. Decision 3 resolved: these are included, and the slide names Reuters on its face together with OpenAI's response. They remain `[A]` and must never be restated without the outlet attached.
 
 **Ecosystem risk data.** The enterprise survey reporting 88% of organizations experiencing a confirmed or suspected AI agent security incident. Snyk's 2026 ToxicSkills audit: 1,467 of 3,984 skill packages (36.8%) with at least one security issue, 76 confirmed malicious payloads. SecurityScorecard's 40,000+ internet-exposed OpenClaw instances with 15.2K flagged RCE-vulnerable. The two OpenClaw CVEs themselves **are** verified (25253 at 8.8, 32922 at 9.9); only the exposure counts are unverified.
 
@@ -78,11 +78,17 @@ Each carried from the brief and not yet confirmed. Any that remain unverified at
 4. **No published disclosure routing procedure exists.** Nine destinations resolve, none publishes a decision procedure. This absence is what the routing tree addresses, and the tree is therefore an original proposal, not a summary of practice.
 5. **The context-compression hypothesis is untested.** `[H]` OpenTelemetry carries the two attributes needed to test it. No published correlation study was found.
 
-## F. Blocked on owner decisions
+## F. Owner decisions, all resolved 2026-08-27
 
-From `README.md` Section "Open decisions for the owner". Items 1 and 2 block build work.
+Recorded in `README.md`. None of these blocks build work any longer.
 
-1. Bilingual scope. Blocks Module 2, which is written first.
-2. Delivery date. Determines Akrites status language and whether OpenAI's fuller account exists.
-3. Reuters attribution posture. Determines whether Section C's `[A]` items appear at all.
-4. Capstone AIVSS score status: project position or teaching exercise.
+1. **Bilingual scope: English-first with i18n hooks.** Decks are authored in English and every
+   translatable string carries a `data-i18n` key, so a Chinese track can be added as a translation
+   table rather than a slide-by-slide rewrite. The glossary is bilingual now.
+2. **Delivery window: September to October 2026.** Akrites is described as launching into
+   operation during the course window, and its pre-launch report figures are labelled pre-launch.
+   The Akrites slide is built so one status line can be updated without restructuring it.
+3. **Reuters-sourced items: included, with Reuters named on the slide face.** Carried with the
+   note that OpenAI said the report contained inaccuracies without specifying them.
+4. **Capstone AIVSS score: a teaching exercise.** Every slide carrying the score says so, and the
+   sensitivity analysis stays visible. It is not an AIVSS project position.

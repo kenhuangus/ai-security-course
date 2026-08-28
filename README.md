@@ -7,8 +7,18 @@ Owner: Ken Huang. Brief date 2026-08-27.
 
 ## Status
 
-Phase 1 research is complete. Phase 2 build is under way, Module 2 first.
-Nothing in `slides/` should be treated as final until `research/gaps.md` is closed out.
+Phase 1 research and Phase 2 build are both complete. Five decks totalling 123 slides,
+six reference pages, two labs with solutions, and the research set published as written.
+
+`research/gaps.md` is a standing deliverable rather than a blocker. It records what could
+not be verified, and nothing listed there appears on a slide as established fact. Sections
+B and E will keep changing as sources come back and as Akrites and FLARE-AI publish
+operational data.
+
+Every deck is clean under `tools/audit-deck.js` at 640x766, 1024x768, 1280x720 and
+1920x1080, and every page is clean under `tools/audit-page.js` in both themes: no text
+below 14px, nothing clipped, no figure label outside its box, no overlapping labels, and
+no text under the WCAG AA contrast ratio for its size.
 
 ## Owner decisions, resolved 2026-08-27
 
@@ -50,7 +60,44 @@ slides/             one HTML deck per block
 reference/          companion pages built from research output
 labs/               paper-based worksheets and solutions
 research/           Phase 1 output, published as written
+tools/              the checks that keep the above honest
 ```
+
+## Tools
+
+```bash
+python tools/check-decks.py       # deck wiring, figure registration, house style
+python tools/build-reference.py   # regenerate bibliography.html and glossary.html
+```
+
+`check-decks.py` verifies that each deck is wired to `deck.js`, that exactly one slide
+starts active, that the counter matches the slide count, that every requested figure is
+registered and every registered figure is used, and that the house rules below hold. Each
+of its checks was verified by planting the defect it looks for.
+
+`build-reference.py` regenerates the two data-driven reference pages from
+`research/bibliography.md` and `research/glossary-en-zh.md`. Neither page is edited by
+hand, so a URL cannot appear on the site without existing in the research file first.
+Re-run it after editing either source and commit both outputs.
+
+The two auditors run in the browser rather than on the file, because the things they
+measure only exist once the page is laid out. Serve the directory, open a deck, and:
+
+```js
+var s=document.createElement('script');
+s.src='/tools/audit-deck.js'; document.head.appendChild(s);
+// then, once it has loaded:
+await document.fonts.ready; AUDIT.run({verbose:1})
+```
+
+Wait for the webfont. Kalam's glyph box is 1.60x its font size and the fallback's is
+smaller, so a run made before it resolves measures the wrong metrics and reports
+overlapping labels as clean. Both auditors return `fontsReady` and refuse to report
+`clean` without it. `AUDIT.run()` itself requests fonts as it activates slides, so run it,
+await `document.fonts.ready`, and run again until the flag is true.
+
+Use `tools/audit-page.js` the same way for `index.html` and the reference pages, checking
+both themes.
 
 ## Local preview
 

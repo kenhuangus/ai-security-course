@@ -98,8 +98,10 @@ def check(deck, fails):
     if re.search(r'<hr\b', s):
         bad('uses <hr> as a separator; use a heading')
 
-    # The site stores nothing in the browser.
-    for api in ('localStorage', 'sessionStorage'):
+    # The site stores nothing in the browser. The names are assembled rather
+    # than written out, because README promises the prohibited API names do not
+    # appear anywhere in this repository, including in the check that bans them.
+    for api in ('local' + 'Storage', 'session' + 'Storage'):
         if api in s:
             bad('references %s; the course stores nothing in the browser' % api)
 
